@@ -77,13 +77,61 @@
         /* Smooth Scroll Reveal Animation */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(60px);
+            transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        /* Staggered animations for grids */
+        .reveal-stagger {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-stagger.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Left slide animation */
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Right slide animation */
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Scale animation */
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
         }
         
         /* Navigation */
@@ -135,9 +183,17 @@
             transform: scale(1.02);
         }
         
-        .logo img {
-            height: 42px;
-            width: auto;
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: white;
         }
         
         .logo span {
@@ -145,6 +201,10 @@
             font-size: 1.5rem;
             color: var(--white);
             letter-spacing: -0.5px;
+        }
+        
+        nav.scrolled .logo span {
+            color: var(--secondary);
         }
         
         .nav-links {
@@ -765,10 +825,6 @@
             background: var(--gradient-primary);
         }
         
-        .feature-card:hover .feature-icon span {
-            filter: brightness(0) invert(1);
-        }
-        
         .feature-card h3 {
             font-size: 1.35rem;
             font-weight: 700;
@@ -1009,8 +1065,17 @@
             margin-bottom: 1rem;
         }
         
-        .footer-brand h3 img {
+        .footer-logo-icon {
+            width: 36px;
             height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: white;
         }
         
         .footer-brand p {
@@ -1220,7 +1285,7 @@
     <nav id="navbar">
         <div class="nav-container">
             <a href="/" class="logo">
-                <img src="logo.png" alt="Navitra Logo">
+                <div class="logo-icon">N</div>
                 <span>Navitra</span>
             </a>
             <div class="nav-links">
@@ -1476,7 +1541,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <h3>
-                        <img src="logo.png" alt="Navitra">
+                        <div class="footer-logo-icon">N</div>
                         Navitra
                     </h3>
                     <p>AI-powered travel companion that helps you discover, plan, and navigate your perfect trip.</p>
@@ -1530,22 +1595,54 @@
             }
         });
         
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.reveal');
-        
+        // Enhanced scroll reveal animation with stagger
         const revealOnScroll = () => {
-            revealElements.forEach(element => {
+            // Basic reveal elements
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
                 const windowHeight = window.innerHeight;
                 
-                if (elementTop < windowHeight - 100) {
+                if (elementTop < windowHeight - 80) {
                     element.classList.add('active');
                 }
             });
+            
+            // Staggered reveal for feature cards, steps, premium features
+            const staggerContainers = [
+                { selector: '.features-grid .feature-card', delay: 150 },
+                { selector: '.steps-container .step-card', delay: 200 },
+                { selector: '.premium-grid .premium-feature', delay: 150 },
+                { selector: '.stats-container .stat-item', delay: 100 }
+            ];
+            
+            staggerContainers.forEach(({ selector, delay }) => {
+                const items = document.querySelectorAll(selector);
+                items.forEach((item, index) => {
+                    const elementTop = item.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight - 50) {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, index * delay);
+                    }
+                });
+            });
         };
         
+        // Initialize stagger elements
+        document.querySelectorAll('.feature-card, .step-card, .premium-feature, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+        
         window.addEventListener('scroll', revealOnScroll);
-        window.addEventListener('load', revealOnScroll);
+        window.addEventListener('load', () => {
+            // Small delay for initial load
+            setTimeout(revealOnScroll, 100);
+        });
         
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1559,6 +1656,15 @@
                     });
                 }
             });
+        });
+        
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.backgroundPositionY = scrolled * 0.5 + 'px';
+            }
         });
     </script>
 </body>
