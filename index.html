@@ -3,47 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navitra - AI Travel Planner | Smart Trip Itineraries</title>
-    <meta name="description" content="Plan your perfect trip in seconds with Navitra. AI-powered itineraries, smart route optimization, and personalized travel recommendations.">
-    <meta name="keywords" content="travel planner, itinerary, AI travel, trip planning, route optimizer, vacation planner">
+    <title>Navitra - AI Travel Planner | Smart Trip Routes & Itineraries</title>
+    <meta name="description" content="Plan smarter, travel better with Navitra. AI-powered travel companion that creates perfectly optimized itineraries for any destination.">
+    <meta name="keywords" content="travel planner, trip itinerary, AI travel, route optimizer, vacation planner">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Navitra - AI Travel Planner">
-    <meta property="og:description" content="Plan your perfect trip in seconds with AI-powered itineraries">
+    <meta property="og:description" content="Plan smarter, travel better with AI-powered trip planning.">
     <meta property="og:image" content="https://navitraapp.com/og-image.png">
     <meta property="og:url" content="https://navitraapp.com">
     <meta property="og:type" content="website">
     
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Navitra - AI Travel Planner">
+    <meta name="twitter:description" content="Plan smarter, travel better with AI-powered trip planning.">
+    
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        :root {
+            --primary: #FF5722;
+            --primary-dark: #E64A19;
+            --primary-light: #FFCCBC;
+            --secondary: #1A1A2E;
+            --accent: #FF8A65;
+            --dark: #0F0F1A;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-800: #424242;
+            --gray-900: #212121;
+            --white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF5722 0%, #FF8A65 50%, #FFB74D 100%);
+            --gradient-dark: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+            --gradient-hero: linear-gradient(180deg, #0F0F1A 0%, #1A1A2E 50%, #1F1F3A 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.15);
+            --shadow-glow: 0 0 60px rgba(255, 87, 34, 0.3);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        :root {
-            --primary-orange: #FF5722;
-            --primary-dark: #E64A19;
-            --deep-night: #1A1A2E;
-            --text-primary: #1F2937;
-            --text-secondary: #6B7280;
-            --background: #FFFFFF;
-            --surface: #F9FAFB;
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--background);
-            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-900);
             line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--white);
+        }
+        
+        /* Smooth Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Staggered animations for grids */
+        .reveal-stagger {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-stagger.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Left slide animation */
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Right slide animation */
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Scale animation */
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
         }
         
         /* Navigation */
@@ -52,11 +140,22 @@
             top: 0;
             left: 0;
             right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            z-index: 1000;
-            padding: 16px 24px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-sm);
+            padding: 0.75rem 2rem;
+        }
+        
+        nav.scrolled .logo span,
+        nav.scrolled .nav-links a {
+            color: var(--secondary);
         }
         
         .nav-container {
@@ -70,88 +169,210 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 24px;
-            color: var(--deep-night);
+            gap: 0.75rem;
             text-decoration: none;
+            transition: transform 0.3s ease;
         }
         
-        .logo img {
-            height: 36px;
-            width: auto;
+        .logo:hover {
+            transform: scale(1.02);
+        }
+        
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px;
+            box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
+        }
+        
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .logo span {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+        
+        nav.scrolled .logo span {
+            color: var(--secondary);
         }
         
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 2.5rem;
             align-items: center;
         }
         
         .nav-links a {
+            color: rgba(255,255,255,0.85);
             text-decoration: none;
-            color: var(--text-secondary);
             font-weight: 500;
-            transition: color 0.2s;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
         .nav-links a:hover {
-            color: var(--primary-orange);
+            color: var(--primary);
         }
         
-        .nav-cta {
-            background: var(--primary-orange);
-            color: white !important;
-            padding: 10px 24px;
-            border-radius: 100px;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .btn-nav {
+            padding: 0.65rem 1.5rem;
+            border-radius: 50px;
             font-weight: 600;
+            text-decoration: none !important;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.15);
+            color: white !important;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
         }
         
-        .nav-cta:hover {
-            background: var(--primary-dark);
+        .btn-nav:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 87, 34, 0.3);
             color: white !important;
         }
         
-        /* Mobile Menu Button */
+        .btn-nav::after {
+            display: none !important;
+        }
+        
+        nav.scrolled .btn-nav {
+            background: var(--gradient-primary);
+            color: white !important;
+            border-color: transparent;
+        }
+        
+        nav.scrolled .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 87, 34, 0.4);
+            color: white !important;
+        }
+        
+        /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 8px;
-            z-index: 1001;
+            padding: 0.5rem;
         }
         
         .mobile-menu-btn span {
             display: block;
             width: 24px;
             height: 2px;
-            background: var(--deep-night);
-            margin: 6px 0;
+            background: white;
+            margin: 5px 0;
             transition: all 0.3s ease;
-            border-radius: 2px;
         }
         
-        /* Mobile Menu Active State */
-        .mobile-menu-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
+        nav.scrolled .mobile-menu-btn span {
+            background: var(--secondary);
         }
-        
-        .mobile-menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .mobile-menu-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-        
+
         /* Hero Section */
         .hero {
-            padding: 160px 24px 80px;
-            background: linear-gradient(135deg, #FFF5F2 0%, #FFF 50%, #F0F9FF 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
+            padding: 8rem 2rem 4rem;
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(255, 87, 34, 0.15) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(ellipse, rgba(255, 138, 101, 0.1) 0%, transparent 50%);
+            animation: pulse 10s ease-in-out infinite reverse;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 87, 34, 0.2), rgba(255, 138, 101, 0.1));
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 20%;
+            left: 5%;
+            animation-delay: 2s;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 40%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
         }
         
         .hero-container {
@@ -159,229 +380,686 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            gap: 4rem;
             align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            color: white;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 87, 34, 0.15);
+            border: 1px solid rgba(255, 87, 34, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero-badge::before {
+            content: '✨';
         }
         
         .hero-content h1 {
-            font-size: 56px;
+            font-size: 4rem;
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 24px;
-            color: var(--deep-night);
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
         }
         
-        .hero-content h1 span {
-            color: var(--primary-orange);
+        .hero-content h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .hero-content p {
-            font-size: 20px;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2.5rem;
             max-width: 480px;
+            line-height: 1.7;
         }
         
         .hero-buttons {
             display: flex;
-            gap: 16px;
+            gap: 1rem;
             flex-wrap: wrap;
+            align-items: center;
         }
         
         .btn-primary {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: var(--deep-night);
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
             color: white;
-            padding: 16px 32px;
-            border-radius: 100px;
             text-decoration: none;
+            border-radius: 14px;
             font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 87, 34, 0.3);
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(26, 26, 46, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 87, 34, 0.4);
+        }
+        
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
         }
         
         .btn-secondary {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: white;
-            color: var(--deep-night);
-            padding: 16px 32px;
-            border-radius: 100px;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
             text-decoration: none;
+            border-radius: 14px;
             font-weight: 600;
-            border: 2px solid #E5E7EB;
-            transition: border-color 0.2s;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
         }
         
         .btn-secondary:hover {
-            border-color: var(--primary-orange);
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
         }
         
-        .hero-image {
+        /* Phone Mockup */
+        .hero-phone {
+            position: relative;
             display: flex;
             justify-content: center;
+            align-items: center;
         }
         
         .phone-mockup {
-            max-width: 320px;
-            filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.15));
-            border-radius: 40px;
+            position: relative;
+            width: 280px;
+            height: 580px;
+            background: linear-gradient(145deg, #2a2a3e, #1a1a2e);
+            border-radius: 45px;
+            padding: 12px;
+            box-shadow: 
+                0 50px 100px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(255,255,255,0.1),
+                inset 0 0 0 1px rgba(255,255,255,0.05);
+            animation: phoneFloat 6s ease-in-out infinite;
         }
         
+        @keyframes phoneFloat {
+            0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+            50% { transform: translateY(-15px) rotateX(2deg) rotateY(-2deg); }
+        }
+        
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 35px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 30px;
+            background: #1a1a2e;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+        
+        .phone-content {
+            padding: 50px 16px 16px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .phone-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .phone-header h3 {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .phone-header p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.75rem;
+        }
+        
+        .phone-card {
+            background: white;
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .phone-card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .phone-card-text h4 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        
+        .phone-card-text p {
+            font-size: 0.65rem;
+            color: var(--gray-500);
+        }
+        
+        .phone-map {
+            flex: 1;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .phone-map::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .map-route {
+            position: absolute;
+            top: 20%;
+            left: 15%;
+            width: 70%;
+            height: 60%;
+        }
+        
+        .map-route svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .map-pin {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            box-shadow: 0 3px 10px rgba(255, 87, 34, 0.4);
+        }
+        
+        .map-pin::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .map-pin.pin-1 { top: 15%; left: 20%; animation: pinBounce 2s ease-in-out infinite; }
+        .map-pin.pin-2 { top: 35%; left: 60%; animation: pinBounce 2s ease-in-out infinite 0.3s; }
+        .map-pin.pin-3 { top: 65%; left: 40%; animation: pinBounce 2s ease-in-out infinite 0.6s; }
+        
+        @keyframes pinBounce {
+            0%, 100% { transform: rotate(-45deg) translateY(0); }
+            50% { transform: rotate(-45deg) translateY(-5px); }
+        }
+        
+        /* Floating Cards around Phone */
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 1rem 1.25rem;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: cardFloat 5s ease-in-out infinite;
+        }
+        
+        .floating-card.card-1 {
+            top: 5%;
+            right: -20%;
+            animation-delay: 0s;
+        }
+        
+        .floating-card.card-2 {
+            bottom: 15%;
+            left: -15%;
+            animation-delay: 1.5s;
+        }
+        
+        .floating-card.card-3 {
+            top: 40%;
+            left: -25%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating-card-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+        
+        .floating-card-text strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--gray-900);
+        }
+        
+        .floating-card-text span {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            background: white;
+            padding: 3rem 2rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .stats-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-item p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         /* Features Section */
         .features {
-            padding: 120px 24px;
-            background: var(--surface);
+            padding: 8rem 2rem;
+            background: var(--gray-50);
+        }
+        
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .section-header {
             text-align: center;
-            max-width: 600px;
-            margin: 0 auto 64px;
+            margin-bottom: 5rem;
+        }
+        
+        .section-label {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .section-header h2 {
-            font-size: 40px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--deep-night);
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
         }
         
         .section-header p {
-            color: var(--text-secondary);
-            font-size: 18px;
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
+            gap: 2rem;
         }
         
         .feature-card {
             background: white;
-            padding: 40px;
+            padding: 2.5rem;
             border-radius: 24px;
-            border: 1px solid #E5E7EB;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
         }
         
         .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
         
         .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--primary-orange), #FF8A65);
-            border-radius: 16px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, rgba(255, 87, 34, 0.2) 100%);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin-bottom: 24px;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--gradient-primary);
         }
         
         .feature-card h3 {
-            font-size: 20px;
+            font-size: 1.35rem;
             font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--deep-night);
+            color: var(--secondary);
+            margin-bottom: 0.75rem;
         }
         
         .feature-card p {
-            color: var(--text-secondary);
-            font-size: 16px;
+            color: var(--gray-600);
+            font-size: 1rem;
+            line-height: 1.7;
         }
-        
-        /* How it Works */
+
+        /* How It Works */
         .how-it-works {
-            padding: 120px 24px;
+            padding: 8rem 2rem;
+            background: white;
         }
         
-        .steps {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 48px;
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+            position: relative;
         }
         
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 40px;
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 12%;
+            right: 12%;
+            height: 3px;
+            background: var(--gray-200);
+            z-index: 0;
+        }
+        
+        .step-card {
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
         
         .step-number {
-            width: 80px;
-            height: 80px;
-            background: var(--primary-orange);
-            color: white;
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            font-weight: 800;
-            flex-shrink: 0;
+            font-size: 2.5rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(255, 87, 34, 0.3);
+            transition: all 0.3s ease;
         }
         
-        .step-content h3 {
-            font-size: 24px;
+        .step-card:hover .step-number {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 87, 34, 0.4);
+        }
+        
+        .step-card h3 {
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--deep-night);
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
         }
         
-        .step-content p {
-            color: var(--text-secondary);
-            font-size: 18px;
+        .step-card p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        /* Premium Section */
+        .premium {
+            padding: 8rem 2rem;
+            background: var(--gradient-dark);
+            position: relative;
+            overflow: hidden;
         }
         
+        .premium::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(255, 87, 34, 0.1) 0%, transparent 60%);
+        }
+        
+        .premium .section-header h2,
+        .premium .section-header p {
+            color: white;
+        }
+        
+        .premium .section-header p {
+            opacity: 0.8;
+        }
+        
+        .premium-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .premium-feature {
+            display: flex;
+            gap: 1.25rem;
+            padding: 1.75rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .premium-feature:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(10px);
+            border-color: rgba(255, 87, 34, 0.3);
+        }
+        
+        .premium-feature-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.3);
+        }
+        
+        .premium-feature h4 {
+            font-size: 1.15rem;
+            color: white;
+            margin-bottom: 0.35rem;
+            font-weight: 600;
+        }
+        
+        .premium-feature p {
+            color: rgba(255,255,255,0.65);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
         /* CTA Section */
         .cta {
-            padding: 120px 24px;
-            background: var(--deep-night);
+            padding: 8rem 2rem;
+            background: var(--gradient-primary);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
         }
         
         .cta h2 {
-            font-size: 48px;
+            font-size: 3rem;
             font-weight: 800;
             color: white;
-            margin-bottom: 24px;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
         }
         
         .cta p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 20px;
-            margin-bottom: 40px;
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .cta .btn-primary {
-            background: var(--primary-orange);
+        .cta .btn-white {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: white;
+            color: var(--primary);
+            padding: 1.1rem 2.5rem;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         
-        .cta .btn-primary:hover {
-            background: var(--primary-dark);
-            box-shadow: 0 10px 40px rgba(255, 87, 34, 0.4);
+        .cta .btn-white:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
         }
-        
+
         /* Footer */
         footer {
-            padding: 64px 24px 32px;
-            background: #0D0D1A;
+            background: var(--dark);
+            color: white;
+            padding: 5rem 2rem 2rem;
         }
         
         .footer-container {
@@ -389,185 +1067,216 @@
             margin: 0 auto;
         }
         
-        .footer-top {
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+        
+        .footer-brand h3 {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 48px;
-            flex-wrap: wrap;
-            gap: 32px;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
         
-        .footer-brand {
-            max-width: 300px;
+        .footer-logo-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px;
         }
         
-        .footer-brand .logo {
-            color: white;
-            margin-bottom: 16px;
+        .footer-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
         
         .footer-brand p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 64px;
-        }
-        
-        .footer-column h4 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        
-        .footer-column a {
-            display: block;
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            margin-bottom: 12px;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-        
-        .footer-column a:hover {
-            color: var(--primary-orange);
-        }
-        
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        
-        .footer-bottom p {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
         }
         
         .social-links {
             display: flex;
-            gap: 16px;
+            gap: 0.75rem;
         }
         
         .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
         }
         
         .social-links a:hover {
-            background: var(--primary-orange);
+            background: var(--primary);
+            transform: translateY(-3px);
         }
         
-        .social-links svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
+        .footer-links h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: white;
         }
         
-        /* Mobile Responsive */
-        @media (max-width: 968px) {
+        .footer-links a {
+            display: block;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            margin-bottom: 0.85rem;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .footer-bottom p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-bottom-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
             .hero-container {
                 grid-template-columns: 1fr;
                 text-align: center;
-                gap: 48px;
+                gap: 3rem;
+            }
+            
+            .hero-content {
+                order: 1;
+            }
+            
+            .hero-phone {
+                order: 0;
             }
             
             .hero-content h1 {
-                font-size: 40px;
+                font-size: 3rem;
             }
             
             .hero-content p {
-                margin-left: auto;
-                margin-right: auto;
+                margin: 0 auto 2rem;
             }
             
             .hero-buttons {
                 justify-content: center;
             }
             
+            .floating-card {
+                display: none;
+            }
+            
             .features-grid {
-                grid-template-columns: 1fr;
-                max-width: 500px;
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .footer-top {
-                flex-direction: column;
+            .steps-container {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .footer-links {
-                flex-wrap: wrap;
-                gap: 32px;
+            .steps-container::before {
+                display: none;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
         @media (max-width: 768px) {
-            /* Show mobile menu button */
+            .nav-links {
+                display: none;
+            }
+            
             .mobile-menu-btn {
                 display: block;
             }
             
-            /* Hide nav links by default on mobile */
-            .nav-links {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 32px;
-                z-index: 999;
-            }
-            
-            /* Show nav links when active */
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .nav-links a {
-                font-size: 24px;
-            }
-            
             .hero {
-                padding: 120px 24px 60px;
+                padding: 6rem 1.5rem 3rem;
             }
             
             .hero-content h1 {
-                font-size: 32px;
-            }
-            
-            .hero-content p {
-                font-size: 16px;
+                font-size: 2.5rem;
             }
             
             .section-header h2 {
-                font-size: 28px;
+                font-size: 2.25rem;
+            }
+            
+            .features-grid,
+            .premium-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .phone-mockup {
+                width: 240px;
+                height: 500px;
             }
             
             .cta h2 {
-                font-size: 32px;
+                font-size: 2.25rem;
             }
             
-            .step {
-                flex-direction: column;
-                text-align: center;
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
             
             .footer-bottom {
@@ -575,228 +1284,411 @@
                 text-align: center;
             }
         }
+        
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .stat-item h3 {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav>
+    <nav id="navbar">
         <div class="nav-container">
             <a href="/" class="logo">
-                <img src="logo.png" alt="Navitra">
-                Navitra
+                <div class="logo-icon">
+                    <img src="logo-white.png" alt="Navitra">
+                </div>
+                <span>Navitra</span>
             </a>
-            
-            <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Toggle menu">
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#premium">Premium</a>
+                <a href="support.html">Support</a>
+                <a href="#download" class="btn-nav">Download App</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            
-            <div class="nav-links" id="navLinks">
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How it Works</a>
-                <a href="support.html">Support</a>
-                <a href="#download" class="nav-cta">Download</a>
-            </div>
         </div>
     </nav>
-    
+
     <!-- Hero Section -->
     <section class="hero">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        
         <div class="hero-container">
-            <div class="hero-content">
-                <h1>Plan your perfect trip <span>in seconds</span></h1>
-                <p>AI-powered itineraries that optimize your routes, save time, and help you discover hidden gems. Travel smarter with Navitra.</p>
+            <div class="hero-content reveal">
+                <div class="hero-badge">AI-Powered Travel Planning</div>
+                <h1>Plan Smarter,<br><span class="highlight">Travel Better</span></h1>
+                <p>Your intelligent travel companion that creates perfectly optimized itineraries. Focus on making memories, we'll handle the logistics.</p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn-primary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                        </svg>
-                        App Store
+                    <a href="#download" class="btn-primary">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                        Download for iOS
                     </a>
-                    <a href="#" class="btn-secondary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
-                        </svg>
-                        Google Play
+                    <a href="#features" class="btn-secondary">
+                        Learn More →
                     </a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="hero-phone.png" alt="Navitra App" class="phone-mockup">
+            
+            <div class="hero-phone reveal">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="phone-notch"></div>
+                        <div class="phone-content">
+                            <div class="phone-header">
+                                <h3>Your Trip to Paris</h3>
+                                <p>3 days • 12 places</p>
+                            </div>
+                            <div class="phone-card">
+                                <div class="phone-card-icon">🗼</div>
+                                <div class="phone-card-text">
+                                    <h4>Eiffel Tower</h4>
+                                    <p>9:00 AM • 2 hours</p>
+                                </div>
+                            </div>
+                            <div class="phone-card">
+                                <div class="phone-card-icon">🏛️</div>
+                                <div class="phone-card-text">
+                                    <h4>Louvre Museum</h4>
+                                    <p>11:30 AM • 3 hours</p>
+                                </div>
+                            </div>
+                            <div class="phone-map">
+                                <div class="map-pin pin-1"></div>
+                                <div class="map-pin pin-2"></div>
+                                <div class="map-pin pin-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="floating-card card-1">
+                    <div class="floating-card-icon">🤖</div>
+                    <div class="floating-card-text">
+                        <strong>AI Optimized</strong>
+                        <span>Smart routing</span>
+                    </div>
+                </div>
+                
+                <div class="floating-card card-2">
+                    <div class="floating-card-icon">⚡</div>
+                    <div class="floating-card-text">
+                        <strong>Save 40%</strong>
+                        <span>Travel time</span>
+                    </div>
+                </div>
+                
+                <div class="floating-card card-3">
+                    <div class="floating-card-icon">🌍</div>
+                    <div class="floating-card-text">
+                        <strong>7 Languages</strong>
+                        <span>Global support</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    
+
+    <!-- Stats Bar -->
+    <section class="stats-bar reveal">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3>50K+</h3>
+                <p>Trips Planned</p>
+            </div>
+            <div class="stat-item">
+                <h3>100+</h3>
+                <p>Cities Covered</p>
+            </div>
+            <div class="stat-item">
+                <h3>4.9★</h3>
+                <p>App Store Rating</p>
+            </div>
+            <div class="stat-item">
+                <h3>40%</h3>
+                <p>Time Saved</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Features Section -->
     <section class="features" id="features">
-        <div class="section-header">
-            <h2>Everything you need for the perfect trip</h2>
-            <p>Powered by AI to make travel planning effortless</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Smart Route Optimization</h3>
-                <p>Our AI analyzes distances, opening hours, and traffic to create the most efficient daily routes.</p>
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-label">Features</span>
+                <h2>Everything You Need to Travel Smart</h2>
+                <p>Powerful features designed to make your trip planning effortless and enjoyable.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">👆</div>
-                <h3>Swipe to Discover</h3>
-                <p>Tinder-style interface to quickly pick places you want to visit. Swipe right to add, left to skip.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🗺️</div>
-                <h3>Interactive Maps</h3>
-                <p>See your entire trip visualized on a map with optimized routes between each destination.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💰</div>
-                <h3>Budget Planning</h3>
-                <p>Get estimated costs for your trip including attractions, food, and transportation.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎧</div>
-                <h3>Voice Guides</h3>
-                <p>Audio guides for each destination so you can learn while you explore.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🌍</div>
-                <h3>13 Languages</h3>
-                <p>Available in multiple languages to help travelers from around the world.</p>
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><span>🤖</span></div>
+                    <h3>AI Route Optimization</h3>
+                    <p>Our intelligent algorithm considers opening hours, travel times, and geographic clustering to create the perfect daily schedule.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><span>🎯</span></div>
+                    <h3>Smart Discovery</h3>
+                    <p>Discover the perfect mix of tourist highlights, local favorites, and hidden gems tailored to your interests.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><span>🧭</span></div>
+                    <h3>Real-Time Navigation</h3>
+                    <p>Get turn-by-turn directions between stops with accurate walking, driving, and transit times.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><span>📅</span></div>
+                    <h3>Multi-Day Planning</h3>
+                    <p>Plan trips from 1 to 14 days with daily itineraries that consider your energy levels and travel pace.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><span>🔄</span></div>
+                    <h3>AI Remix</h3>
+                    <p>Stuck at a location? Let Navitra suggest alternative places based on your mood and remaining time.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon"><span>🌍</span></div>
+                    <h3>7 Languages</h3>
+                    <p>Available in English, Turkish, German, Spanish, French, Arabic, and Chinese for global travelers.</p>
+                </div>
             </div>
         </div>
     </section>
-    
-    <!-- How it Works -->
+
+    <!-- How It Works -->
     <section class="how-it-works" id="how-it-works">
-        <div class="section-header">
-            <h2>How it works</h2>
-            <p>Plan your trip in three simple steps</p>
-        </div>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>Choose your destination</h3>
-                    <p>Search for any city and select your travel dates. We'll find the best attractions for you.</p>
-                </div>
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-label">How It Works</span>
+                <h2>Plan Your Trip in 4 Simple Steps</h2>
+                <p>From destination to adventure in minutes, not hours.</p>
             </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Swipe through places</h3>
-                    <p>Like a place? Swipe right. Not interested? Swipe left. Build your perfect list in minutes.</p>
+            <div class="steps-container">
+                <div class="step-card reveal">
+                    <div class="step-number">📍</div>
+                    <h3>Choose Destination</h3>
+                    <p>Search for any city or pick from popular destinations</p>
                 </div>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Get your optimized route</h3>
-                    <p>Our AI creates a day-by-day itinerary with the best times to visit each place.</p>
+                <div class="step-card reveal">
+                    <div class="step-number">👆</div>
+                    <h3>Swipe Places</h3>
+                    <p>Swipe right on places you want to visit</p>
+                </div>
+                <div class="step-card reveal">
+                    <div class="step-number">🤖</div>
+                    <h3>AI Optimization</h3>
+                    <p>Our AI creates the perfect route for you</p>
+                </div>
+                <div class="step-card reveal">
+                    <div class="step-number">🚀</div>
+                    <h3>Start Exploring</h3>
+                    <p>Follow your personalized itinerary</p>
                 </div>
             </div>
         </div>
     </section>
-    
+
+    <!-- Premium Section -->
+    <section class="premium" id="premium">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-label" style="background: rgba(255,255,255,0.1); color: var(--accent);">Premium</span>
+                <h2>Unlock the Full Experience</h2>
+                <p>Take your travel planning to the next level with Navitra Premium.</p>
+            </div>
+            <div class="premium-grid">
+                <div class="premium-feature reveal">
+                    <div class="premium-feature-icon">🎧</div>
+                    <div>
+                        <h4>AI Voice Guide</h4>
+                        <p>Listen to engaging audio guides about each location, delivered in a natural storytelling style.</p>
+                    </div>
+                </div>
+                <div class="premium-feature reveal">
+                    <div class="premium-feature-icon">📱</div>
+                    <div>
+                        <h4>Offline Maps</h4>
+                        <p>Download maps and routes for offline use. Perfect for international travel without data.</p>
+                    </div>
+                </div>
+                <div class="premium-feature reveal">
+                    <div class="premium-feature-icon">💰</div>
+                    <div>
+                        <h4>Budget Planning</h4>
+                        <p>Track estimated costs for entrance fees, food, and transportation before you go.</p>
+                    </div>
+                </div>
+                <div class="premium-feature reveal">
+                    <div class="premium-feature-icon">♾️</div>
+                    <div>
+                        <h4>Unlimited Everything</h4>
+                        <p>Create unlimited trips, extended itineraries up to 14 days, and unlimited AI suggestions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="cta" id="download">
-        <h2>Ready to travel smarter?</h2>
-        <p>Download Navitra and plan your next adventure in minutes</p>
-        <a href="#" class="btn-primary">
-            Download Free
-        </a>
+        <div class="cta-content reveal">
+            <h2>Ready to Travel Smarter?</h2>
+            <p>Join thousands of travelers planning better trips with Navitra.</p>
+            <a href="https://apps.apple.com/app/navitra" class="btn-white">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Download Free on App Store
+            </a>
+        </div>
     </section>
-    
+
     <!-- Footer -->
     <footer>
         <div class="footer-container">
-            <div class="footer-top">
+            <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="/" class="logo">
-                        <img src="logo.png" alt="Navitra" style="height: 32px;">
+                    <h3>
+                        <div class="footer-logo-icon">
+                            <img src="logo-white.png" alt="Navitra">
+                        </div>
                         Navitra
-                    </a>
-                    <p>AI-powered travel planning for the modern explorer.</p>
+                    </h3>
+                    <p>AI-powered travel companion that helps you discover, plan, and navigate your perfect trip.</p>
+                    <div class="social-links">
+                        <a href="https://twitter.com/navitraapp" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="https://instagram.com/navitraapp" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="https://tiktok.com/@navitraapp" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                        </a>
+                    </div>
                 </div>
                 <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Product</h4>
-                        <a href="#features">Features</a>
-                        <a href="#how-it-works">How it Works</a>
-                        <a href="#download">Download</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Support</h4>
-                        <a href="support.html">Help Center</a>
-                        <a href="support.html">Contact Us</a>
-                        <a href="support.html">FAQ</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Legal</h4>
-                        <a href="privacy.html">Privacy Policy</a>
-                        <a href="terms.html">Terms of Service</a>
-                    </div>
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#premium">Premium</a>
+                    <a href="#download">Download</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <a href="support.html">Help Center</a>
+                    <a href="mailto:support@navitraapp.com">Contact Us</a>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>© 2026 Navitra. All rights reserved.</p>
-                <div class="social-links">
-                    <!-- Instagram -->
-                    <a href="https://instagram.com/navitraapp" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24" fill="white">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
-                    <!-- TikTok -->
-                    <a href="https://tiktok.com/@navitraapp" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-                        <svg viewBox="0 0 24 24" fill="white">
-                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                        </svg>
-                    </a>
+                <div class="footer-bottom-links">
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
                 </div>
             </div>
         </div>
     </footer>
-    
-    <!-- Mobile Menu Script -->
+
     <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            
-            navLinks.classList.toggle('active');
-            menuBtn.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open
-            if (navLinks.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
             } else {
-                document.body.style.overflow = '';
+                navbar.classList.remove('scrolled');
             }
-        }
+        });
         
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                const navLinks = document.getElementById('navLinks');
-                const menuBtn = document.querySelector('.mobile-menu-btn');
+        // Enhanced scroll reveal animation with stagger
+        const revealOnScroll = () => {
+            // Basic reveal elements
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
                 
-                navLinks.classList.remove('active');
-                menuBtn.classList.remove('active');
-                document.body.style.overflow = '';
+                if (elementTop < windowHeight - 80) {
+                    element.classList.add('active');
+                }
+            });
+            
+            // Staggered reveal for feature cards, steps, premium features
+            const staggerContainers = [
+                { selector: '.features-grid .feature-card', delay: 150 },
+                { selector: '.steps-container .step-card', delay: 200 },
+                { selector: '.premium-grid .premium-feature', delay: 150 },
+                { selector: '.stats-container .stat-item', delay: 100 }
+            ];
+            
+            staggerContainers.forEach(({ selector, delay }) => {
+                const items = document.querySelectorAll(selector);
+                items.forEach((item, index) => {
+                    const elementTop = item.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementTop < windowHeight - 50) {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, index * delay);
+                    }
+                });
+            });
+        };
+        
+        // Initialize stagger elements
+        document.querySelectorAll('.feature-card, .step-card, .premium-feature, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+        
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', () => {
+            // Small delay for initial load
+            setTimeout(revealOnScroll, 100);
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
         });
         
-        // Close menu on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                const navLinks = document.getElementById('navLinks');
-                const menuBtn = document.querySelector('.mobile-menu-btn');
-                
-                navLinks.classList.remove('active');
-                menuBtn.classList.remove('active');
-                document.body.style.overflow = '';
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.backgroundPositionY = scrolled * 0.5 + 'px';
             }
         });
     </script>
