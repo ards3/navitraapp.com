@@ -158,11 +158,6 @@
             color: var(--secondary);
         }
         
-        nav.scrolled .btn-nav {
-            background: var(--gradient-primary);
-            color: white;
-        }
-        
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -184,16 +179,22 @@
         }
         
         .logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             background: var(--gradient-primary);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: white;
+            padding: 6px;
+            box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
+        }
+        
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
         }
         
         .logo span {
@@ -245,10 +246,10 @@
             padding: 0.65rem 1.5rem;
             border-radius: 50px;
             font-weight: 600;
-            text-decoration: none;
+            text-decoration: none !important;
             transition: all 0.3s ease;
             background: rgba(255,255,255,0.15);
-            color: white;
+            color: white !important;
             border: 1px solid rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
         }
@@ -258,6 +259,23 @@
             border-color: var(--primary);
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(255, 87, 34, 0.3);
+            color: white !important;
+        }
+        
+        .btn-nav::after {
+            display: none !important;
+        }
+        
+        nav.scrolled .btn-nav {
+            background: var(--gradient-primary);
+            color: white !important;
+            border-color: transparent;
+        }
+        
+        nav.scrolled .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 87, 34, 0.4);
+            color: white !important;
         }
         
         /* Mobile Menu */
@@ -1066,16 +1084,21 @@
         }
         
         .footer-logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             background: var(--gradient-primary);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: white;
+            padding: 6px;
+        }
+        
+        .footer-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
         }
         
         .footer-brand p {
@@ -1285,7 +1308,9 @@
     <nav id="navbar">
         <div class="nav-container">
             <a href="/" class="logo">
-                <div class="logo-icon">N</div>
+                <div class="logo-icon">
+                    <img src="logo.png" alt="Navitra">
+                </div>
                 <span>Navitra</span>
             </a>
             <div class="nav-links">
@@ -1541,7 +1566,9 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <h3>
-                        <div class="footer-logo-icon">N</div>
+                        <div class="footer-logo-icon">
+                            <img src="logo.png" alt="Navitra">
+                        </div>
                         Navitra
                     </h3>
                     <p>AI-powered travel companion that helps you discover, plan, and navigate your perfect trip.</p>
