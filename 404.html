@@ -497,6 +497,30 @@
       flex-shrink: 0;
     }
 
+    .accommodation-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      opacity: 0.7;
+    }
+    .accommodation-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #607D8B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .accommodation-label {
+      font-size: 12px;
+      color: #607D8B;
+      font-style: italic;
+    }
+
     /* ── CTA Section ── */
     .cta-section {
       margin-top: 8px;
@@ -965,6 +989,7 @@
         loading: 'Loading route...',
         dayLabel: 'Day',
         places: 'places',
+        accommodation: 'Accommodation',
         days: 'days',
         sharedBy: 'Shared by',
         openInApp: 'Open in Navitra',
@@ -989,6 +1014,7 @@
         loading: 'Rota yükleniyor...',
         dayLabel: 'Gün',
         places: 'mekan',
+        accommodation: 'Konaklama',
         days: 'gün',
         sharedBy: 'Paylaşan',
         openInApp: "Navitra'da Aç",
@@ -1013,6 +1039,7 @@
         loading: 'Route wird geladen...',
         dayLabel: 'Tag',
         places: 'Orte',
+        accommodation: 'Unterkunft',
         days: 'Tage',
         sharedBy: 'Geteilt von',
         openInApp: 'In Navitra öffnen',
@@ -1037,6 +1064,7 @@
         loading: "Chargement de l'itinéraire...",
         dayLabel: 'Jour',
         places: 'lieux',
+        accommodation: 'Hébergement',
         days: 'jours',
         sharedBy: 'Partagé par',
         openInApp: 'Ouvrir dans Navitra',
@@ -1061,6 +1089,7 @@
         loading: 'Cargando ruta...',
         dayLabel: 'Día',
         places: 'lugares',
+        accommodation: 'Alojamiento',
         days: 'días',
         sharedBy: 'Compartido por',
         openInApp: 'Abrir en Navitra',
@@ -1085,6 +1114,7 @@
         loading: 'جارٍ تحميل المسار...',
         dayLabel: 'اليوم',
         places: 'أماكن',
+        accommodation: 'الإقامة',
         days: 'أيام',
         sharedBy: 'شاركه',
         openInApp: 'افتح في Navitra',
@@ -1109,6 +1139,7 @@
         loading: '正在加载路线...',
         dayLabel: '第{n}天',
         places: '个地点',
+        accommodation: '住宿',
         days: '天',
         sharedBy: '分享者',
         openInApp: '在Navitra中打开',
@@ -1266,6 +1297,23 @@
           marker.bindPopup(popupContent, { closeButton: false });
         });
 
+        // Accommodation marker
+        var acc = day.accommodation;
+        if (acc && acc.latitude && acc.longitude) {
+          var accLatlng = [acc.latitude, acc.longitude];
+          dayCoords.unshift(accLatlng); // connect line from hotel
+          dayCoords.push(accLatlng);    // connect line back to hotel
+          allCoords.push(accLatlng);
+          var accIcon = L.divIcon({
+            html: '<div style="width:28px;height:28px;background:#607D8B;border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,0.3);">🏨</div>',
+            className: '',
+            iconSize: [28, 28],
+            iconAnchor: [14, 14],
+          });
+          L.marker(accLatlng, { icon: accIcon }).addTo(layerGroup)
+            .bindPopup('<div class="map-popup"><div><div class="map-popup-name">' + T.accommodation + '</div></div></div>', { closeButton: false });
+        }
+
         // Draw route line for each day
         if (dayCoords.length > 1) {
           L.polyline(dayCoords, {
@@ -1365,6 +1413,10 @@
         var places = day.itinerary || [];
 
         var placesHtml = '';
+        var hasAcc = day.accommodation && day.accommodation.latitude;
+        if (hasAcc) {
+          placesHtml += '<div class="accommodation-item"><div class="accommodation-dot">🏨</div><div class="accommodation-label">' + T.accommodation + '</div></div>';
+        }
         places.forEach(function(place, pIdx) {
           var imgUrl = resolveImageUrl(place.imageUrl);
           var photoHtml = imgUrl
@@ -1399,6 +1451,10 @@
             aiTipHtml +
             placeNoteHtml;
         });
+
+        if (hasAcc) {
+          placesHtml += '<div class="accommodation-item"><div class="accommodation-dot">🏨</div><div class="accommodation-label">' + T.accommodation + '</div></div>';
+        }
 
         daysHtml +=
           '<div class="day-section" style="animation-delay:' + (idx * 0.1) + 's">' +
