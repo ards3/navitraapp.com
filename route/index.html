@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navitra - Shared Route</title>
+  <meta name="description" content="View and adopt this travel route on Navitra">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Navitra - AI Travel Planner">
+  <meta property="og:description" content="Check out this travel route planned with Navitra AI">
+  <meta property="og:type" content="website">
+
+  <!-- App Links -->
+  <meta property="al:ios:app_store_id" content="6743812693">
+  <meta property="al:ios:app_name" content="Navitra">
+  <meta property="al:ios:url" content="navitra://route/">
+  <meta property="al:android:package" content="com.navitra.app">
+  <meta property="al:android:app_name" content="Navitra">
+  <meta property="al:android:url" content="navitra://route/">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- QR Code -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #F8F8F8;
+      color: #1A1A2E;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Split Layout (desktop) ── */
+    .split-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .map-panel {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      overflow: hidden;
+    }
+
+    .content-panel {
+      width: 100%;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(transparent, #F8F8F8);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* ── Badge (inside content panel on desktop, on map on mobile) ── */
+    .hero-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, rgba(26,26,46,0.85), rgba(26,26,46,0.72));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 10px 16px 10px 12px;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .content-badge {
+      display: none;
+    }
+
+    .hero-badge-logo, .content-badge-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .hero-badge-logo img, .content-badge-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .hero-badge-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .hero-badge-name {
+      font-weight: 800;
+      font-size: 15px;
+      color: #FFFFFF;
+      letter-spacing: 1.2px;
+      line-height: 1;
+    }
+
+    .hero-badge-tagline {
+      font-size: 10px;
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      line-height: 1;
+    }
+
+    /* Content badge (desktop) */
+    .content-badge {
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #1A1A2E, #2D2B55);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(26,26,46,0.3);
+    }
+
+    .content-badge-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(255,107,53,0.3);
+    }
+
+    .content-badge-info {
+      flex: 1;
+    }
+
+    .content-badge-name {
+      font-weight: 800;
+      font-size: 16px;
+      color: #FFFFFF;
+      letter-spacing: 1.5px;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .content-badge-tagline {
+      font-size: 11px;
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      line-height: 1;
+    }
+
+    .content-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4CAF50;
+      box-shadow: 0 0 8px rgba(76,175,80,0.6);
+      animation: badgePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes badgePulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── Container ── */
+    .container {
+      max-width: 480px;
+      margin: -40px auto 0;
+      padding: 0 16px 24px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* ── Route Header Card ── */
+    .route-header {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+    }
+
+    .route-city {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .route-stats {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    .stat-text {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .stat-text strong {
+      display: block;
+      font-size: 16px;
+      color: #1A1A2E;
+    }
+
+    .shared-by {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid #F0F0F0;
+    }
+
+    .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #FF6B35;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .shared-by-text {
+      font-size: 13px;
+      color: #999;
+    }
+
+    /* ── Day Legend ── */
+    .day-legend {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 0 0 12px;
+      margin-bottom: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .day-legend::-webkit-scrollbar { display: none; }
+
+    .day-chip {
+      flex-shrink: 0;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .day-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .day-chip.active {
+      transform: scale(1.05);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+
+    /* ── Journal Section ── */
+    .journal-section {
+      background: linear-gradient(135deg, #FFF8F5, #FFFAF7);
+      border: 1px solid rgba(255,87,34,0.1);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+      animation: fadeInUp 0.5s ease-out both;
+    }
+
+    .journal-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #FF5722;
+    }
+
+    .journal-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #4B5563;
+      font-style: italic;
+      white-space: pre-line;
+    }
+
+    .journal-text.collapsed {
+      max-height: 120px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .journal-text.collapsed::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(transparent, #FFF8F5);
+    }
+
+    .journal-expand {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #FF5722;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+    }
+
+    .journal-expand:hover {
+      text-decoration: underline;
+    }
+
+    .place-ai-tip {
+      font-size: 12px;
+      color: #92400E;
+      padding: 6px 10px;
+      margin: 2px 0 2px 42px;
+      background: rgba(245,158,11,0.08);
+      border-left: 2px solid rgba(245,158,11,0.3);
+      border-radius: 0 8px 8px 0;
+      line-height: 1.4;
+    }
+
+    .place-ai-tip-icon {
+      font-size: 11px;
+      margin-right: 2px;
+    }
+
+    .place-note {
+      font-size: 12px;
+      color: #6B7280;
+      font-style: italic;
+      padding: 6px 10px;
+      margin: 2px 0 4px 42px;
+      background: rgba(255,87,34,0.04);
+      border-left: 2px solid rgba(255,87,34,0.2);
+      border-radius: 0 8px 8px 0;
+      line-height: 1.4;
+    }
+
+    /* ── Day Section ── */
+    .day-section {
+      margin-bottom: 16px;
+      animation: fadeInUp 0.5s ease-out both;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .day-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+
+    .day-card-header {
+      padding: 16px 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .day-card-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .day-card-count {
+      font-size: 12px;
+      opacity: 0.85;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 10px;
+      border-radius: 10px;
+    }
+
+    /* ── Place Item ── */
+    .place-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      border-bottom: 1px solid #F5F5F5;
+      transition: background 0.15s;
+    }
+
+    .place-item:last-child {
+      border-bottom: none;
+    }
+
+    .place-photo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #F0F0F0;
+    }
+
+    .place-photo-placeholder {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .place-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .place-name {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .place-category {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .place-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      margin-top: 8px;
+    }
+
+    .open-app-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #FF6B35, #FF8F5E);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 16px rgba(255,107,53,0.35);
+    }
+
+    .open-app-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(255,107,53,0.4);
+    }
+
+    .open-app-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* ── QR & Store ── */
+    .bottom-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .qr-card {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .qr-card p {
+      font-size: 11px;
+      color: #999;
+      margin-top: 8px;
+    }
+
+    #qr-code {
+      display: flex;
+      justify-content: center;
+    }
+
+    #qr-code canvas, #qr-code img {
+      border-radius: 8px;
+    }
+
+    .store-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .store-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: transform 0.15s;
+    }
+
+    .store-btn:active { transform: scale(0.97); }
+
+    .store-btn.apple {
+      background: #000;
+      color: white;
+    }
+
+    .store-btn.google {
+      background: white;
+      color: #1A1A2E;
+      border: 1.5px solid #E0E0E0;
+    }
+
+    .store-btn svg { width: 22px; height: 22px; }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 16px;
+      color: #BBB;
+      font-size: 12px;
+    }
+
+    /* ── Loading ── */
+    .loading {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #F0F0F0;
+      border-top-color: #FF6B35;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-msg {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .error-msg h2 { margin-bottom: 8px; font-size: 20px; }
+    .error-msg p { color: #888; font-size: 14px; }
+
+    .error-store-buttons {
+      display: flex;
+      gap: 12px;
+      max-width: 400px;
+      margin: 20px auto 0;
+    }
+
+    /* ── Leaflet custom ── */
+    .leaflet-popup-content-wrapper {
+      border-radius: 12px !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
+    }
+
+    .leaflet-popup-content {
+      margin: 10px 12px !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    .map-popup {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .map-popup img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .map-popup-name {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .map-popup-cat {
+      font-size: 11px;
+      color: #999;
+    }
+
+    /* ── Pulse animation for markers ── */
+    .pulse-marker {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    /* ── Mobile (default, stacked) ── */
+    @media (max-width: 768px) {
+      .split-layout {
+        flex-direction: column;
+      }
+
+      /* On mobile: map on top, content below */
+      .map-panel { order: -1; height: 300px; }
+      .content-panel { order: 1; }
+
+      .container {
+        margin-top: -30px;
+      }
+
+      .route-city { font-size: 24px; }
+    }
+
+    /* ── Floating store card (desktop only) ── */
+    .floating-store {
+      display: none;
+    }
+
+    /* ── Desktop (map fullscreen, panel overlay) ── */
+    @media (min-width: 769px) {
+      .split-layout {
+        position: relative;
+        height: 100vh;
+      }
+
+      .content-panel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 380px;
+        height: 100vh;
+        overflow-y: auto;
+        background: rgba(255,255,255,0.72);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 2;
+        box-shadow: 4px 0 30px rgba(0,0,0,0.12);
+      }
+
+      .map-panel {
+        width: 100%;
+        height: 100vh;
+        position: relative;
+      }
+
+      .hero-overlay {
+        display: none;
+      }
+
+      .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 20px 18px 20px;
+      }
+
+      .route-header {
+        padding: 18px;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.65);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+        margin-bottom: 12px;
+      }
+
+      .route-city { font-size: 22px; }
+
+      .day-card {
+        border-radius: 16px;
+        background: rgba(255,255,255,0.65);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      .day-section { margin-bottom: 12px; }
+
+      .place-item { padding: 10px 16px; }
+      .place-photo, .place-photo-placeholder { width: 44px; height: 44px; border-radius: 10px; }
+      .place-name { font-size: 13px; }
+      .place-category { font-size: 11px; }
+      .place-number { width: 22px; height: 22px; font-size: 10px; }
+
+      /* Hide QR/store from content panel on desktop */
+      .cta-bottom-row { display: none; }
+
+      /* Badge: hide hero badge, show content badge on desktop */
+      .hero-badge { display: none; }
+      .content-badge { display: flex; }
+
+      /* Show floating store card on map */
+      .floating-store {
+        display: flex;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        z-index: 3;
+        gap: 10px;
+        align-items: flex-end;
+      }
+
+      .floating-store .qr-card {
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 14px;
+        padding: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      }
+
+      .floating-store .qr-card p {
+        font-size: 10px;
+        margin-top: 6px;
+      }
+
+      .floating-store .store-col {
+        gap: 8px;
+      }
+
+      .floating-store .store-btn {
+        padding: 10px 16px;
+        border-radius: 12px;
+        font-size: 13px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      }
+
+      .floating-store .store-btn svg { width: 18px; height: 18px; }
+
+      /* Custom scrollbar */
+      .content-panel::-webkit-scrollbar {
+        width: 5px;
+      }
+      .content-panel::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .content-panel::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.12);
+        border-radius: 3px;
+      }
+      .content-panel::-webkit-scrollbar-thumb:hover {
+        background: rgba(0,0,0,0.2);
+      }
+    }
+
+    /* ── Wide desktop ── */
+    @media (min-width: 1200px) {
+      .content-panel { width: 400px; }
+      .container { padding: 24px 20px 20px; }
+      .route-city { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="split-layout">
+    <!-- Content Panel (left on desktop) -->
+    <div class="content-panel">
+      <div class="container">
+        <div id="content">
+          <div class="loading">
+            <div class="spinner"></div>
+            <p>Loading route...</p>
+          </div>
+        </div>
+        <div class="footer">&copy; 2025 Navitra &middot; AI Travel Planner</div>
+      </div>
+    </div>
+
+    <!-- Map Panel (right on desktop, top on mobile) -->
+    <div class="map-panel" id="hero">
+      <div id="map"></div>
+      <div class="hero-overlay"></div>
+      <div class="floating-store" id="floating-store"></div>
+      <div class="hero-badge">
+        <div class="hero-badge-logo">
+          <img src="/assets/logo.png" alt="Navitra" />
+        </div>
+        <div class="hero-badge-text">
+          <div class="hero-badge-name">NAVITRA</div>
+          <div class="hero-badge-tagline" id="badge-tagline">AI Travel Planner</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── i18n ──
+    var TRANSLATIONS = {
+      en: {
+        tagline: 'AI Travel Planner',
+        loading: 'Loading route...',
+        dayLabel: 'Day',
+        places: 'places',
+        days: 'days',
+        sharedBy: 'Shared by',
+        openInApp: 'Open in Navitra',
+        scanToOpen: 'Scan to open',
+        appStore: 'App Store',
+        googlePlay: 'Google Play',
+        invalidLink: 'Invalid Route Link',
+        invalidDesc: "This link doesn't contain a valid route.",
+        notFound: 'Route Not Found',
+        notFoundDesc: 'This route may have been removed or the link is incorrect.',
+        error: 'Something went wrong',
+        errorDesc: 'Please try again later.',
+        footer: 'Navitra \u00b7 AI Travel Planner',
+        dayTrip: 'Day Trip',
+        journalOf: "'s Journal",
+        readMore: 'Read More',
+        readLess: 'Show Less',
+      },
+      tr: {
+        tagline: 'AI Seyahat Planlayıcı',
+        loading: 'Rota yükleniyor...',
+        dayLabel: 'Gün',
+        places: 'mekan',
+        days: 'gün',
+        sharedBy: 'Paylaşan',
+        openInApp: "Navitra'da Aç",
+        scanToOpen: 'Tarayıp açın',
+        appStore: 'App Store',
+        googlePlay: 'Google Play',
+        invalidLink: 'Geçersiz Rota Linki',
+        invalidDesc: 'Bu link geçerli bir rota içermiyor.',
+        notFound: 'Rota Bulunamadı',
+        notFoundDesc: 'Bu rota kaldırılmış olabilir veya link hatalı.',
+        error: 'Bir hata oluştu',
+        errorDesc: 'Lütfen daha sonra tekrar deneyin.',
+        footer: 'Navitra \u00b7 AI Seyahat Planlayıcı',
+        dayTrip: 'Günlük Gezi',
+        journalOf: "'nın Günlüğü",
+        readMore: 'Devamını Oku',
+        readLess: 'Daralt',
+      },
+      de: {
+        tagline: 'KI-Reiseplaner',
+        loading: 'Route wird geladen...',
+        dayLabel: 'Tag',
+        places: 'Orte',
+        days: 'Tage',
+        sharedBy: 'Geteilt von',
+        openInApp: 'In Navitra öffnen',
+        scanToOpen: 'Scannen zum Öffnen',
+        appStore: 'App Store',
+        googlePlay: 'Google Play',
+        invalidLink: 'Ungültiger Routenlink',
+        invalidDesc: 'Dieser Link enthält keine gültige Route.',
+        notFound: 'Route nicht gefunden',
+        notFoundDesc: 'Diese Route wurde möglicherweise entfernt oder der Link ist fehlerhaft.',
+        error: 'Etwas ist schiefgelaufen',
+        errorDesc: 'Bitte versuchen Sie es später erneut.',
+        footer: 'Navitra \u00b7 KI-Reiseplaner',
+        dayTrip: 'Tagesreise',
+        journalOf: 's Tagebuch',
+        readMore: 'Weiterlesen',
+        readLess: 'Weniger',
+      },
+      fr: {
+        tagline: 'Planificateur IA',
+        loading: "Chargement de l'itinéraire...",
+        dayLabel: 'Jour',
+        places: 'lieux',
+        days: 'jours',
+        sharedBy: 'Partagé par',
+        openInApp: 'Ouvrir dans Navitra',
+        scanToOpen: 'Scanner pour ouvrir',
+        appStore: 'App Store',
+        googlePlay: 'Google Play',
+        invalidLink: 'Lien invalide',
+        invalidDesc: "Ce lien ne contient pas d'itinéraire valide.",
+        notFound: 'Itinéraire introuvable',
+        notFoundDesc: "Cet itinéraire a peut-être été supprimé ou le lien est incorrect.",
+        error: 'Une erreur est survenue',
+        errorDesc: 'Veuillez réessayer plus tard.',
+        footer: 'Navitra \u00b7 Planificateur IA',
+        dayTrip: "Voyage d'une journée",
+        journalOf: ' — Journal',
+        readMore: 'Lire la suite',
+        readLess: 'Réduire',
+      },
+      es: {
+        tagline: 'Planificador IA',
+        loading: 'Cargando ruta...',
+        dayLabel: 'Día',
+        places: 'lugares',
+        days: 'días',
+        sharedBy: 'Compartido por',
+        openInApp: 'Abrir en Navitra',
+        scanToOpen: 'Escanear para abrir',
+        appStore: 'App Store',
+        googlePlay: 'Google Play',
+        invalidLink: 'Enlace inválido',
+        invalidDesc: 'Este enlace no contiene una ruta válida.',
+        notFound: 'Ruta no encontrada',
+        notFoundDesc: 'Esta ruta puede haber sido eliminada o el enlace es incorrecto.',
+        error: 'Algo salió mal',
+        errorDesc: 'Inténtelo de nuevo más tarde.',
+        footer: 'Navitra \u00b7 Planificador IA',
+        dayTrip: 'Viaje de un día',
+        journalOf: ' — Diario',
+        readMore: 'Leer más',
+        readLess: 'Mostrar menos',
+      },
+      ar: {
+        tagline: 'مخطط سفر ذكي',
+        loading: 'جارٍ تحميل المسار...',
+        dayLabel: 'اليوم',
+        places: 'أماكن',
+        days: 'أيام',
+        sharedBy: 'شاركه',
+        openInApp: 'افتح في Navitra',
+        scanToOpen: 'امسح للفتح',
+        appStore: 'App Store',
+        googlePlay: 'Google Play',
+        invalidLink: 'رابط غير صالح',
+        invalidDesc: 'هذا الرابط لا يحتوي على مسار صالح.',
+        notFound: 'المسار غير موجود',
+        notFoundDesc: 'ربما تم حذف هذا المسار أو الرابط غير صحيح.',
+        error: 'حدث خطأ',
+        errorDesc: 'يرجى المحاولة مرة أخرى لاحقاً.',
+        footer: 'Navitra \u00b7 مخطط سفر ذكي',
+        dayTrip: 'رحلة يومية',
+        journalOf: ' — مذكرات',
+        readMore: 'اقرأ المزيد',
+        readLess: 'عرض أقل',
+      },
+      zh: {
+        tagline: 'AI旅行规划师',
+        loading: '正在加载路线...',
+        dayLabel: '第{n}天',
+        places: '个地点',
+        days: '天',
+        sharedBy: '分享者',
+        openInApp: '在Navitra中打开',
+        scanToOpen: '扫码打开',
+        appStore: 'App Store',
+        googlePlay: 'Google Play',
+        invalidLink: '无效的路线链接',
+        invalidDesc: '此链接不包含有效路线。',
+        notFound: '路线未找到',
+        notFoundDesc: '此路线可能已被删除或链接有误。',
+        error: '出了点问题',
+        errorDesc: '请稍后再试。',
+        footer: 'Navitra \u00b7 AI旅行规划师',
+        dayTrip: '日游',
+        journalOf: '的日记',
+        readMore: '阅读更多',
+        readLess: '收起',
+      },
+    };
+
+    function detectLang() {
+      var lang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+      if (lang.startsWith('tr')) return 'tr';
+      if (lang.startsWith('de')) return 'de';
+      if (lang.startsWith('fr')) return 'fr';
+      if (lang.startsWith('es')) return 'es';
+      if (lang.startsWith('ar')) return 'ar';
+      if (lang.startsWith('zh')) return 'zh';
+      return 'en';
+    }
+
+    var LANG = detectLang();
+    var T = TRANSLATIONS[LANG];
+
+    function dayLabel(num) {
+      if (LANG === 'zh') return T.dayLabel.replace('{n}', num);
+      return T.dayLabel + ' ' + num;
+    }
+
+    // Apply initial translated content
+    document.getElementById('badge-tagline').textContent = T.tagline;
+    document.querySelector('.loading p').textContent = T.loading;
+    document.querySelector('.footer').innerHTML = '&copy; 2025 ' + T.footer;
+
+    // ── Config ──
+    const firebaseConfig = {
+      apiKey: "AIzaSyBVuTWG0SHH6Je4wSmgMx490vCrFt88utI",
+      authDomain: "swipetrippa-app.firebaseapp.com",
+      projectId: "swipetrippa-app",
+      storageBucket: "swipetrippa-app.firebasestorage.app",
+      messagingSenderId: "850257736882",
+      appId: "1:850257736882:web:REPLACE_WITH_WEB_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+
+    var APPLE_STORE = 'https://apps.apple.com/app/navitra/id6743812693';
+    var GOOGLE_STORE = 'https://play.google.com/store/apps/details?id=com.navitra.app';
+
+    // Day colors
+    var DAY_COLORS = [
+      '#FF6B35', '#4CAF50', '#2196F3', '#9C27B0', '#FF9800',
+      '#E91E63', '#00BCD4', '#795548', '#607D8B', '#F44336'
+    ];
+
+    var categoryIcons = {
+      'Museum': '\u{1F3DB}\uFE0F', 'Nature': '\u{1F33F}', 'Historic': '\u{1F3F0}',
+      'Park': '\u{1F333}', 'Beach': '\u{1F3D6}\uFE0F', 'Restaurant': '\u{1F37D}\uFE0F',
+      'Cafe': '\u2615', 'Shopping': '\u{1F6CD}\uFE0F', 'Mosque': '\u{1F54C}',
+      'Church': '\u26EA', 'Temple': '\u{1F6D5}', 'Market': '\u{1F3EA}',
+      'Viewpoint': '\u{1F304}', 'Entertainment': '\u{1F3AD}', 'Nightlife': '\u{1F319}',
+      'Spa': '\u{1F486}', 'Sport': '\u26BD', 'Zoo': '\u{1F981}', 'Aquarium': '\u{1F420}',
+    };
+
+    function getCategoryIcon(cat) {
+      if (!cat) return '\u{1F4CD}';
+      for (var k in categoryIcons) {
+        if (cat.toLowerCase().indexOf(k.toLowerCase()) !== -1) return categoryIcons[k];
+      }
+      return '\u{1F4CD}';
+    }
+
+    function getShareId() {
+      var m = window.location.pathname.match(/\/route\/([^/]+)/);
+      return m ? m[1] : null;
+    }
+
+    function escapeHtml(t) {
+      var d = document.createElement('div');
+      d.textContent = t;
+      return d.innerHTML;
+    }
+
+    // ── Map ──
+    var map = null;
+    var markerLayers = {};
+
+    function initMap(routes) {
+      map = L.map('map', {
+        zoomControl: false,
+        attributionControl: false,
+        dragging: true,
+        scrollWheelZoom: true,
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+      }).addTo(map);
+
+      var allCoords = [];
+
+      routes.forEach(function(day, dayIdx) {
+        var color = DAY_COLORS[dayIdx % DAY_COLORS.length];
+        var places = day.itinerary || [];
+        var layerGroup = L.layerGroup().addTo(map);
+        markerLayers[dayIdx] = layerGroup;
+
+        var dayCoords = [];
+
+        places.forEach(function(place, placeIdx) {
+          if (!place.latitude || !place.longitude) return;
+          var latlng = [place.latitude, place.longitude];
+          allCoords.push(latlng);
+          dayCoords.push(latlng);
+
+          var markerHtml =
+            '<div style="' +
+              'width:32px;height:32px;' +
+              'background:' + color + ';' +
+              'border:3px solid white;' +
+              'border-radius:50%;' +
+              'display:flex;align-items:center;justify-content:center;' +
+              'font-size:13px;font-weight:700;color:white;' +
+              'box-shadow:0 2px 8px rgba(0,0,0,0.3);' +
+            '">' + (placeIdx + 1) + '</div>';
+
+          var icon = L.divIcon({
+            html: markerHtml,
+            className: '',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
+          });
+
+          var marker = L.marker(latlng, { icon: icon }).addTo(layerGroup);
+
+          var popupContent = '<div class="map-popup">';
+          if (place.imageUrl) {
+            popupContent += '<img src="' + escapeHtml(place.imageUrl) + '" onerror="this.style.display=\'none\'" />';
+          }
+          popupContent += '<div><div class="map-popup-name">' + escapeHtml(place.name || '') + '</div>' +
+            '<div class="map-popup-cat">' + escapeHtml(place.category || '') + '</div></div></div>';
+
+          marker.bindPopup(popupContent, { closeButton: false });
+        });
+
+        // Draw route line for each day
+        if (dayCoords.length > 1) {
+          L.polyline(dayCoords, {
+            color: color,
+            weight: 3,
+            opacity: 0.6,
+            dashArray: '8, 8',
+          }).addTo(layerGroup);
+        }
+      });
+
+      if (allCoords.length > 0) {
+        map.fitBounds(allCoords, { padding: [50, 50], maxZoom: 14 });
+      } else {
+        map.setView([39, 35], 6); // Turkey default
+      }
+    }
+
+    function focusDay(dayIdx, routes) {
+      var places = (routes[dayIdx] && routes[dayIdx].itinerary) || [];
+      var coords = [];
+      places.forEach(function(p) {
+        if (p.latitude && p.longitude) coords.push([p.latitude, p.longitude]);
+      });
+      if (coords.length > 0) {
+        map.fitBounds(coords, { padding: [60, 60], maxZoom: 14, animate: true, duration: 0.8 });
+      }
+      // Dim other days
+      Object.keys(markerLayers).forEach(function(k) {
+        var layer = markerLayers[k];
+        var opacity = (parseInt(k) === dayIdx) ? 1 : 0.25;
+        layer.eachLayer(function(l) {
+          if (l.setOpacity) l.setOpacity(opacity);
+          if (l._icon) l._icon.style.opacity = opacity;
+          if (l._path) l._path.style.opacity = opacity;
+        });
+      });
+    }
+
+    function resetMapView(routes) {
+      var allCoords = [];
+      routes.forEach(function(day) {
+        (day.itinerary || []).forEach(function(p) {
+          if (p.latitude && p.longitude) allCoords.push([p.latitude, p.longitude]);
+        });
+      });
+      if (allCoords.length > 0) {
+        map.fitBounds(allCoords, { padding: [40, 40], maxZoom: 13, animate: true, duration: 0.8 });
+      }
+      Object.keys(markerLayers).forEach(function(k) {
+        markerLayers[k].eachLayer(function(l) {
+          if (l.setOpacity) l.setOpacity(1);
+          if (l._icon) l._icon.style.opacity = 1;
+          if (l._path) l._path.style.opacity = 1;
+        });
+      });
+    }
+
+    // ── Render ──
+    function resolveImageUrl(raw) {
+      if (!raw) return '';
+      if (raw.startsWith('http')) return raw;
+      if (raw.startsWith('places/')) {
+        return 'https://places.googleapis.com/v1/' + raw + '/media?maxWidthPx=200&key=' + firebaseConfig.apiKey;
+      }
+      return '';
+    }
+
+    function renderRoute(data, shareId) {
+      var content = document.getElementById('content');
+      var city = data.cityName || 'Trip';
+      var totalDays = data.totalDays || 1;
+      var totalPlaces = data.totalPlaces || 0;
+      var userName = data.userName || 'Navitra User';
+      var routes = data.routes || [];
+      var journal = data.journal || null;
+      var deepLink = 'https://navitraapp.com/route/' + shareId;
+
+      document.title = city + ' - ' + totalDays + ' ' + T.dayTrip + ' | Navitra';
+
+      // Init map
+      initMap(routes);
+
+      // Day chips
+      var chipsHtml = '';
+      routes.forEach(function(day, idx) {
+        var color = DAY_COLORS[idx % DAY_COLORS.length];
+        var dayNum = day.dayNumber || (idx + 1);
+        chipsHtml += '<div class="day-chip" data-day="' + idx + '" style="background:' + color + '">' + dayLabel(dayNum) + '</div>';
+      });
+
+      // Day cards
+      var daysHtml = '';
+      routes.forEach(function(day, idx) {
+        var color = DAY_COLORS[idx % DAY_COLORS.length];
+        var dayNum = day.dayNumber || (idx + 1);
+        var places = day.itinerary || [];
+
+        var placesHtml = '';
+        places.forEach(function(place, pIdx) {
+          var imgUrl = resolveImageUrl(place.imageUrl);
+          var photoHtml = imgUrl
+            ? '<img class="place-photo" src="' + escapeHtml(imgUrl) + '" onerror="this.outerHTML=\'<div class=place-photo-placeholder style=background:' + color + '15>' + getCategoryIcon(place.category) + '</div>\'" loading="lazy" />'
+            : '<div class="place-photo-placeholder" style="background:' + color + '15">' + getCategoryIcon(place.category) + '</div>';
+
+          // AI tip
+          var aiTipHtml = '';
+          if (place.aiTip) {
+            aiTipHtml = '<div class="place-ai-tip"><span class="place-ai-tip-icon">&#x1F4A1;</span> <strong>Navitra:</strong> ' + escapeHtml(place.aiTip) + '</div>';
+          }
+
+          // Check for place note from journal
+          var placeNoteHtml = '';
+          if (journal && journal.placeNotes) {
+            var pId = place.placeId || place.id || '';
+            var pNote = journal.placeNotes[pId];
+            if (pNote) {
+              placeNoteHtml = '<div class="place-note"><strong>' + escapeHtml(userName) + ':</strong> ' + escapeHtml(pNote) + '</div>';
+            }
+          }
+
+          placesHtml +=
+            '<div class="place-item">' +
+              '<div class="place-number" style="background:' + color + '">' + (pIdx + 1) + '</div>' +
+              photoHtml +
+              '<div class="place-info">' +
+                '<div class="place-name">' + escapeHtml(place.name || 'Unknown') + '</div>' +
+                '<div class="place-category">' + escapeHtml(place.category || '') + '</div>' +
+              '</div>' +
+            '</div>' +
+            aiTipHtml +
+            placeNoteHtml;
+        });
+
+        daysHtml +=
+          '<div class="day-section" style="animation-delay:' + (idx * 0.1) + 's">' +
+            '<div class="day-card">' +
+              '<div class="day-card-header" style="background:' + color + '">' +
+                '<div class="day-card-title">' + dayLabel(dayNum) + '</div>' +
+                '<div class="day-card-count">' + places.length + ' ' + T.places + '</div>' +
+              '</div>' +
+              placesHtml +
+            '</div>' +
+          '</div>';
+      });
+
+      var initial = userName.charAt(0).toUpperCase();
+
+      content.innerHTML =
+        '<div class="content-badge">' +
+          '<div class="content-badge-logo"><img src="/assets/logo.png" alt="Navitra" /></div>' +
+          '<div class="content-badge-info">' +
+            '<div class="content-badge-name">NAVITRA</div>' +
+            '<div class="content-badge-tagline">' + T.tagline + '</div>' +
+          '</div>' +
+          '<div class="content-badge-dot"></div>' +
+        '</div>' +
+        '<div class="route-header">' +
+          '<div class="route-city">' + escapeHtml(city) + '</div>' +
+          '<div class="route-stats">' +
+            '<div class="stat">' +
+              '<div class="stat-icon" style="background:#FFF3ED">\u{1F4C5}</div>' +
+              '<div class="stat-text"><strong>' + totalDays + '</strong>' + T.days + '</div>' +
+            '</div>' +
+            '<div class="stat">' +
+              '<div class="stat-icon" style="background:#FFF3ED">\u{1F4CD}</div>' +
+              '<div class="stat-text"><strong>' + totalPlaces + '</strong>' + T.places + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="shared-by">' +
+            '<div class="avatar">' + escapeHtml(initial) + '</div>' +
+            '<div class="shared-by-text">' + T.sharedBy + ' <strong>' + escapeHtml(userName) + '</strong></div>' +
+          '</div>' +
+        '</div>' +
+        (journal && journal.routeNote ? (
+          '<div class="journal-section">' +
+            '<div class="journal-header">' +
+              '<span style="font-size:16px">&#9998;</span> ' + escapeHtml(userName) + (T.journalOf || "'s Journal") +
+            '</div>' +
+            '<div class="journal-text' + (journal.routeNote.length > 300 ? ' collapsed' : '') + '" id="journal-body">' +
+              escapeHtml(journal.routeNote) +
+            '</div>' +
+            (journal.routeNote.length > 300 ?
+              '<button class="journal-expand" onclick="document.getElementById(\'journal-body\').classList.toggle(\'collapsed\');this.textContent=this.textContent===\'' + (T.readMore || 'Read More') + '\'?\'' + (T.readLess || 'Show Less') + '\':\'' + (T.readMore || 'Read More') + '\'">' + (T.readMore || 'Read More') + '</button>'
+              : '') +
+          '</div>'
+        ) : '') +
+        '<div class="day-legend">' + chipsHtml + '</div>' +
+        daysHtml +
+        '<div class="cta-section">' +
+          '<a href="' + deepLink + '" class="open-app-btn" id="open-app">' + T.openInApp + '</a>' +
+          '<div class="bottom-row cta-bottom-row">' +
+            '<div class="qr-card"><div id="qr-code"></div><p>' + T.scanToOpen + '</p></div>' +
+            '<div class="store-col">' +
+              '<a href="' + APPLE_STORE + '" class="store-btn apple" target="_blank">' +
+                '<svg viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>' +
+                T.appStore +
+              '</a>' +
+              '<a href="' + GOOGLE_STORE + '" class="store-btn google" target="_blank">' +
+                '<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>' +
+                T.googlePlay +
+              '</a>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      // QR code
+      if (typeof QRCode !== 'undefined') {
+        new QRCode(document.getElementById('qr-code'), {
+          text: deepLink,
+          width: 120,
+          height: 120,
+          colorDark: '#1A1A2E',
+          colorLight: '#FFFFFF',
+          correctLevel: QRCode.CorrectLevel.M,
+        });
+      }
+
+      // Populate floating store (desktop)
+      var floatingStore = document.getElementById('floating-store');
+      if (floatingStore && window.innerWidth >= 769) {
+        floatingStore.innerHTML =
+          '<div class="qr-card"><div id="qr-code-desktop"></div><p>' + T.scanToOpen + '</p></div>' +
+          '<div class="store-col">' +
+            '<a href="' + APPLE_STORE + '" class="store-btn apple" target="_blank">' +
+              '<svg viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>' +
+              T.appStore +
+            '</a>' +
+            '<a href="' + GOOGLE_STORE + '" class="store-btn google" target="_blank">' +
+              '<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>' +
+              T.googlePlay +
+            '</a>' +
+          '</div>';
+        if (typeof QRCode !== 'undefined') {
+          new QRCode(document.getElementById('qr-code-desktop'), {
+            text: deepLink, width: 100, height: 100,
+            colorDark: '#1A1A2E', colorLight: '#FFFFFF',
+            correctLevel: QRCode.CorrectLevel.M,
+          });
+        }
+      }
+
+      // Day chip click handlers
+      var chips = document.querySelectorAll('.day-chip');
+      var activeChip = null;
+      chips.forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          var dayIdx = parseInt(chip.getAttribute('data-day'));
+          if (activeChip === dayIdx) {
+            // Deselect
+            chip.classList.remove('active');
+            activeChip = null;
+            resetMapView(routes);
+          } else {
+            chips.forEach(function(c) { c.classList.remove('active'); });
+            chip.classList.add('active');
+            activeChip = dayIdx;
+            focusDay(dayIdx, routes);
+          }
+        });
+      });
+
+      // Deep link setup
+      setupDeepLink(shareId);
+
+      // Invalidate map size after layout renders (needed for split view)
+      // Multiple invalidations to handle all timing scenarios
+      [100, 300, 800].forEach(function(delay) {
+        setTimeout(function() {
+          if (map) {
+            map.invalidateSize();
+            var allCoords = [];
+            routes.forEach(function(day) {
+              (day.itinerary || []).forEach(function(p) {
+                if (p.latitude && p.longitude) allCoords.push([p.latitude, p.longitude]);
+              });
+            });
+            if (allCoords.length > 0) {
+              map.fitBounds(allCoords, { padding: [50, 50], maxZoom: 14 });
+            }
+          }
+        }, delay);
+      });
+    }
+
+    function renderStoreButtonsBlock() {
+      return '<div class="error-store-buttons">' +
+        '<a href="' + APPLE_STORE + '" class="store-btn apple" target="_blank" style="flex:1">' +
+          '<svg viewBox="0 0 24 24" fill="white" style="width:20px;height:20px"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>' +
+          '' + T.appStore + '</a>' +
+        '<a href="' + GOOGLE_STORE + '" class="store-btn google" target="_blank" style="flex:1">' +
+          '<svg viewBox="0 0 24 24" style="width:20px;height:20px"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>' +
+          '' + T.googlePlay + '</a>' +
+      '</div>';
+    }
+
+    function setupDeepLink(shareId) {
+      var btn = document.getElementById('open-app');
+      if (!btn) return;
+      var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      var isAndroid = /Android/i.test(navigator.userAgent);
+      var isMobile = isIOS || isAndroid;
+
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        if (isMobile) {
+          // Try custom scheme deep link first
+          var start = Date.now();
+          window.location.href = 'navitra://route/' + shareId;
+
+          // If app didn't open within 1.5s, redirect to store
+          setTimeout(function() {
+            // If page is still visible, app didn't open
+            if (document.visibilityState !== 'hidden' && Date.now() - start < 3000) {
+              window.location.href = isIOS ? APPLE_STORE : GOOGLE_STORE;
+            }
+          }, 1500);
+        } else {
+          // Desktop: scroll to store buttons / QR code section
+          var floatingStore = document.querySelector('.floating-store');
+          if (floatingStore) {
+            floatingStore.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+            floatingStore.style.transform = 'scale(1.05)';
+            floatingStore.style.boxShadow = '0 8px 32px rgba(255,87,34,0.3)';
+            setTimeout(function() {
+              floatingStore.style.transform = '';
+              floatingStore.style.boxShadow = '';
+            }, 2000);
+          } else {
+            // Fallback: open App Store (macOS) or Play Store
+            var isMac = /Mac/i.test(navigator.userAgent);
+            window.open(isMac ? APPLE_STORE : GOOGLE_STORE, '_blank');
+          }
+        }
+      });
+    }
+
+    // ── Load ──
+    async function loadRoute() {
+      var shareId = getShareId();
+      var content = document.getElementById('content');
+
+      if (!shareId) {
+        document.getElementById('hero').style.display = 'none';
+        content.innerHTML =
+          '<div class="error-msg"><p style="font-size:48px;margin-bottom:12px">\u{1F5FA}\uFE0F</p>' +
+          '<h2>' + T.invalidLink + '</h2><p>' + T.invalidDesc + '</p></div>' +
+          renderStoreButtonsBlock();
+        return;
+      }
+
+      try {
+        var doc = await db.collection('shared_routes').doc(shareId).get();
+        if (!doc.exists) {
+          document.getElementById('hero').style.display = 'none';
+          content.innerHTML =
+            '<div class="error-msg"><p style="font-size:48px;margin-bottom:12px">\u{1F50D}</p>' +
+            '<h2>' + T.notFound + '</h2><p>' + T.notFoundDesc + '</p></div>' +
+            renderStoreButtonsBlock();
+          return;
+        }
+        renderRoute(doc.data(), shareId);
+      } catch (e) {
+        console.error('Error:', e);
+        document.getElementById('hero').style.display = 'none';
+        content.innerHTML =
+          '<div class="error-msg"><p style="font-size:48px;margin-bottom:12px">\u26A0\uFE0F</p>' +
+          '<h2>' + T.error + '</h2><p>' + T.errorDesc + '</p></div>' +
+          renderStoreButtonsBlock();
+      }
+    }
+
+    loadRoute();
+  </script>
+</body>
+</html>
