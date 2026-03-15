@@ -275,7 +275,8 @@
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding: 0 0 12px;
+      padding: 8px 0 12px;
+      margin-top: 12px;
       margin-bottom: 16px;
       -webkit-overflow-scrolling: touch;
     }
@@ -1305,10 +1306,10 @@
           dayCoords.push(accLatlng);    // connect line back to hotel
           allCoords.push(accLatlng);
           var accIcon = L.divIcon({
-            html: '<div style="width:28px;height:28px;background:#607D8B;border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,0.3);">🏨</div>',
+            html: '<div style="width:36px;height:36px;background:#607D8B;border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,0.3);">🏨</div>',
             className: '',
-            iconSize: [28, 28],
-            iconAnchor: [14, 14],
+            iconSize: [36, 36],
+            iconAnchor: [18, 18],
           });
           L.marker(accLatlng, { icon: accIcon }).addTo(layerGroup)
             .bindPopup('<div class="map-popup"><div><div class="map-popup-name">' + T.accommodation + '</div></div></div>', { closeButton: false });
