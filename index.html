@@ -37,7 +37,7 @@
         "@context": "https://schema.org",
         "@type": "MobileApplication",
         "name": "Navitra",
-        "operatingSystem": "iOS, Android",
+        "operatingSystem": "iOS",
         "applicationCategory": "TravelApplication",
         "description": "AI-powered travel companion that creates perfectly optimized itineraries for any destination.",
         "offers": {
@@ -313,6 +313,79 @@
             color: white !important;
         }
         
+        /* Language Switcher */
+        .lang-switcher {
+            position: relative;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        nav.scrolled .lang-btn {
+            background: var(--gray-100);
+            border-color: var(--gray-200);
+            color: var(--secondary);
+        }
+
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            z-index: 1001;
+            min-width: 150px;
+        }
+
+        .lang-dropdown.active {
+            display: block;
+        }
+
+        .lang-option {
+            display: block;
+            width: 100%;
+            padding: 0.65rem 1rem;
+            border: none;
+            background: none;
+            color: var(--gray-700);
+            font-size: 0.9rem;
+            font-family: inherit;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .lang-option:hover {
+            background: var(--gray-50);
+            color: var(--primary);
+        }
+
+        .lang-option.active {
+            color: var(--primary);
+            font-weight: 600;
+            background: var(--gray-50);
+        }
+
         /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
@@ -1268,6 +1341,10 @@
             .testimonials-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         /* Skip to content */
@@ -1426,31 +1503,138 @@
             color: white;
         }
 
-        /* Google Play button */
-        .btn-dark {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 1rem 2rem;
-            background: var(--secondary);
-            color: white;
-            text-decoration: none;
-            border-radius: 16px;
-            font-weight: 600;
-            font-size: 1rem;
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 2rem 2rem;
+            background: var(--gradient-dark);
+            position: relative;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
             transition: all 0.3s ease;
-            border: 2px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            position: relative;
         }
 
-        .btn-dark:hover {
-            background: #16213E;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,87,34,0.3);
+            background: rgba(255,255,255,0.1);
         }
 
-        .btn-dark svg {
-            width: 22px;
-            height: 22px;
+        .pricing-card.featured {
+            border-color: var(--primary);
+            background: rgba(255,87,34,0.1);
+        }
+
+        .pricing-card-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .pricing-card h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .pricing-card ul li {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.9rem;
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pricing-card ul li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .pricing-cta {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .pricing-cta-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .pricing-cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,87,34,0.4);
+        }
+
+        .pricing-cta-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .pricing-cta-secondary:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* RTL support */
+        html[dir="rtl"] .premium-feature:hover {
+            transform: translateX(-10px);
+        }
+
+        html[dir="rtl"] .testimonial-author,
+        html[dir="rtl"] .pricing-card ul li {
+            direction: rtl;
         }
 
         /* Reduced motion */
@@ -1516,6 +1700,10 @@
             }
 
             .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1599,11 +1787,27 @@
                 <span>Navitra</span>
             </a>
             <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#premium">Premium</a>
-                <a href="support.html">Support</a>
-                <a href="#download" class="btn-nav">Download App</a>
+                <a href="#features" data-i18n="nav.features">Features</a>
+                <a href="#how-it-works" data-i18n="nav.howItWorks">How It Works</a>
+                <a href="#premium" data-i18n="nav.premium">Premium</a>
+                <a href="support.html" data-i18n="nav.support">Support</a>
+                <a href="#download" class="btn-nav" data-i18n="nav.download">Download App</a>
+            </div>
+            <div class="lang-switcher">
+                <button class="lang-btn" aria-label="Change language">
+                    <span id="current-lang-flag">🇬🇧</span>
+                    <span id="current-lang-code">EN</span>
+                    <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor"><path d="M1 1l4 4 4-4"/></svg>
+                </button>
+                <div class="lang-dropdown" id="lang-dropdown">
+                    <button class="lang-option active" data-lang="en">🇬🇧 English</button>
+                    <button class="lang-option" data-lang="tr">🇹🇷 Türkçe</button>
+                    <button class="lang-option" data-lang="de">🇩🇪 Deutsch</button>
+                    <button class="lang-option" data-lang="es">🇪🇸 Español</button>
+                    <button class="lang-option" data-lang="fr">🇫🇷 Français</button>
+                    <button class="lang-option" data-lang="ar">🇸🇦 العربية</button>
+                    <button class="lang-option" data-lang="zh">🇨🇳 中文</button>
+                </div>
             </div>
             <button class="mobile-menu-btn" aria-label="Menu">
                 <span></span>
@@ -1622,17 +1826,16 @@
         
         <div class="hero-container">
             <div class="hero-content reveal">
-                <div class="hero-badge">AI-Powered Travel Planning</div>
-                <h1>Plan Smarter,<br><span class="highlight">Travel Better</span></h1>
-                <p>Your intelligent travel companion that creates perfectly optimized itineraries. Focus on making memories, we'll handle the logistics.</p>
+                <div class="hero-badge" data-i18n="hero.badge">AI-Powered Travel Planning</div>
+                <h1><span data-i18n="hero.title1">Plan Smarter,</span><br><span class="highlight" data-i18n="hero.title2">Travel Better</span></h1>
+                <p data-i18n="hero.desc">Your intelligent travel companion that creates perfectly optimized itineraries. Focus on making memories, we'll handle the logistics.</p>
                 <div class="hero-buttons">
                     <a href="https://apps.apple.com/app/navitra" class="btn-primary" aria-label="Download Navitra on App Store">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                        Download for iOS
+                        <span data-i18n="hero.ios">Download for iOS</span>
                     </a>
-                    <a href="https://play.google.com/store/apps/details?id=com.navitra.app" class="btn-dark" aria-label="Download Navitra on Google Play">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
-                        Download for Android
+                    <a href="#features" class="btn-secondary">
+                        <span data-i18n="hero.learnMore">Learn More</span> →
                     </a>
                 </div>
             </div>
@@ -1701,19 +1904,19 @@
         <div class="stats-container">
             <div class="stat-item">
                 <h3>50K+</h3>
-                <p>Trips Planned</p>
+                <p data-i18n="stats.trips">Trips Planned</p>
             </div>
             <div class="stat-item">
                 <h3>100+</h3>
-                <p>Cities Covered</p>
+                <p data-i18n="stats.cities">Cities Covered</p>
             </div>
             <div class="stat-item">
                 <h3>4.9★</h3>
-                <p>App Store Rating</p>
+                <p data-i18n="stats.rating">App Store Rating</p>
             </div>
             <div class="stat-item">
                 <h3>40%</h3>
-                <p>Time Saved</p>
+                <p data-i18n="stats.time">Time Saved</p>
             </div>
         </div>
     </section>
@@ -1722,55 +1925,55 @@
     <section class="features" id="features">
         <div class="section-container">
             <div class="section-header reveal">
-                <span class="section-label">Features</span>
-                <h2>Everything You Need to Travel Smart</h2>
-                <p>Powerful features designed to make your trip planning effortless and enjoyable.</p>
+                <span class="section-label" data-i18n="features.label">Features</span>
+                <h2 data-i18n="features.title">Everything You Need to Travel Smart</h2>
+                <p data-i18n="features.desc">Powerful features designed to make your trip planning effortless and enjoyable.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card reveal">
                     <div class="feature-icon" aria-hidden="true"><span>🤖</span></div>
-                    <h3>AI Route Optimization</h3>
-                    <p>Our intelligent algorithm considers opening hours, travel times, and geographic clustering to create the perfect daily schedule.</p>
+                    <h3 data-i18n="features.ai.title">AI Route Optimization</h3>
+                    <p data-i18n="features.ai.desc">Our intelligent algorithm considers opening hours, travel times, and geographic clustering to create the perfect daily schedule.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon" aria-hidden="true"><span>🎯</span></div>
-                    <h3>Smart Discovery</h3>
-                    <p>Discover the perfect mix of tourist highlights, local favorites, and hidden gems tailored to your interests.</p>
+                    <h3 data-i18n="features.discovery.title">Smart Discovery</h3>
+                    <p data-i18n="features.discovery.desc">Discover the perfect mix of tourist highlights, local favorites, and hidden gems tailored to your interests.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon" aria-hidden="true"><span>🧭</span></div>
-                    <h3>Real-Time Navigation</h3>
-                    <p>Get turn-by-turn directions between stops with accurate walking, driving, and transit times.</p>
+                    <h3 data-i18n="features.nav.title">Real-Time Navigation</h3>
+                    <p data-i18n="features.nav.desc">Get turn-by-turn directions between stops with accurate walking, driving, and transit times.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon" aria-hidden="true"><span>📅</span></div>
-                    <h3>Multi-Day Planning</h3>
-                    <p>Plan trips from 1 to 14 days with daily itineraries that consider your energy levels and travel pace.</p>
+                    <h3 data-i18n="features.multiday.title">Multi-Day Planning</h3>
+                    <p data-i18n="features.multiday.desc">Plan trips from 1 to 14 days with daily itineraries that consider your energy levels and travel pace.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon" aria-hidden="true"><span>🔄</span></div>
-                    <h3>AI Remix</h3>
-                    <p>Stuck at a location? Let Navitra suggest alternative places based on your mood and remaining time.</p>
+                    <h3 data-i18n="features.remix.title">AI Remix</h3>
+                    <p data-i18n="features.remix.desc">Stuck at a location? Let Navitra suggest alternative places based on your mood and remaining time.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon" aria-hidden="true"><span>🌍</span></div>
-                    <h3>7 Languages</h3>
-                    <p>Available in English, Turkish, German, Spanish, French, Arabic, and Chinese for global travelers.</p>
+                    <h3 data-i18n="features.languages.title">7 Languages</h3>
+                    <p data-i18n="features.languages.desc">Available in English, Turkish, German, Spanish, French, Arabic, and Chinese for global travelers.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon" aria-hidden="true"><span>🔗</span></div>
-                    <h3>Route Sharing</h3>
-                    <p>Share your travel routes with friends and family via link or QR code, and let them adopt your itinerary instantly.</p>
+                    <h3 data-i18n="features.sharing.title">Route Sharing</h3>
+                    <p data-i18n="features.sharing.desc">Share your travel routes with friends and family via link or QR code, and let them adopt your itinerary instantly.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon" aria-hidden="true"><span>🏨</span></div>
-                    <h3>Accommodation Integration</h3>
-                    <p>Add your hotel or accommodation to your itinerary and see it on the map alongside your daily route.</p>
+                    <h3 data-i18n="features.accommodation.title">Accommodation Integration</h3>
+                    <p data-i18n="features.accommodation.desc">Add your hotel or accommodation to your itinerary and see it on the map alongside your daily route.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon" aria-hidden="true"><span>👆</span></div>
-                    <h3>Swipe to Discover</h3>
-                    <p>Browse places with a fun swipe interface — swipe right to add to your trip, left to skip. Discovery made easy.</p>
+                    <h3 data-i18n="features.swipe.title">Swipe to Discover</h3>
+                    <p data-i18n="features.swipe.desc">Browse places with a fun swipe interface — swipe right to add to your trip, left to skip. Discovery made easy.</p>
                 </div>
             </div>
         </div>
@@ -1780,30 +1983,30 @@
     <section class="how-it-works" id="how-it-works">
         <div class="section-container">
             <div class="section-header reveal">
-                <span class="section-label">How It Works</span>
-                <h2>Plan Your Trip in 4 Simple Steps</h2>
-                <p>From destination to adventure in minutes, not hours.</p>
+                <span class="section-label" data-i18n="how.label">How It Works</span>
+                <h2 data-i18n="how.title">Plan Your Trip in 4 Simple Steps</h2>
+                <p data-i18n="how.desc">From destination to adventure in minutes, not hours.</p>
             </div>
             <div class="steps-container">
                 <div class="step-card reveal">
                     <div class="step-number">📍</div>
-                    <h3>Choose Destination</h3>
-                    <p>Search for any city or pick from popular destinations</p>
+                    <h3 data-i18n="how.step1.title">Choose Destination</h3>
+                    <p data-i18n="how.step1.desc">Search for any city or pick from popular destinations</p>
                 </div>
                 <div class="step-card reveal">
                     <div class="step-number">👆</div>
-                    <h3>Swipe Places</h3>
-                    <p>Swipe right on places you want to visit</p>
+                    <h3 data-i18n="how.step2.title">Swipe Places</h3>
+                    <p data-i18n="how.step2.desc">Swipe right on places you want to visit</p>
                 </div>
                 <div class="step-card reveal">
                     <div class="step-number">🤖</div>
-                    <h3>AI Optimization</h3>
-                    <p>Our AI creates the perfect route for you</p>
+                    <h3 data-i18n="how.step3.title">AI Optimization</h3>
+                    <p data-i18n="how.step3.desc">Our AI creates the perfect route for you</p>
                 </div>
                 <div class="step-card reveal">
                     <div class="step-number">🚀</div>
-                    <h3>Start Exploring</h3>
-                    <p>Follow your personalized itinerary</p>
+                    <h3 data-i18n="how.step4.title">Start Exploring</h3>
+                    <p data-i18n="how.step4.desc">Follow your personalized itinerary</p>
                 </div>
             </div>
         </div>
@@ -1813,14 +2016,14 @@
     <section class="testimonials">
         <div class="section-container">
             <div class="section-header reveal">
-                <span class="section-label">Testimonials</span>
-                <h2>Loved by Travelers Worldwide</h2>
-                <p>See what our users say about their experience with Navitra.</p>
+                <span class="section-label" data-i18n="testimonials.label">Testimonials</span>
+                <h2 data-i18n="testimonials.title">Loved by Travelers Worldwide</h2>
+                <p data-i18n="testimonials.desc">See what our users say about their experience with Navitra.</p>
             </div>
             <div class="testimonials-grid">
                 <div class="testimonial-card reveal">
                     <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p class="testimonial-text">"Navitra planned our 5-day Rome trip in minutes. Every stop was perfectly timed — no backtracking, no wasted time. We visited 30% more places than we could have planned ourselves!"</p>
+                    <p class="testimonial-text" data-i18n="testimonials.t1.text">"Navitra planned our 5-day Rome trip in minutes. Every stop was perfectly timed — no backtracking, no wasted time. We visited 30% more places than we could have planned ourselves!"</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">S</div>
                         <div class="testimonial-author-info">
@@ -1831,7 +2034,7 @@
                 </div>
                 <div class="testimonial-card reveal">
                     <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p class="testimonial-text">"The AI Voice Guide was like having a personal tour guide. We learned so much about each place while walking between stops. Absolutely worth the premium!"</p>
+                    <p class="testimonial-text" data-i18n="testimonials.t2.text">"The AI Voice Guide was like having a personal tour guide. We learned so much about each place while walking between stops. Absolutely worth the premium!"</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">J</div>
                         <div class="testimonial-author-info">
@@ -1842,7 +2045,7 @@
                 </div>
                 <div class="testimonial-card reveal">
                     <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <p class="testimonial-text">"I used to spend hours on Google Maps planning routes. Navitra does it in seconds and the routes are actually smarter. The swipe interface makes choosing places so fun!"</p>
+                    <p class="testimonial-text" data-i18n="testimonials.t3.text">"I used to spend hours on Google Maps planning routes. Navitra does it in seconds and the routes are actually smarter. The swipe interface makes choosing places so fun!"</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">E</div>
                         <div class="testimonial-author-info">
@@ -1859,42 +2062,87 @@
     <section class="premium" id="premium">
         <div class="section-container">
             <div class="section-header reveal">
-                <span class="section-label" style="background: rgba(255,255,255,0.1); color: var(--accent);">Premium</span>
-                <h2>Unlock the Full Experience</h2>
-                <p>Take your travel planning to the next level with Navitra Premium.</p>
+                <span class="section-label" style="background: rgba(255,255,255,0.1); color: var(--accent);" data-i18n="premium.label">Premium</span>
+                <h2 data-i18n="premium.title">Unlock the Full Experience</h2>
+                <p data-i18n="premium.desc">Take your travel planning to the next level with Navitra Premium.</p>
             </div>
             <div class="premium-grid">
                 <div class="premium-feature reveal">
                     <div class="premium-feature-icon">🎧</div>
                     <div>
-                        <h4>AI Voice Guide</h4>
-                        <p>Listen to engaging audio guides about each location, delivered in a natural storytelling style.</p>
+                        <h4 data-i18n="premium.voice.title">AI Voice Guide</h4>
+                        <p data-i18n="premium.voice.desc">Listen to engaging audio guides about each location, delivered in a natural storytelling style.</p>
                     </div>
                 </div>
                 <div class="premium-feature reveal">
                     <div class="premium-feature-icon">📱</div>
                     <div>
-                        <h4>Offline Maps</h4>
-                        <p>Download maps and routes for offline use. Perfect for international travel without data.</p>
+                        <h4 data-i18n="premium.offline.title">Offline Maps</h4>
+                        <p data-i18n="premium.offline.desc">Download maps and routes for offline use. Perfect for international travel without data.</p>
                     </div>
                 </div>
                 <div class="premium-feature reveal">
                     <div class="premium-feature-icon">💰</div>
                     <div>
-                        <h4>Budget Planning</h4>
-                        <p>Track estimated costs for entrance fees, food, and transportation before you go.</p>
+                        <h4 data-i18n="premium.budget.title">Budget Planning</h4>
+                        <p data-i18n="premium.budget.desc">Track estimated costs for entrance fees, food, and transportation before you go.</p>
                     </div>
                 </div>
                 <div class="premium-feature reveal">
                     <div class="premium-feature-icon">♾️</div>
                     <div>
-                        <h4>Unlimited Everything</h4>
-                        <p>Create unlimited trips, extended itineraries up to 14 days, and unlimited AI suggestions.</p>
+                        <h4 data-i18n="premium.unlimited.title">Unlimited Everything</h4>
+                        <p data-i18n="premium.unlimited.desc">Create unlimited trips, extended itineraries up to 14 days, and unlimited AI suggestions.</p>
                     </div>
                 </div>
             </div>
-            <div class="pricing-note reveal">
-                <p class="pricing-badge">Free to download with basic features. Premium starts at <strong>$2.99/week</strong>. Cancel anytime.</p>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-label" style="background: rgba(255,255,255,0.1); color: var(--accent);" data-i18n="pricing.title">Choose Your Plan</span>
+                <h2 data-i18n="pricing.title">Choose Your Plan</h2>
+                <p data-i18n="pricing.desc" style="color: rgba(255,255,255,0.8);">Start free, upgrade when you're ready. Cancel anytime.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card reveal">
+                    <h3 data-i18n="pricing.free.name">Free</h3>
+                    <div class="price" data-i18n="pricing.free.price">$0 <span data-i18n="pricing.free.period">forever</span></div>
+                    <ul>
+                        <li data-i18n="pricing.free.f1">Up to 3 trips</li>
+                        <li data-i18n="pricing.free.f2">Basic AI route optimization</li>
+                        <li data-i18n="pricing.free.f3">Up to 3-day itineraries</li>
+                        <li data-i18n="pricing.free.f4">Standard place recommendations</li>
+                    </ul>
+                    <a href="#download" class="pricing-cta pricing-cta-secondary" data-i18n="pricing.free.cta">Get Started</a>
+                </div>
+                <div class="pricing-card featured reveal">
+                    <div class="pricing-card-badge" data-i18n="pricing.monthly.badge">Most Popular</div>
+                    <h3 data-i18n="pricing.monthly.name">Monthly</h3>
+                    <div class="price">$9.99 <span data-i18n="pricing.monthly.period">/month</span></div>
+                    <ul>
+                        <li data-i18n="pricing.monthly.f1">Everything in Weekly</li>
+                        <li data-i18n="pricing.monthly.f2">Budget planning</li>
+                        <li data-i18n="pricing.monthly.f3">Unlimited AI Remix</li>
+                        <li data-i18n="pricing.monthly.f4">Priority support</li>
+                    </ul>
+                    <a href="#download" class="pricing-cta pricing-cta-primary" data-i18n="pricing.monthly.cta">Start Free Trial</a>
+                </div>
+                <div class="pricing-card reveal">
+                    <div class="pricing-card-badge" data-i18n="pricing.yearly.badge">Best Value</div>
+                    <h3 data-i18n="pricing.yearly.name">Yearly</h3>
+                    <div class="price">$49.99 <span data-i18n="pricing.yearly.period">/year</span></div>
+                    <ul>
+                        <li data-i18n="pricing.yearly.f1">Everything in Monthly</li>
+                        <li data-i18n="pricing.yearly.f2">Save 60% vs monthly</li>
+                        <li data-i18n="pricing.yearly.f3">Early access to new features</li>
+                        <li data-i18n="pricing.yearly.f4">Exclusive travel insights</li>
+                    </ul>
+                    <a href="#download" class="pricing-cta pricing-cta-secondary" data-i18n="pricing.yearly.cta">Start Free Trial</a>
+                </div>
             </div>
         </div>
     </section>
@@ -1903,12 +2151,12 @@
     <section class="team">
         <div class="section-container">
             <div class="team-content reveal">
-                <span class="section-label">About Us</span>
-                <h2>Built by Travelers, for Travelers</h2>
-                <p>Navitra was born in Istanbul from a simple frustration: planning a multi-day trip shouldn't take longer than the trip itself. Our team of travel enthusiasts and AI engineers built Navitra to turn hours of research into minutes of smart planning — so you can spend more time exploring and less time organizing.</p>
+                <span class="section-label" data-i18n="team.label">About Us</span>
+                <h2 data-i18n="team.title">Built by Travelers, for Travelers</h2>
+                <p data-i18n="team.desc">Navitra was born in Istanbul from a simple frustration: planning a multi-day trip shouldn't take longer than the trip itself. Our team of travel enthusiasts and AI engineers built Navitra to turn hours of research into minutes of smart planning — so you can spend more time exploring and less time organizing.</p>
                 <div class="team-links">
-                    <a href="mailto:feedback@navitraapp.com">Get in Touch</a>
-                    <a href="support.html">Help Center</a>
+                    <a href="mailto:feedback@navitraapp.com" data-i18n="team.contact">Get in Touch</a>
+                    <a href="support.html" data-i18n="team.help">Help Center</a>
                 </div>
             </div>
         </div>
@@ -1917,18 +2165,12 @@
     <!-- CTA Section -->
     <section class="cta" id="download">
         <div class="cta-content reveal">
-            <h2>Ready to Travel Smarter?</h2>
-            <p>Join thousands of travelers planning better trips with Navitra.</p>
-            <div class="hero-buttons" style="justify-content: center; margin-top: 1rem;">
-                <a href="https://apps.apple.com/app/navitra" class="btn-white" aria-label="Download on App Store">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                    Download for iOS
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=com.navitra.app" class="btn-white" style="background: transparent; border: 2px solid white;" aria-label="Download on Google Play">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
-                    Download for Android
-                </a>
-            </div>
+            <h2 data-i18n="cta.title">Ready to Travel Smarter?</h2>
+            <p data-i18n="cta.desc">Join thousands of travelers planning better trips with Navitra.</p>
+            <a href="https://apps.apple.com/app/navitra" class="btn-white" aria-label="Download on App Store">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                <span data-i18n="cta.ios">Download Free on App Store</span>
+            </a>
         </div>
     </section>
     </main>
@@ -1944,7 +2186,7 @@
                         </div>
                         Navitra
                     </h3>
-                    <p>AI-powered travel companion that helps you discover, plan, and navigate your perfect trip.</p>
+                    <p data-i18n="footer.desc">AI-powered travel companion that helps you discover, plan, and navigate your perfect trip.</p>
                     <div class="social-links">
                         <a href="https://twitter.com/navitraapp" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -1958,24 +2200,24 @@
                     </div>
                 </div>
                 <div class="footer-links">
-                    <h4>Product</h4>
-                    <a href="#features">Features</a>
-                    <a href="#premium">Premium</a>
-                    <a href="#download">Download</a>
+                    <h4 data-i18n="footer.product">Product</h4>
+                    <a href="#features" data-i18n="footer.features">Features</a>
+                    <a href="#premium" data-i18n="footer.premium">Premium</a>
+                    <a href="#download" data-i18n="footer.download">Download</a>
                 </div>
                 <div class="footer-links">
-                    <h4>Legal</h4>
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="terms.html">Terms of Service</a>
+                    <h4 data-i18n="footer.legal">Legal</h4>
+                    <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+                    <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
                 </div>
                 <div class="footer-links">
-                    <h4>Support</h4>
-                    <a href="support.html">Help Center</a>
-                    <a href="mailto:support@navitraapp.com">Contact Us</a>
+                    <h4 data-i18n="footer.support">Support</h4>
+                    <a href="support.html" data-i18n="footer.help">Help Center</a>
+                    <a href="mailto:support@navitraapp.com" data-i18n="footer.contact">Contact Us</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 Navitra. All rights reserved.</p>
+                <p data-i18n="footer.copyright">© 2026 Navitra. All rights reserved.</p>
                 <div class="footer-bottom-links">
                     <a href="privacy.html">Privacy</a>
                     <a href="terms.html">Terms</a>
@@ -2087,6 +2329,71 @@
                 hero.style.backgroundPositionY = scrolled * 0.5 + 'px';
             }
         });
+        // Language switcher
+        const langBtn = document.querySelector('.lang-btn');
+        const langDropdown = document.getElementById('lang-dropdown');
+        const langOptions = document.querySelectorAll('.lang-option');
+        const langFlags = { en: '🇬🇧', tr: '🇹🇷', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', ar: '🇸🇦', zh: '🇨🇳' };
+        const langCodes = { en: 'EN', tr: 'TR', de: 'DE', es: 'ES', fr: 'FR', ar: 'AR', zh: 'ZH' };
+
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', () => {
+            langDropdown.classList.remove('active');
+        });
+
+        function setLanguage(lang) {
+            if (!translations || !translations[lang]) return;
+            const t = translations[lang];
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    el.textContent = t[key];
+                }
+            });
+
+            // Update lang attribute and direction
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+            // Update switcher UI
+            document.getElementById('current-lang-flag').textContent = langFlags[lang];
+            document.getElementById('current-lang-code').textContent = langCodes[lang];
+
+            // Update active state
+            langOptions.forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.lang === lang);
+            });
+
+            // Save preference
+            localStorage.setItem('navitra-lang', lang);
+        }
+
+        langOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                setLanguage(option.dataset.lang);
+                langDropdown.classList.remove('active');
+            });
+        });
+
+    </script>
+    <script src="translations.js"></script>
+    <script>
+        // Apply saved/detected language after translations load
+        const savedLang = localStorage.getItem('navitra-lang');
+        if (savedLang && typeof translations !== 'undefined' && translations[savedLang]) {
+            setLanguage(savedLang);
+        } else {
+            const bl = navigator.language.slice(0, 2);
+            if (typeof translations !== 'undefined' && translations[bl]) {
+                setLanguage(bl);
+            }
+        }
     </script>
 </body>
 </html>
