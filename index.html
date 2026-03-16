@@ -18,11 +18,47 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Navitra - AI Travel Planner">
     <meta name="twitter:description" content="Plan smarter, travel better with AI-powered trip planning.">
-    
+    <meta name="twitter:image" content="https://navitraapp.com/og-image.png">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://navitraapp.com/">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FF5722">
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        "name": "Navitra",
+        "operatingSystem": "iOS, Android",
+        "applicationCategory": "TravelApplication",
+        "description": "AI-powered travel companion that creates perfectly optimized itineraries for any destination.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "2400",
+            "bestRating": "5"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "Navitra",
+            "url": "https://navitraapp.com"
+        }
+    }
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1228,15 +1264,264 @@
             .footer-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
-        
+
+        /* Skip to content */
+        .skip-to-content {
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0 0 8px 8px;
+            z-index: 10000;
+            font-weight: 600;
+            text-decoration: none;
+            transition: top 0.3s;
+        }
+        .skip-to-content:focus {
+            top: 0;
+        }
+
+        /* Focus visible for keyboard navigation */
+        *:focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 8rem 2rem;
+            background: var(--gray-50);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .testimonial-stars {
+            color: #FFB400;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            color: var(--gray-700);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .testimonial-author-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .testimonial-author-info p {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+
+        /* Team Section */
+        .team {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .team-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .team-content p {
+            color: var(--gray-600);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-top: 1.5rem;
+        }
+
+        .team-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .team-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .team-links a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Pricing badge */
+        .pricing-note {
+            text-align: center;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.95rem;
+        }
+
+        .pricing-badge strong {
+            color: white;
+        }
+
+        /* Google Play button */
+        .btn-dark {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1rem 2rem;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.15);
+        }
+
+        .btn-dark:hover {
+            background: #16213E;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn-dark svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .reveal, .reveal-left, .reveal-right, .reveal-scale {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1.5rem 2rem;
+                box-shadow: var(--shadow-md);
+                gap: 1rem;
             }
-            
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                color: var(--secondary) !important;
+                font-size: 1rem;
+                padding: 0.5rem 0;
+            }
+
+            .nav-links a::after {
+                display: none;
+            }
+
+            .btn-nav {
+                background: var(--gradient-primary) !important;
+                color: white !important;
+                text-align: center;
+                border: none !important;
+            }
+
             .mobile-menu-btn {
                 display: block;
+            }
+
+            .mobile-menu-btn.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .mobile-menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .mobile-menu-btn.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
             }
             
             .hero {
@@ -1302,6 +1587,8 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -1327,6 +1614,7 @@
     </nav>
 
     <!-- Hero Section -->
+    <main id="main-content">
     <section class="hero">
         <div class="floating-element"></div>
         <div class="floating-element"></div>
@@ -1338,12 +1626,13 @@
                 <h1>Plan Smarter,<br><span class="highlight">Travel Better</span></h1>
                 <p>Your intelligent travel companion that creates perfectly optimized itineraries. Focus on making memories, we'll handle the logistics.</p>
                 <div class="hero-buttons">
-                    <a href="#download" class="btn-primary">
+                    <a href="https://apps.apple.com/app/navitra" class="btn-primary" aria-label="Download Navitra on App Store">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                         Download for iOS
                     </a>
-                    <a href="#features" class="btn-secondary">
-                        Learn More →
+                    <a href="https://play.google.com/store/apps/details?id=com.navitra.app" class="btn-dark" aria-label="Download Navitra on Google Play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
+                        Download for Android
                     </a>
                 </div>
             </div>
@@ -1439,47 +1728,47 @@
             </div>
             <div class="features-grid">
                 <div class="feature-card reveal">
-                    <div class="feature-icon"><span>🤖</span></div>
+                    <div class="feature-icon" aria-hidden="true"><span>🤖</span></div>
                     <h3>AI Route Optimization</h3>
                     <p>Our intelligent algorithm considers opening hours, travel times, and geographic clustering to create the perfect daily schedule.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon"><span>🎯</span></div>
+                    <div class="feature-icon" aria-hidden="true"><span>🎯</span></div>
                     <h3>Smart Discovery</h3>
                     <p>Discover the perfect mix of tourist highlights, local favorites, and hidden gems tailored to your interests.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon"><span>🧭</span></div>
+                    <div class="feature-icon" aria-hidden="true"><span>🧭</span></div>
                     <h3>Real-Time Navigation</h3>
                     <p>Get turn-by-turn directions between stops with accurate walking, driving, and transit times.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon"><span>📅</span></div>
+                    <div class="feature-icon" aria-hidden="true"><span>📅</span></div>
                     <h3>Multi-Day Planning</h3>
                     <p>Plan trips from 1 to 14 days with daily itineraries that consider your energy levels and travel pace.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon"><span>🔄</span></div>
+                    <div class="feature-icon" aria-hidden="true"><span>🔄</span></div>
                     <h3>AI Remix</h3>
                     <p>Stuck at a location? Let Navitra suggest alternative places based on your mood and remaining time.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon"><span>🌍</span></div>
+                    <div class="feature-icon" aria-hidden="true"><span>🌍</span></div>
                     <h3>7 Languages</h3>
                     <p>Available in English, Turkish, German, Spanish, French, Arabic, and Chinese for global travelers.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon"><span>🔗</span></div>
+                    <div class="feature-icon" aria-hidden="true"><span>🔗</span></div>
                     <h3>Route Sharing</h3>
                     <p>Share your travel routes with friends and family via link or QR code, and let them adopt your itinerary instantly.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon"><span>🏨</span></div>
+                    <div class="feature-icon" aria-hidden="true"><span>🏨</span></div>
                     <h3>Accommodation Integration</h3>
                     <p>Add your hotel or accommodation to your itinerary and see it on the map alongside your daily route.</p>
                 </div>
                 <div class="feature-card reveal">
-                    <div class="feature-icon"><span>👆</span></div>
+                    <div class="feature-icon" aria-hidden="true"><span>👆</span></div>
                     <h3>Swipe to Discover</h3>
                     <p>Browse places with a fun swipe interface — swipe right to add to your trip, left to skip. Discovery made easy.</p>
                 </div>
@@ -1515,6 +1804,52 @@
                     <div class="step-number">🚀</div>
                     <h3>Start Exploring</h3>
                     <p>Follow your personalized itinerary</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-label">Testimonials</span>
+                <h2>Loved by Travelers Worldwide</h2>
+                <p>See what our users say about their experience with Navitra.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="testimonial-text">"Navitra planned our 5-day Rome trip in minutes. Every stop was perfectly timed — no backtracking, no wasted time. We visited 30% more places than we could have planned ourselves!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">S</div>
+                        <div class="testimonial-author-info">
+                            <h4>Sarah M.</h4>
+                            <p>Rome, Italy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="testimonial-text">"The AI Voice Guide was like having a personal tour guide. We learned so much about each place while walking between stops. Absolutely worth the premium!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">J</div>
+                        <div class="testimonial-author-info">
+                            <h4>James K.</h4>
+                            <p>Tokyo, Japan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="testimonial-text">"I used to spend hours on Google Maps planning routes. Navitra does it in seconds and the routes are actually smarter. The swipe interface makes choosing places so fun!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">E</div>
+                        <div class="testimonial-author-info">
+                            <h4>Elena R.</h4>
+                            <p>Barcelona, Spain</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1558,6 +1893,24 @@
                     </div>
                 </div>
             </div>
+            <div class="pricing-note reveal">
+                <p class="pricing-badge">Free to download with basic features. Premium starts at <strong>$2.99/week</strong>. Cancel anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team">
+        <div class="section-container">
+            <div class="team-content reveal">
+                <span class="section-label">About Us</span>
+                <h2>Built by Travelers, for Travelers</h2>
+                <p>Navitra was born in Istanbul from a simple frustration: planning a multi-day trip shouldn't take longer than the trip itself. Our team of travel enthusiasts and AI engineers built Navitra to turn hours of research into minutes of smart planning — so you can spend more time exploring and less time organizing.</p>
+                <div class="team-links">
+                    <a href="mailto:feedback@navitraapp.com">Get in Touch</a>
+                    <a href="support.html">Help Center</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1566,12 +1919,19 @@
         <div class="cta-content reveal">
             <h2>Ready to Travel Smarter?</h2>
             <p>Join thousands of travelers planning better trips with Navitra.</p>
-            <a href="https://apps.apple.com/app/navitra" class="btn-white">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                Download Free on App Store
-            </a>
+            <div class="hero-buttons" style="justify-content: center; margin-top: 1rem;">
+                <a href="https://apps.apple.com/app/navitra" class="btn-white" aria-label="Download on App Store">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    Download for iOS
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.navitra.app" class="btn-white" style="background: transparent; border: 2px solid white;" aria-label="Download on Google Play">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>
+                    Download for Android
+                </a>
+            </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -1625,6 +1985,23 @@
     </footer>
 
     <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
@@ -1652,7 +2029,8 @@
                 { selector: '.features-grid .feature-card', delay: 150 },
                 { selector: '.steps-container .step-card', delay: 200 },
                 { selector: '.premium-grid .premium-feature', delay: 150 },
-                { selector: '.stats-container .stat-item', delay: 100 }
+                { selector: '.stats-container .stat-item', delay: 100 },
+                { selector: '.testimonials-grid .testimonial-card', delay: 200 }
             ];
             
             staggerContainers.forEach(({ selector, delay }) => {
@@ -1671,11 +2049,14 @@
             });
         };
         
-        // Initialize stagger elements
-        document.querySelectorAll('.feature-card, .step-card, .premium-feature, .stat-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        // Initialize stagger elements (respect reduced motion)
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.querySelectorAll('.feature-card, .step-card, .premium-feature, .stat-item, .testimonial-card').forEach(el => {
+            if (!prefersReducedMotion) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            }
         });
         
         window.addEventListener('scroll', revealOnScroll);
