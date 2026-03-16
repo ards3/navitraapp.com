@@ -15,9 +15,6 @@
   <meta property="al:ios:app_store_id" content="6743812693">
   <meta property="al:ios:app_name" content="Navitra">
   <meta property="al:ios:url" content="navitra://route/">
-  <meta property="al:android:package" content="com.navitra.app">
-  <meta property="al:android:app_name" content="Navitra">
-  <meta property="al:android:url" content="navitra://route/">
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -996,7 +993,6 @@
         openInApp: 'Open in Navitra',
         scanToOpen: 'Scan to open',
         appStore: 'App Store',
-        googlePlay: 'Google Play',
         invalidLink: 'Invalid Route Link',
         invalidDesc: "This link doesn't contain a valid route.",
         notFound: 'Route Not Found',
@@ -1021,7 +1017,6 @@
         openInApp: "Navitra'da Aç",
         scanToOpen: 'Tarayıp açın',
         appStore: 'App Store',
-        googlePlay: 'Google Play',
         invalidLink: 'Geçersiz Rota Linki',
         invalidDesc: 'Bu link geçerli bir rota içermiyor.',
         notFound: 'Rota Bulunamadı',
@@ -1046,7 +1041,6 @@
         openInApp: 'In Navitra öffnen',
         scanToOpen: 'Scannen zum Öffnen',
         appStore: 'App Store',
-        googlePlay: 'Google Play',
         invalidLink: 'Ungültiger Routenlink',
         invalidDesc: 'Dieser Link enthält keine gültige Route.',
         notFound: 'Route nicht gefunden',
@@ -1071,7 +1065,6 @@
         openInApp: 'Ouvrir dans Navitra',
         scanToOpen: 'Scanner pour ouvrir',
         appStore: 'App Store',
-        googlePlay: 'Google Play',
         invalidLink: 'Lien invalide',
         invalidDesc: "Ce lien ne contient pas d'itinéraire valide.",
         notFound: 'Itinéraire introuvable',
@@ -1096,7 +1089,6 @@
         openInApp: 'Abrir en Navitra',
         scanToOpen: 'Escanear para abrir',
         appStore: 'App Store',
-        googlePlay: 'Google Play',
         invalidLink: 'Enlace inválido',
         invalidDesc: 'Este enlace no contiene una ruta válida.',
         notFound: 'Ruta no encontrada',
@@ -1121,7 +1113,6 @@
         openInApp: 'افتح في Navitra',
         scanToOpen: 'امسح للفتح',
         appStore: 'App Store',
-        googlePlay: 'Google Play',
         invalidLink: 'رابط غير صالح',
         invalidDesc: 'هذا الرابط لا يحتوي على مسار صالح.',
         notFound: 'المسار غير موجود',
@@ -1146,7 +1137,6 @@
         openInApp: '在Navitra中打开',
         scanToOpen: '扫码打开',
         appStore: 'App Store',
-        googlePlay: 'Google Play',
         invalidLink: '无效的路线链接',
         invalidDesc: '此链接不包含有效路线。',
         notFound: '路线未找到',
@@ -1200,7 +1190,7 @@
     var db = firebase.firestore();
 
     var APPLE_STORE = 'https://apps.apple.com/app/navitra/id6743812693';
-    var GOOGLE_STORE = 'https://play.google.com/store/apps/details?id=com.navitra.app';
+    var GOOGLE_STORE = '';
 
     // Day colors
     var DAY_COLORS = [
