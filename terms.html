@@ -22,29 +22,33 @@
         :root {
             --primary: #FF5722;
             --primary-dark: #E64A19;
+            --primary-light: #FFCCBC;
             --secondary: #1A1A2E;
             --gray-50: #FAFAFA;
             --gray-100: #F5F5F5;
             --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
             --gray-500: #9E9E9E;
             --gray-600: #757575;
             --gray-700: #616161;
             --gray-900: #212121;
             --white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #FF5722 0%, #FF8A65 100%);
             --warning: #FFF3E0;
             --warning-border: #FFB74D;
         }
-        
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        
+
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             color: var(--gray-900);
             line-height: 1.7;
             background: var(--gray-50);
         }
-        
+
+        /* Navigation */
         nav {
             background: white;
             padding: 1rem 2rem;
@@ -52,16 +56,18 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255,255,255,0.95);
         }
-        
+
         .nav-container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
@@ -71,91 +77,191 @@
             color: var(--primary);
             text-decoration: none;
         }
-        
-        .logo img { height: 32px; }
-        
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+        }
+
+        .logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+
         .back-link {
             color: var(--gray-600);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
         }
-        
+
         .back-link:hover { color: var(--primary); }
-        
+
+        /* Hero */
         .hero {
-            background: linear-gradient(135deg, var(--secondary) 0%, #16213E 100%);
-            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--secondary) 0%, #16213E 50%, #1F1F3A 100%);
+            padding: 5rem 2rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(255, 87, 34, 0.12) 0%, transparent 60%);
+        }
+
         .hero h1 {
             color: white;
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+            letter-spacing: -1px;
         }
-        
-        .hero p {
-            color: rgba(255,255,255,0.7);
+
+        .hero .subtitle {
+            color: rgba(255,255,255,0.6);
             font-size: 1rem;
+            position: relative;
         }
-        
+
+        .hero .last-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 1rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Layout */
+        .page-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 3rem;
+            padding: 3rem 2rem 4rem;
+        }
+
+        /* Sidebar TOC */
+        .toc {
+            position: sticky;
+            top: 80px;
+            align-self: start;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+
+        .toc h3 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gray-500);
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+        }
+
+        .toc a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-left: 2px solid transparent;
+            transition: all 0.2s ease;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .toc a:hover {
+            color: var(--primary);
+            background: rgba(255, 87, 34, 0.05);
+            border-left-color: var(--primary-light);
+        }
+
+        .toc a.active {
+            color: var(--primary);
+            background: rgba(255, 87, 34, 0.08);
+            border-left-color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Content */
         .content {
-            max-width: 800px;
-            margin: -2rem auto 4rem;
-            padding: 3rem;
             background: white;
             border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 1;
+            padding: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid var(--gray-200);
         }
-        
-        h2 {
-            font-size: 1.5rem;
+
+        .content h2 {
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--secondary);
             margin: 2.5rem 0 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--gray-100);
+            scroll-margin-top: 80px;
         }
-        
-        h3 {
-            font-size: 1.1rem;
+
+        .content h2:first-child { margin-top: 0; }
+
+        .content h3 {
+            font-size: 1.05rem;
             font-weight: 600;
             color: var(--gray-700);
             margin: 1.5rem 0 0.75rem;
         }
-        
-        p { margin-bottom: 1rem; color: var(--gray-700); }
-        
-        ul, ol {
+
+        .content p { margin-bottom: 1rem; color: var(--gray-700); }
+
+        .content ul, .content ol {
             margin: 1rem 0 1rem 1.5rem;
             color: var(--gray-700);
         }
-        
-        li { margin-bottom: 0.5rem; }
-        
-        strong { color: var(--gray-900); }
-        
-        a { color: var(--primary); text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        
+
+        .content li { margin-bottom: 0.5rem; }
+        .content strong { color: var(--gray-900); }
+        .content a { color: var(--primary); text-decoration: none; }
+        .content a:hover { text-decoration: underline; }
+
+        /* Highlight Box */
         .highlight-box {
-            background: linear-gradient(135deg, rgba(255, 87, 34, 0.05) 0%, rgba(255, 87, 34, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(255, 87, 34, 0.04) 0%, rgba(255, 87, 34, 0.08) 100%);
             padding: 1.5rem;
             border-radius: 16px;
             margin: 1.5rem 0;
             border-left: 4px solid var(--primary);
         }
-        
+
         .highlight-box h3 {
             color: var(--primary-dark);
             margin-top: 0;
         }
-        
+
+        /* Warning Box */
         .warning-box {
             background: var(--warning);
             padding: 1.5rem;
@@ -163,12 +269,34 @@
             margin: 1.5rem 0;
             border-left: 4px solid var(--warning-border);
         }
-        
+
         .warning-box h3 {
             color: #E65100;
             margin-top: 0;
         }
-        
+
+        /* Section Icons */
+        .section-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 87, 34, 0.1);
+            border-radius: 8px;
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+
+        /* Legal uppercase text */
+        .legal-caps {
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            line-height: 1.8;
+        }
+
+        /* Footer */
         footer {
             text-align: center;
             padding: 2rem;
@@ -177,12 +305,65 @@
             background: white;
             border-top: 1px solid var(--gray-200);
         }
-        
-        footer a { color: var(--gray-600); margin: 0 1rem; }
-        
-        @media (max-width: 768px) {
-            .content { margin: -1rem 1rem 2rem; padding: 2rem 1.5rem; }
-            .hero h1 { font-size: 2rem; }
+
+        footer a { color: var(--gray-600); margin: 0 1rem; text-decoration: none; }
+        footer a:hover { color: var(--primary); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+                padding: 2rem 1rem;
+            }
+
+            .toc {
+                position: static;
+                display: flex;
+                gap: 0.5rem;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+                max-height: none;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .toc h3 { display: none; }
+
+            .toc a {
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 2px solid transparent;
+                border-radius: 8px;
+                background: white;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+                border: 1px solid var(--gray-200);
+            }
+
+            .toc a.active {
+                border-color: var(--primary);
+                background: rgba(255, 87, 34, 0.05);
+            }
+
+            .content {
+                margin: 0;
+                padding: 2rem 1.5rem;
+                border-radius: 16px;
+            }
+
+            .hero h1 { font-size: 2.25rem; }
+            .hero { padding: 4rem 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.75rem; }
+            .content { padding: 1.5rem 1.25rem; }
+        }
+
+        /* Print */
+        @media print {
+            nav, .toc, .hero { display: none; }
+            .page-layout { grid-template-columns: 1fr; }
+            .content { box-shadow: none; border: none; padding: 0; }
         }
     </style>
 </head>
@@ -190,156 +371,211 @@
     <nav>
         <div class="nav-container">
             <a href="/" class="logo">
-                <div style="width:28px;height:28px;background:linear-gradient(135deg,#FF5722,#FF8A65);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;color:white;">N</div>
+                <div class="logo-icon">
+                    <img src="logo-white.png" alt="Navitra">
+                </div>
                 Navitra
             </a>
-            <a href="/" class="back-link">← Back to Home</a>
+            <a href="/" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Home
+            </a>
         </div>
     </nav>
-    
+
     <div class="hero">
         <h1>Terms of Service</h1>
-        <p>Last Updated: February 12, 2026</p>
-    </div>
-    
-    <div class="content">
-        <h2>1. Agreement to Terms</h2>
-        <p>By downloading, installing, or using Navitra ("App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the App.</p>
-        
-        <h2>2. Description of Service</h2>
-        <p>Navitra is an AI-powered travel planning application that helps users:</p>
-        <ul>
-            <li>Discover travel destinations</li>
-            <li>Create optimized travel itineraries</li>
-            <li>Navigate between points of interest</li>
-            <li>Plan multi-day trips with intelligent route optimization</li>
-        </ul>
-        
-        <h2>3. Eligibility</h2>
-        <p>You must be at least 13 years old to use Navitra. By using the App, you represent and warrant that you meet this requirement.</p>
-        
-        <h2>4. User Accounts</h2>
-        
-        <h3>4.1 Account Creation</h3>
-        <p>You may create an account using:</p>
-        <ul>
-            <li>Email and password</li>
-            <li>Google Sign-In</li>
-            <li>Apple Sign-In</li>
-            <li>Guest access (limited features)</li>
-        </ul>
-        
-        <h3>4.2 Account Responsibility</h3>
-        <p>You are responsible for:</p>
-        <ul>
-            <li>Maintaining the confidentiality of your account</li>
-            <li>All activities that occur under your account</li>
-            <li>Notifying us immediately of any unauthorized use</li>
-        </ul>
-        
-        <h3>4.3 Account Termination</h3>
-        <p>You may delete your account at any time through the app. We reserve the right to suspend or terminate accounts that violate these Terms.</p>
-        
-        <h2>5. Subscriptions and Payments</h2>
-        
-        <h3>5.1 Free Features</h3>
-        <p>Basic features are available for free, subject to usage limits.</p>
-        
-        <h3>5.2 Premium Subscription</h3>
-        <p>Premium features are available through subscription plans:</p>
-        <ul>
-            <li><strong>Weekly Plan:</strong> Auto-renews weekly</li>
-            <li><strong>Monthly Plan:</strong> Auto-renews monthly</li>
-            <li><strong>Yearly Plan:</strong> Auto-renews annually</li>
-        </ul>
-        
-        <div class="highlight-box">
-            <h3>💳 Payment Terms</h3>
-            <ul>
-                <li>Payments are processed through Apple App Store or Google Play Store</li>
-                <li>Subscriptions auto-renew unless cancelled at least 24 hours before the renewal date</li>
-                <li>You can manage subscriptions in your device's account settings</li>
-            </ul>
-        </div>
-        
-        <h3>5.3 Refunds</h3>
-        <p>Refund requests are handled by Apple or Google according to their respective refund policies.</p>
-        
-        <h2>6. Acceptable Use</h2>
-        
-        <h3>6.1 You Agree NOT to:</h3>
-        <ul>
-            <li>Use the App for any illegal purpose</li>
-            <li>Attempt to gain unauthorized access to our systems</li>
-            <li>Interfere with or disrupt the App's functionality</li>
-            <li>Reverse engineer, decompile, or disassemble the App</li>
-            <li>Use the App to harass, abuse, or harm others</li>
-            <li>Upload malicious content or code</li>
-            <li>Resell or redistribute the App without authorization</li>
-        </ul>
-        
-        <h2>7. Intellectual Property</h2>
-        
-        <h3>7.1 Our Rights</h3>
-        <p>The App, including its design, features, and content, is owned by Navitra and protected by intellectual property laws. The Navitra name, logo, and related marks are our trademarks.</p>
-        
-        <h3>7.2 Your Rights</h3>
-        <p>You retain ownership of content you create (trip data, notes). By using the App, you grant us a limited license to process this content to provide our services.</p>
-        
-        <h2>8. Disclaimers</h2>
-        
-        <div class="warning-box">
-            <h3>⚠️ Travel Information</h3>
-            <p>Navitra provides travel planning assistance. However:</p>
-            <ul>
-                <li>We do not guarantee the accuracy of place information, opening hours, or prices</li>
-                <li>Travel conditions may change without notice</li>
-                <li>Always verify critical information before traveling</li>
-                <li>Routes and recommendations are AI-generated and may not be perfect</li>
-            </ul>
-        </div>
-        
-        <h2>9. Limitation of Liability</h2>
-        
-        <h3>9.1 Disclaimer of Warranties</h3>
-        <p>THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
-        
-        <h3>9.2 Limitation of Damages</h3>
-        <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, NAVITRA SHALL NOT BE LIABLE FOR:</p>
-        <ul>
-            <li>Indirect, incidental, special, or consequential damages</li>
-            <li>Loss of profits, data, or business opportunities</li>
-            <li>Damages resulting from reliance on the App's information</li>
-            <li>Damages exceeding the amount you paid for the App in the past 12 months</li>
-        </ul>
-        
-        <h2>10. Indemnification</h2>
-        <p>You agree to indemnify and hold harmless Navitra, its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from your use of the App or violation of these Terms.</p>
-        
-        <h2>11. Changes to Terms</h2>
-        <p>We may modify these Terms at any time. We will notify you of material changes through in-app notifications or email. Continued use of the App after changes constitutes acceptance of the new Terms.</p>
-        
-        <h2>12. Governing Law</h2>
-        <p>These Terms are governed by the laws of the Republic of Turkey, without regard to conflict of law principles.</p>
-        
-        <h2>13. Dispute Resolution</h2>
-        <p>Before filing a formal dispute, please contact us to attempt informal resolution. Any disputes that cannot be resolved informally shall be settled by binding arbitration in Istanbul, Turkey.</p>
-        
-        <h2>14. Contact Us</h2>
-        <p>For questions about these Terms:</p>
-        <ul>
-            <li><strong>Email:</strong> <a href="mailto:legal@navitraapp.com">legal@navitraapp.com</a></li>
-            <li><strong>Support:</strong> <a href="mailto:support@navitraapp.com">support@navitraapp.com</a></li>
-        </ul>
-        
-        <div class="highlight-box">
-            <p><strong>By using Navitra, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</strong></p>
+        <p class="subtitle">Please read these terms carefully before using Navitra.</p>
+        <div class="last-updated">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Last Updated: February 12, 2026
         </div>
     </div>
-    
+
+    <div class="page-layout">
+        <aside class="toc">
+            <h3>Contents</h3>
+            <a href="#agreement">Agreement to Terms</a>
+            <a href="#description">Description of Service</a>
+            <a href="#eligibility">Eligibility</a>
+            <a href="#accounts">User Accounts</a>
+            <a href="#subscriptions">Subscriptions & Payments</a>
+            <a href="#acceptable-use">Acceptable Use</a>
+            <a href="#ip">Intellectual Property</a>
+            <a href="#disclaimers">Disclaimers</a>
+            <a href="#liability">Limitation of Liability</a>
+            <a href="#indemnification">Indemnification</a>
+            <a href="#changes">Changes to Terms</a>
+            <a href="#governing-law">Governing Law</a>
+            <a href="#disputes">Dispute Resolution</a>
+            <a href="#contact">Contact Us</a>
+        </aside>
+
+        <div class="content">
+            <h2 id="agreement"><span class="section-icon">&#128220;</span> 1. Agreement to Terms</h2>
+            <p>By downloading, installing, or using Navitra ("App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the App.</p>
+
+            <h2 id="description"><span class="section-icon">&#128205;</span> 2. Description of Service</h2>
+            <p>Navitra is an AI-powered travel planning application that helps users:</p>
+            <ul>
+                <li>Discover travel destinations</li>
+                <li>Create optimized travel itineraries</li>
+                <li>Navigate between points of interest</li>
+                <li>Plan multi-day trips with intelligent route optimization</li>
+            </ul>
+
+            <h2 id="eligibility"><span class="section-icon">&#9989;</span> 3. Eligibility</h2>
+            <p>You must be at least 13 years old to use Navitra. By using the App, you represent and warrant that you meet this requirement.</p>
+
+            <h2 id="accounts"><span class="section-icon">&#128100;</span> 4. User Accounts</h2>
+
+            <h3>4.1 Account Creation</h3>
+            <p>You may create an account using:</p>
+            <ul>
+                <li>Email and password</li>
+                <li>Google Sign-In</li>
+                <li>Apple Sign-In</li>
+                <li>Guest access (limited features)</li>
+            </ul>
+
+            <h3>4.2 Account Responsibility</h3>
+            <p>You are responsible for:</p>
+            <ul>
+                <li>Maintaining the confidentiality of your account</li>
+                <li>All activities that occur under your account</li>
+                <li>Notifying us immediately of any unauthorized use</li>
+            </ul>
+
+            <h3>4.3 Account Termination</h3>
+            <p>You may delete your account at any time through the app. We reserve the right to suspend or terminate accounts that violate these Terms.</p>
+
+            <h2 id="subscriptions"><span class="section-icon">&#128179;</span> 5. Subscriptions and Payments</h2>
+
+            <h3>5.1 Free Features</h3>
+            <p>Basic features are available for free, subject to usage limits.</p>
+
+            <h3>5.2 Premium Subscription</h3>
+            <p>Premium features are available through subscription plans:</p>
+            <ul>
+                <li><strong>Weekly Plan:</strong> Auto-renews weekly</li>
+                <li><strong>Monthly Plan:</strong> Auto-renews monthly</li>
+                <li><strong>Yearly Plan:</strong> Auto-renews annually</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h3>Payment Terms</h3>
+                <ul>
+                    <li>Payments are processed through Apple App Store or Google Play Store</li>
+                    <li>Subscriptions auto-renew unless cancelled at least 24 hours before the renewal date</li>
+                    <li>You can manage subscriptions in your device's account settings</li>
+                </ul>
+            </div>
+
+            <h3>5.3 Refunds</h3>
+            <p>Refund requests are handled by Apple or Google according to their respective refund policies.</p>
+
+            <h2 id="acceptable-use"><span class="section-icon">&#128683;</span> 6. Acceptable Use</h2>
+
+            <h3>6.1 You Agree NOT to:</h3>
+            <ul>
+                <li>Use the App for any illegal purpose</li>
+                <li>Attempt to gain unauthorized access to our systems</li>
+                <li>Interfere with or disrupt the App's functionality</li>
+                <li>Reverse engineer, decompile, or disassemble the App</li>
+                <li>Use the App to harass, abuse, or harm others</li>
+                <li>Upload malicious content or code</li>
+                <li>Resell or redistribute the App without authorization</li>
+            </ul>
+
+            <h2 id="ip"><span class="section-icon">&#169;</span> 7. Intellectual Property</h2>
+
+            <h3>7.1 Our Rights</h3>
+            <p>The App, including its design, features, and content, is owned by Navitra and protected by intellectual property laws. The Navitra name, logo, and related marks are our trademarks.</p>
+
+            <h3>7.2 Your Rights</h3>
+            <p>You retain ownership of content you create (trip data, notes). By using the App, you grant us a limited license to process this content to provide our services.</p>
+
+            <h2 id="disclaimers"><span class="section-icon">&#9888;</span> 8. Disclaimers</h2>
+
+            <div class="warning-box">
+                <h3>Travel Information</h3>
+                <p>Navitra provides travel planning assistance. However:</p>
+                <ul>
+                    <li>We do not guarantee the accuracy of place information, opening hours, or prices</li>
+                    <li>Travel conditions may change without notice</li>
+                    <li>Always verify critical information before traveling</li>
+                    <li>Routes and recommendations are AI-generated and may not be perfect</li>
+                </ul>
+            </div>
+
+            <h2 id="liability"><span class="section-icon">&#9878;</span> 9. Limitation of Liability</h2>
+
+            <h3>9.1 Disclaimer of Warranties</h3>
+            <p class="legal-caps">THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
+
+            <h3>9.2 Limitation of Damages</h3>
+            <p class="legal-caps">TO THE MAXIMUM EXTENT PERMITTED BY LAW, NAVITRA SHALL NOT BE LIABLE FOR:</p>
+            <ul>
+                <li>Indirect, incidental, special, or consequential damages</li>
+                <li>Loss of profits, data, or business opportunities</li>
+                <li>Damages resulting from reliance on the App's information</li>
+                <li>Damages exceeding the amount you paid for the App in the past 12 months</li>
+            </ul>
+
+            <h2 id="indemnification"><span class="section-icon">&#128737;</span> 10. Indemnification</h2>
+            <p>You agree to indemnify and hold harmless Navitra, its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from your use of the App or violation of these Terms.</p>
+
+            <h2 id="changes"><span class="section-icon">&#128221;</span> 11. Changes to Terms</h2>
+            <p>We may modify these Terms at any time. We will notify you of material changes through in-app notifications or email. Continued use of the App after changes constitutes acceptance of the new Terms.</p>
+
+            <h2 id="governing-law"><span class="section-icon">&#127988;</span> 12. Governing Law</h2>
+            <p>These Terms are governed by the laws of the Republic of Turkey, without regard to conflict of law principles.</p>
+
+            <h2 id="disputes"><span class="section-icon">&#9878;</span> 13. Dispute Resolution</h2>
+            <p>Before filing a formal dispute, please contact us to attempt informal resolution. Any disputes that cannot be resolved informally shall be settled by binding arbitration in Istanbul, Turkey.</p>
+
+            <h2 id="contact"><span class="section-icon">&#128231;</span> 14. Contact Us</h2>
+            <p>For questions about these Terms:</p>
+            <ul>
+                <li><strong>Email:</strong> <a href="mailto:legal@navitraapp.com">legal@navitraapp.com</a></li>
+                <li><strong>Support:</strong> <a href="mailto:support@navitraapp.com">support@navitraapp.com</a></li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>By using Navitra, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</strong></p>
+            </div>
+        </div>
+    </div>
+
     <footer>
-        <p>© 2026 Navitra. All rights reserved.</p>
+        <p>&copy; 2026 Navitra. All rights reserved.</p>
         <p><a href="privacy.html">Privacy Policy</a> <a href="terms.html">Terms of Service</a> <a href="support.html">Support</a></p>
     </footer>
+
+    <script>
+        // Active TOC tracking
+        const tocLinks = document.querySelectorAll('.toc a');
+        const sections = document.querySelectorAll('.content h2[id]');
+
+        const observerOptions = {
+            rootMargin: '-80px 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    tocLinks.forEach(link => link.classList.remove('active'));
+                    const activeLink = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+                    if (activeLink) activeLink.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        // Set first TOC link as active by default
+        if (tocLinks.length > 0) tocLinks[0].classList.add('active');
+    </script>
 </body>
 </html>
