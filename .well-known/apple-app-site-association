@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "Q2F4FRWBR9.com.navitra.app",
+        "paths": [
+          "/route/*",
+          "/shared-route/*"
+        ]
+      }
+    ]
+  }
+}
