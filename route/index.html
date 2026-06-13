@@ -10,12 +10,19 @@
   <meta property="og:title" content="Navitra - AI Travel Planner">
   <meta property="og:description" content="Check out this travel route planned with Navitra AI">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://navitraapp.com/og-route-preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Navitra - AI Travel Planner">
+  <meta name="twitter:description" content="Check out this travel route planned with Navitra AI">
+  <meta name="twitter:image" content="https://navitraapp.com/og-route-preview.jpg">
 
   <!-- App Links -->
   <meta property="al:ios:app_store_id" content="6743812693">
   <meta property="al:ios:app_name" content="Navitra">
   <meta property="al:ios:url" content="navitra://route/">
-  <meta property="al:android:package" content="com.navitra.app">
+  <meta property="al:android:package" content="com.seak.navitra">
   <meta property="al:android:app_name" content="Navitra">
   <meta property="al:android:url" content="navitra://route/">
 
@@ -275,8 +282,7 @@
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding: 8px 0 12px;
-      margin-top: 12px;
+      padding: 0 0 12px;
       margin-bottom: 16px;
       -webkit-overflow-scrolling: touch;
     }
@@ -1184,7 +1190,7 @@
     // Apply initial translated content
     document.getElementById('badge-tagline').textContent = T.tagline;
     document.querySelector('.loading p').textContent = T.loading;
-    document.querySelector('.footer').innerHTML = '&copy; 2025 ' + T.footer;
+    document.querySelector('.footer').innerHTML = '&copy; ' + new Date().getFullYear() + ' ' + T.footer;
 
     // ── Config ──
     const firebaseConfig = {
@@ -1199,8 +1205,8 @@
     firebase.initializeApp(firebaseConfig);
     var db = firebase.firestore();
 
-    var APPLE_STORE = 'https://apps.apple.com/app/navitra/id6743812693';
-    var GOOGLE_STORE = 'https://play.google.com/store/apps/details?id=com.navitra.app';
+    var APPLE_STORE = 'https://apps.apple.com/app/navitra/id6779956173';
+    var GOOGLE_STORE = 'https://play.google.com/store/apps/details?id=com.seak.navitra';
 
     // Day colors
     var DAY_COLORS = [
@@ -1298,18 +1304,20 @@
           marker.bindPopup(popupContent, { closeButton: false });
         });
 
-        // Accommodation marker
+        // Accommodation marker (tolerate {lat,lng} and {latitude,longitude})
         var acc = day.accommodation;
-        if (acc && acc.latitude && acc.longitude) {
-          var accLatlng = [acc.latitude, acc.longitude];
+        var accLat = acc ? (acc.latitude != null ? acc.latitude : acc.lat) : null;
+        var accLng = acc ? (acc.longitude != null ? acc.longitude : acc.lng) : null;
+        if (acc && accLat && accLng) {
+          var accLatlng = [accLat, accLng];
           dayCoords.unshift(accLatlng); // connect line from hotel
           dayCoords.push(accLatlng);    // connect line back to hotel
           allCoords.push(accLatlng);
           var accIcon = L.divIcon({
-            html: '<div style="width:36px;height:36px;background:#607D8B;border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,0.3);">🏨</div>',
+            html: '<div style="width:28px;height:28px;background:#607D8B;border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,0.3);">🏨</div>',
             className: '',
-            iconSize: [36, 36],
-            iconAnchor: [18, 18],
+            iconSize: [28, 28],
+            iconAnchor: [14, 14],
           });
           L.marker(accLatlng, { icon: accIcon }).addTo(layerGroup)
             .bindPopup('<div class="map-popup"><div><div class="map-popup-name">' + T.accommodation + '</div></div></div>', { closeButton: false });
@@ -1376,12 +1384,9 @@
     // ── Render ──
     function resolveImageUrl(raw) {
       if (!raw) return '';
-      // Firebase Storage URLs (cached photos) — use directly, no API cost
       if (raw.startsWith('http')) return raw;
-      // Legacy: raw Places API reference (old shares before caching)
-      if (raw.startsWith('places/')) {
-        return 'https://places.googleapis.com/v1/' + raw + '/media?maxWidthPx=200&key=' + firebaseConfig.apiKey;
-      }
+      // Legacy places/ refs are no longer resolved client-side
+      // Photos are cached to Firebase Storage during publish
       return '';
     }
 
@@ -1389,9 +1394,12 @@
       var content = document.getElementById('content');
       var city = data.cityName || 'Trip';
       var totalDays = data.totalDays || 1;
-      var totalPlaces = data.totalPlaces || 0;
-      var userName = data.userName || 'Navitra User';
       var routes = data.routes || [];
+      var totalPlaces = data.totalPlaces || 0;
+      if (!totalPlaces && routes.length) {
+        routes.forEach(function(day) { totalPlaces += (day.itinerary || []).length; });
+      }
+      var userName = data.userName || 'Navitra User';
       var journal = data.journal || null;
       var deepLink = 'https://navitraapp.com/route/' + shareId;
 
@@ -1416,7 +1424,10 @@
         var places = day.itinerary || [];
 
         var placesHtml = '';
-        var hasAcc = day.accommodation && day.accommodation.latitude;
+        var hasAcc = day.accommodation &&
+          (day.accommodation.latitude != null
+            ? day.accommodation.latitude
+            : day.accommodation.lat);
         if (hasAcc) {
           placesHtml += '<div class="accommodation-item"><div class="accommodation-dot">🏨</div><div class="accommodation-label">' + T.accommodation + '</div></div>';
         }

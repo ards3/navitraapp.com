@@ -1,0 +1,9 @@
+# Local Claude Code config
+.claude/
+
+# OG-image regeneration scratch (sources kept locally, output committed at root)
+.photo-picks/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
