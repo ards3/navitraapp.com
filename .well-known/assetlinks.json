@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.navitra.app",
+      "package_name": "com.seak.navitra",
       "sha256_cert_fingerprints": [
         "B6:D7:08:CC:BE:0E:0F:C6:27:0A:42:F5:77:14:5B:A9:50:FD:52:F0:5E:46:EB:71:A7:DC:DF:56:33:AF:68:DF"
       ]

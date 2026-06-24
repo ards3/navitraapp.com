@@ -3,7 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appID": "Q2F4FRWBR9.com.navitra.app",
+        "appID": "Q2F4FRWBR9.com.seak.navitra",
         "paths": [
           "/route/*",
           "/shared-route/*"
