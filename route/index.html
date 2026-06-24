@@ -28,6 +28,7 @@
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
   <!-- Leaflet Map -->
@@ -1203,6 +1204,20 @@
     };
 
     firebase.initializeApp(firebaseConfig);
+
+    // App Check — Firestore enforces App Check in production, so without a valid
+    // token EVERY shared_routes read returns PERMISSION_DENIED and the shared
+    // link never opens in a browser (the mobile app + admin panel work because
+    // they activate App Check). reCAPTCHA v3 site key must list navitraapp.com
+    // in its allowed domains AND be registered for this web app in
+    // Firebase Console → App Check. Must run BEFORE the first Firestore call.
+    var RECAPTCHA_V3_SITE_KEY = '6LcU7SAtAAAAALBaepaMTXKaO9IWCCq-FiZZwfG-';
+    try {
+      firebase.appCheck().activate(RECAPTCHA_V3_SITE_KEY, true);
+    } catch (e) {
+      console.error('App Check activate failed:', e);
+    }
+
     var db = firebase.firestore();
 
     var APPLE_STORE = 'https://navitraapp.com/#download';
