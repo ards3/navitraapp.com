@@ -19,7 +19,7 @@
   <meta name="twitter:image" content="https://navitraapp.com/og-route-preview.jpg">
 
   <!-- App Links -->
-  <meta property="al:ios:app_store_id" content="6743812693">
+  <meta property="al:ios:app_store_id" content="6779956173">
   <meta property="al:ios:app_name" content="Navitra">
   <meta property="al:ios:url" content="navitra://route/">
   <meta property="al:android:package" content="com.seak.navitra">
@@ -1014,7 +1014,7 @@
         journalOf: "'s Journal",
         readMore: 'Read More',
         readLess: 'Show Less',
-        scanQr: 'Scan QR code with your phone or download from stores',
+        scanQr: 'Check launch status or scan the QR code with your phone',
       },
       tr: {
         tagline: 'AI Seyahat Planlayıcı',
@@ -1039,7 +1039,7 @@
         journalOf: "'nın Günlüğü",
         readMore: 'Devamını Oku',
         readLess: 'Daralt',
-        scanQr: 'Telefonunuzla QR kodu tarayın veya mağazadan indirin',
+        scanQr: 'Check launch status or scan the QR code with your phone',
       },
       de: {
         tagline: 'KI-Reiseplaner',
@@ -1064,7 +1064,7 @@
         journalOf: 's Tagebuch',
         readMore: 'Weiterlesen',
         readLess: 'Weniger',
-        scanQr: 'QR-Code scannen oder aus dem Store herunterladen',
+        scanQr: 'Check launch status or scan the QR code with your phone',
       },
       fr: {
         tagline: 'Planificateur IA',
@@ -1089,7 +1089,7 @@
         journalOf: ' — Journal',
         readMore: 'Lire la suite',
         readLess: 'Réduire',
-        scanQr: 'Scannez le QR code ou téléchargez depuis les stores',
+        scanQr: 'Check launch status or scan the QR code with your phone',
       },
       es: {
         tagline: 'Planificador IA',
@@ -1114,7 +1114,7 @@
         journalOf: ' — Diario',
         readMore: 'Leer más',
         readLess: 'Mostrar menos',
-        scanQr: 'Escanea el código QR o descarga desde las tiendas',
+        scanQr: 'Check launch status or scan the QR code with your phone',
       },
       ar: {
         tagline: 'مخطط سفر ذكي',
@@ -1139,7 +1139,7 @@
         journalOf: ' — مذكرات',
         readMore: 'اقرأ المزيد',
         readLess: 'عرض أقل',
-        scanQr: 'امسح رمز QR أو حمّل من المتجر',
+        scanQr: 'Check launch status or scan the QR code with your phone',
       },
       zh: {
         tagline: 'AI旅行规划师',
@@ -1164,7 +1164,7 @@
         journalOf: '的日记',
         readMore: '阅读更多',
         readLess: '收起',
-        scanQr: '用手机扫描二维码或从商店下载',
+        scanQr: 'Check launch status or scan the QR code with your phone',
       },
     };
 
@@ -1205,8 +1205,8 @@
     firebase.initializeApp(firebaseConfig);
     var db = firebase.firestore();
 
-    var APPLE_STORE = 'https://apps.apple.com/app/navitra/id6779956173';
-    var GOOGLE_STORE = 'https://play.google.com/store/apps/details?id=com.seak.navitra';
+    var APPLE_STORE = 'https://navitraapp.com/#download';
+    var GOOGLE_STORE = 'https://navitraapp.com/#download';
 
     // Day colors
     var DAY_COLORS = [
@@ -1668,7 +1668,7 @@
       var qrEl = document.getElementById('modal-qr');
       var btns = document.getElementById('modal-store-buttons');
 
-      desc.textContent = T.scanQr || 'Scan QR code or download from stores';
+      desc.textContent = T.scanQr || 'Check launch status or scan the QR code with your phone';
       qrEl.innerHTML = '';
       new QRCode(qrEl, {
         text: 'https://navitraapp.com/route/' + shareId,
