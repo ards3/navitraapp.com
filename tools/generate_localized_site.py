@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from html import escape
 from pathlib import Path
 
@@ -1002,11 +1003,404 @@ def render_page(code: str, t: dict[str, object]) -> str:
 """
 
 
+CLONE_EXTRA = {
+    "en": {
+        "skip": "Skip to content",
+        "menu": "Menu",
+        "try_label": "Try it right here",
+        "try_title": "Don't just read about the swipe. <em>Do it.</em>",
+        "try_lead": "Say you're headed to Rome. Drag a place right to save it, left to pass — exactly like in the app. Everything you keep becomes an optimized day-by-day route. This is just the fun part.",
+        "saved": "saved to your shortlist",
+        "rome": "Rome, Italy",
+        "save": "Save",
+        "pass": "Pass",
+        "stops": "stops on your Rome list",
+        "swipe_again": "Swipe again",
+        "hint": "Drag the card, tap a button, or use",
+        "philosophy": "Our philosophy",
+        "philosophy_quote": "We don't believe planning should take longer than the trip. Navitra turns hours of tab-juggling into a couple of minutes of swiping — so the adventure starts before you land.",
+        "see_how": "See how it works",
+        "app": "The app",
+        "ready": "Ready to find <em>your</em> path?",
+        "free": "Free at launch",
+        "offline": "Works fully offline",
+        "cancel": "Cancel anytime",
+        "help_line": 'Prefer to look around first? Write to us at <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> or browse the <a class="mail" href="/support.html">Help Center</a> — we\'re happy to help.',
+        "statement_title": 'Built around real travel — <span class="accent">not perfect itineraries.</span>',
+        "statement_a": "Real trips drift. Lunch runs long, a square steals an hour, it rains exactly when you reach the viewpoint. Navitra is built for that: tell it you're tired or hungry and it reshapes the rest of the day in seconds.",
+        "statement_b": "And when plans survive contact with reality, share them — any route becomes a link your friends can open in a browser and adopt with one tap.",
+        "quote": '"Planning a trip shouldn\'t take longer than the trip itself."',
+        "team": "— The Navitra team, Istanbul",
+        "numbers_title": "The numbers we actually stand behind.",
+        "numbers_lead": "No inflated download counts, no invented ratings — just what the product does, measurably.",
+        "route_time": "From picked places to a finished multi-day route.",
+        "languages_stat": "Languages — interface and voice guides alike.",
+        "trophies": "Landmark trophies to collect as you check in around the world.",
+        "signal": "Bars of signal needed once your trip is downloaded.",
+        "benchmark": "* Median route generation time in internal benchmarks, April 2026.",
+        "faq_intro": "Your questions, answered.",
+        "faq_lead": "Didn't find what you're looking for? The Help Center goes deeper, and a human reads every e-mail.",
+        "visit_help": "Visit Help Center",
+        "share_q": "Can I share my route with friends?",
+        "share_a": "Every route can be shared as a link or QR code. Friends see the full plan on an interactive map right in their browser — no account needed — and can adopt it into their own Navitra with one tap.",
+        "delete_q": "How do I cancel or delete my data?",
+        "delete_a": 'Subscriptions are managed by Apple or Google — cancel anytime from your store account, no questions asked. Want your data gone too? Use the in-app option or the <a href="/delete.html">account deletion page</a>; details are in our <a href="/privacy.html">Privacy Policy</a>.',
+        "rights": "Navitra. All rights reserved. Born in Istanbul.",
+    },
+    "tr": {
+        "skip": "İçeriğe geç",
+        "menu": "Menü",
+        "try_label": "Burada dene",
+        "try_title": "Kaydırmayı sadece okuma. <em>Dene.</em>",
+        "try_lead": "Diyelim Roma'ya gidiyorsun. Bir yeri kaydetmek için sağa, geçmek için sola sürükle; uygulamadaki akışın aynısı. Kaydettiklerin optimize edilmiş günlük rotaya dönüşür. Bu sadece eğlenceli kısım.",
+        "saved": "kısa listene kaydedildi",
+        "rome": "Roma, İtalya",
+        "save": "Kaydet",
+        "pass": "Geç",
+        "stops": "Roma listendeki durak",
+        "swipe_again": "Tekrar kaydır",
+        "hint": "Kartı sürükle, düğmeye dokun veya kullan",
+        "philosophy": "Yaklaşımımız",
+        "philosophy_quote": "Planlamanın geziden daha uzun sürmesi gerektiğine inanmıyoruz. Navitra saatler süren sekme karmaşasını birkaç dakikalık kaydırmaya çevirir; macera daha sen varmadan başlar.",
+        "see_how": "Nasıl çalıştığını gör",
+        "app": "Uygulama",
+        "ready": "Kendi <em>rotanı</em> bulmaya hazır mısın?",
+        "free": "Lansmanda ücretsiz",
+        "offline": "Tamamen offline çalışır",
+        "cancel": "İstediğin zaman iptal",
+        "help_line": 'Önce biraz bakmak mı istiyorsun? Bize <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> adresinden yaz veya <a class="mail" href="/support.html">Yardım Merkezi</a>\'ni incele; yardımcı oluruz.',
+        "statement_title": 'Gerçek seyahat için tasarlandı; <span class="accent">kusursuz görünen planlar için değil.</span>',
+        "statement_a": "Gerçek geziler değişir. Öğle yemeği uzar, bir meydan bir saati alır, yağmur tam manzara noktasında başlar. Navitra bunun için tasarlandı: yorulduğunu veya acıktığını söyle, günün geri kalanını saniyeler içinde yeniden şekillendirir.",
+        "statement_b": "Planlar gerçek hayatla karşılaştığında hâlâ ayaktaysa paylaş: her rota, arkadaşlarının tarayıcıda açıp tek dokunuşla kendi Navitra'larına alabileceği bir linke dönüşür.",
+        "quote": '"Bir geziyi planlamak, gezinin kendisinden uzun sürmemeli."',
+        "team": "— Navitra ekibi, İstanbul",
+        "numbers_title": "Gerçekten arkasında durduğumuz sayılar.",
+        "numbers_lead": "Şişirilmiş indirme sayıları veya uydurma puanlar yok; sadece ürünün ölçülebilir şekilde yaptığı işler.",
+        "route_time": "Seçilen yerlerden tamamlanmış çok günlük rotaya.",
+        "languages_stat": "Dil — arayüz ve sesli rehberler dahil.",
+        "trophies": "Dünyayı gezerken toplayabileceğin landmark kupaları.",
+        "signal": "Gezi indirildikten sonra gereken sinyal çubuğu.",
+        "benchmark": "* Dahili testlerde medyan rota üretim süresi, Nisan 2026.",
+        "faq_intro": "Soruların yanıtlandı.",
+        "faq_lead": "Aradığını bulamadın mı? Yardım Merkezi daha detaylıdır ve her e-postayı bir insan okur.",
+        "visit_help": "Yardım Merkezi'ne git",
+        "share_q": "Rotamı arkadaşlarımla paylaşabilir miyim?",
+        "share_a": "Her rota link veya QR kod olarak paylaşılabilir. Arkadaşların planı tarayıcıda interaktif harita üzerinde görür; hesap gerekmez.",
+        "delete_q": "Nasıl iptal ederim veya verilerimi silerim?",
+        "delete_a": 'Abonelikler Apple veya Google tarafından yönetilir; mağaza hesabından istediğin zaman iptal edebilirsin. Verilerini de silmek istersen uygulama içindeki seçeneği veya <a href="/delete.html">hesap silme sayfasını</a> kullanabilirsin; ayrıntılar <a href="/privacy.html">Gizlilik Politikası</a> içinde.',
+        "rights": "Navitra. Tüm hakları saklıdır. İstanbul'da doğdu.",
+    },
+    "de": {
+        "skip": "Zum Inhalt springen", "menu": "Menü", "try_label": "Hier ausprobieren", "try_title": "Nicht nur lesen. <em>Ausprobieren.</em>",
+        "try_lead": "Stell dir vor, du reist nach Rom. Ziehe einen Ort nach rechts zum Speichern oder nach links zum Überspringen. Alles, was du behältst, wird später zu einer optimierten Tagesroute.",
+        "saved": "in deiner Auswahlliste", "rome": "Rom, Italien", "save": "Speichern", "pass": "Überspringen", "stops": "Stopps auf deiner Rom-Liste", "swipe_again": "Erneut swipen", "hint": "Ziehe die Karte, tippe eine Taste oder nutze",
+        "philosophy": "Unsere Philosophie", "philosophy_quote": "Planung sollte nicht länger dauern als die Reise. Navitra macht aus Stunden voller Tabs ein paar Minuten Swipen.",
+        "see_how": "So funktioniert es", "app": "Die App", "ready": "Bereit, <em>deinen</em> Weg zu finden?", "free": "Kostenlos zum Launch", "offline": "Funktioniert vollständig offline", "cancel": "Jederzeit kündbar",
+        "help_line": 'Du willst erst schauen? Schreib an <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> oder öffne das <a class="mail" href="/support.html">Help Center</a>.',
+        "statement_title": 'Für echte Reisen gebaut — <span class="accent">nicht für perfekte Papierpläne.</span>', "statement_a": "Echte Reisen ändern sich. Essen dauert länger, ein Platz hält dich auf, Regen kommt zur falschen Zeit. Navitra passt den Rest des Tages in Sekunden an.", "statement_b": "Und wenn ein Plan die Realität überlebt, kannst du ihn als Link teilen.", "quote": '"Eine Reise zu planen sollte nicht länger dauern als die Reise selbst."', "team": "— Das Navitra-Team, Istanbul",
+        "numbers_title": "Die Zahlen, hinter denen wir stehen.", "numbers_lead": "Keine erfundenen Bewertungen, keine aufgeblasenen Downloadzahlen — nur was das Produkt messbar tut.", "route_time": "Von ausgewählten Orten zur fertigen Mehrtagesroute.", "languages_stat": "Sprachen — Oberfläche und Sprachguides.", "trophies": "Landmark-Trophäen zum Sammeln rund um die Welt.", "signal": "Balken Empfang nach dem Download der Reise.", "benchmark": "* Median der Routenberechnung in internen Benchmarks, April 2026.",
+        "faq_intro": "Deine Fragen, beantwortet.", "faq_lead": "Nicht gefunden, was du suchst? Das Help Center geht tiefer.", "visit_help": "Help Center öffnen", "share_q": "Kann ich meine Route teilen?", "share_a": "Jede Route kann als Link oder QR-Code geteilt werden. Freunde sehen den Plan im Browser.", "delete_q": "Wie kündige ich oder lösche Daten?", "delete_a": 'Abos werden von Apple oder Google verwaltet. Daten kannst du in der App oder über die <a href="/delete.html">Kontolöschseite</a> löschen; Details stehen in der <a href="/privacy.html">Datenschutzrichtlinie</a>.', "rights": "Navitra. Alle Rechte vorbehalten. Geboren in Istanbul.",
+    },
+    "es": {
+        "skip": "Saltar al contenido", "menu": "Menú", "try_label": "Pruébalo aquí", "try_title": "No solo leas el swipe. <em>Hazlo.</em>",
+        "try_lead": "Imagina que vas a Roma. Arrastra un lugar a la derecha para guardarlo o a la izquierda para pasarlo. Todo lo que guardes se convierte en una ruta diaria optimizada.",
+        "saved": "guardados en tu lista", "rome": "Roma, Italia", "save": "Guardar", "pass": "Pasar", "stops": "paradas en tu lista de Roma", "swipe_again": "Volver a deslizar", "hint": "Arrastra la tarjeta, toca un botón o usa",
+        "philosophy": "Nuestra filosofía", "philosophy_quote": "Creemos que planificar no debería durar más que el viaje. Navitra convierte horas de pestañas en unos minutos de swipes.",
+        "see_how": "Ver cómo funciona", "app": "La app", "ready": "¿Listo para encontrar <em>tu</em> ruta?", "free": "Gratis en el lanzamiento", "offline": "Funciona totalmente offline", "cancel": "Cancela cuando quieras",
+        "help_line": '¿Prefieres mirar primero? Escríbenos a <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> o visita el <a class="mail" href="/support.html">Centro de ayuda</a>.',
+        "statement_title": 'Creada para viajes reales — <span class="accent">no itinerarios perfectos.</span>', "statement_a": "Los viajes reales cambian. La comida se alarga, una plaza roba una hora o llueve justo al llegar al mirador. Navitra adapta el resto del día en segundos.", "statement_b": "Cuando el plan sobrevive a la realidad, compártelo como enlace.", "quote": '"Planear un viaje no debería tomar más que el viaje mismo."', "team": "— El equipo de Navitra, Estambul",
+        "numbers_title": "Los números que sí defendemos.", "numbers_lead": "Sin descargas infladas ni valoraciones inventadas: solo lo que el producto hace.", "route_time": "De lugares elegidos a una ruta de varios días.", "languages_stat": "Idiomas — interfaz y guías de voz.", "trophies": "Trofeos de lugares para coleccionar por el mundo.", "signal": "Barras de señal necesarias tras descargar tu viaje.", "benchmark": "* Tiempo mediano de generación en benchmarks internos, abril de 2026.",
+        "faq_intro": "Tus preguntas, respondidas.", "faq_lead": "¿No encontraste lo que buscabas? El Centro de ayuda tiene más detalle.", "visit_help": "Visitar Centro de ayuda", "share_q": "¿Puedo compartir mi ruta?", "share_a": "Cada ruta puede compartirse como enlace o QR. Tus amigos ven el plan en el navegador.", "delete_q": "¿Cómo cancelo o elimino mis datos?", "delete_a": 'Las suscripciones se gestionan desde Apple o Google. Para borrar datos, usa la app o la <a href="/delete.html">página de eliminación de cuenta</a>; los detalles están en la <a href="/privacy.html">Política de privacidad</a>.', "rights": "Navitra. Todos los derechos reservados. Nacida en Estambul.",
+    },
+    "fr": {
+        "skip": "Aller au contenu", "menu": "Menu", "try_label": "Essayez ici", "try_title": "Ne lisez pas seulement le swipe. <em>Essayez.</em>",
+        "try_lead": "Imaginez partir à Rome. Glissez un lieu à droite pour le garder, à gauche pour passer. Ce que vous gardez devient un itinéraire optimisé.",
+        "saved": "dans votre sélection", "rome": "Rome, Italie", "save": "Garder", "pass": "Passer", "stops": "arrêts dans votre liste de Rome", "swipe_again": "Recommencer", "hint": "Glissez la carte, touchez un bouton ou utilisez",
+        "philosophy": "Notre philosophie", "philosophy_quote": "Planifier ne devrait pas prendre plus longtemps que le voyage. Navitra transforme des heures d'onglets en quelques minutes de swipe.",
+        "see_how": "Voir le fonctionnement", "app": "L'app", "ready": "Prêt à trouver <em>votre</em> route ?", "free": "Gratuit au lancement", "offline": "Fonctionne entièrement offline", "cancel": "Annulable à tout moment",
+        "help_line": 'Vous voulez d’abord regarder ? Écrivez à <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> ou consultez le <a class="mail" href="/support.html">centre d’aide</a>.',
+        "statement_title": 'Pensé pour les vrais voyages — <span class="accent">pas les itinéraires parfaits.</span>', "statement_a": "Les vrais voyages changent. Le déjeuner dure, une place vous retient, la pluie arrive au mauvais moment. Navitra ajuste le reste de la journée en quelques secondes.", "statement_b": "Quand un plan tient face à la réalité, partagez-le comme lien.", "quote": '"Planifier un voyage ne devrait pas prendre plus de temps que le voyage lui-même."', "team": "— L’équipe Navitra, Istanbul",
+        "numbers_title": "Les chiffres que nous assumons.", "numbers_lead": "Pas de notes inventées ni de téléchargements gonflés — seulement ce que le produit fait vraiment.", "route_time": "Des lieux choisis à l’itinéraire de plusieurs jours.", "languages_stat": "Langues — interface et guides vocaux.", "trophies": "Trophées de lieux à collectionner dans le monde.", "signal": "Barres de réseau nécessaires une fois le voyage téléchargé.", "benchmark": "* Temps médian de génération en benchmarks internes, avril 2026.",
+        "faq_intro": "Vos questions, nos réponses.", "faq_lead": "Vous n’avez pas trouvé ? Le centre d’aide va plus loin.", "visit_help": "Voir le centre d’aide", "share_q": "Puis-je partager ma route ?", "share_a": "Chaque route peut être partagée par lien ou QR code. Vos amis voient le plan dans leur navigateur.", "delete_q": "Comment annuler ou supprimer mes données ?", "delete_a": 'Les abonnements sont gérés par Apple ou Google. Pour supprimer vos données, utilisez l’app ou la <a href="/delete.html">page de suppression de compte</a>; détails dans la <a href="/privacy.html">Politique de confidentialité</a>.', "rights": "Navitra. Tous droits réservés. Né à Istanbul.",
+    },
+}
+
+CLONE_EXTRA.update({
+    "it": {
+        "skip": "Vai al contenuto", "menu": "Menu", "try_label": "Provalo qui", "try_title": "Non leggere soltanto lo swipe. <em>Provalo.</em>",
+        "try_lead": "Immagina di andare a Roma. Trascina un luogo a destra per salvarlo, a sinistra per saltarlo. Tutto cio che tieni diventa un itinerario giorno per giorno ottimizzato.", "saved": "salvati nella tua lista", "rome": "Roma, Italia", "save": "Salva", "pass": "Salta", "stops": "tappe nella tua lista di Roma", "swipe_again": "Scorri di nuovo", "hint": "Trascina la scheda, tocca un pulsante o usa",
+        "philosophy": "La nostra filosofia", "philosophy_quote": "Pianificare non dovrebbe durare piu del viaggio. Navitra trasforma ore di schede aperte in pochi minuti di swipe.", "see_how": "Scopri come funziona", "app": "L'app", "ready": "Pronto a trovare <em>il tuo</em> percorso?", "free": "Gratis al lancio", "offline": "Funziona completamente offline", "cancel": "Annulla quando vuoi",
+        "help_line": 'Vuoi prima dare un’occhiata? Scrivici a <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> o visita il <a class="mail" href="/support.html">Centro assistenza</a>.',
+        "statement_title": 'Pensata per viaggi reali — <span class="accent">non per itinerari perfetti.</span>', "statement_a": "I viaggi veri cambiano. Il pranzo si allunga, una piazza ruba un’ora, piove proprio al belvedere. Navitra adatta il resto della giornata in pochi secondi.", "statement_b": "Quando un piano regge alla realta, condividilo come link.", "quote": '"Pianificare un viaggio non dovrebbe richiedere piu tempo del viaggio stesso."', "team": "— Il team Navitra, Istanbul",
+        "numbers_title": "I numeri su cui possiamo contare.", "numbers_lead": "Niente download gonfiati o valutazioni inventate: solo cio che il prodotto fa davvero.", "route_time": "Dai luoghi scelti a un itinerario multi-giorno.", "languages_stat": "Lingue — interfaccia e guide vocali.", "trophies": "Trofei di luoghi da collezionare nel mondo.", "signal": "Tacche di segnale necessarie dopo il download del viaggio.", "benchmark": "* Tempo mediano nei benchmark interni, aprile 2026.",
+        "faq_intro": "Le tue domande, risposte.", "faq_lead": "Non hai trovato cio che cercavi? Il Centro assistenza va piu a fondo.", "visit_help": "Visita Centro assistenza", "share_q": "Posso condividere la mia rotta?", "share_a": "Ogni rotta puo essere condivisa con link o QR. Gli amici vedono il piano nel browser.", "delete_q": "Come annullo o elimino i dati?", "delete_a": 'Gli abbonamenti sono gestiti da Apple o Google. Per eliminare i dati usa l’app o la <a href="/delete.html">pagina di eliminazione account</a>; dettagli nella <a href="/privacy.html">privacy policy</a>.', "rights": "Navitra. Tutti i diritti riservati. Nata a Istanbul.",
+    },
+    "nl": {
+        "skip": "Naar inhoud", "menu": "Menu", "try_label": "Probeer het hier", "try_title": "Lees niet alleen over swipen. <em>Doe het.</em>",
+        "try_lead": "Stel dat je naar Rome gaat. Sleep een plek naar rechts om te bewaren of naar links om over te slaan. Alles wat je bewaart wordt een geoptimaliseerde dagroute.", "saved": "bewaard in je shortlist", "rome": "Rome, Italie", "save": "Bewaar", "pass": "Sla over", "stops": "stops op je Rome-lijst", "swipe_again": "Opnieuw swipen", "hint": "Sleep de kaart, tik op een knop of gebruik",
+        "philosophy": "Onze filosofie", "philosophy_quote": "Plannen zou niet langer moeten duren dan de reis. Navitra verandert uren met tabbladen in een paar minuten swipen.", "see_how": "Bekijk hoe het werkt", "app": "De app", "ready": "Klaar om <em>jouw</em> route te vinden?", "free": "Gratis bij lancering", "offline": "Werkt volledig offline", "cancel": "Altijd opzegbaar",
+        "help_line": 'Wil je eerst rondkijken? Mail <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> of bezoek het <a class="mail" href="/support.html">Help Center</a>.',
+        "statement_title": 'Gebouwd voor echte reizen — <span class="accent">niet voor perfecte schema’s.</span>', "statement_a": "Echte reizen veranderen. Lunch duurt langer, een plein houdt je vast, regen komt precies op het uitzichtpunt. Navitra past de rest van de dag in seconden aan.", "statement_b": "Als een plan de werkelijkheid overleeft, deel je het als link.", "quote": '"Een reis plannen zou niet langer moeten duren dan de reis zelf."', "team": "— Het Navitra-team, Istanbul",
+        "numbers_title": "De cijfers waar we achter staan.", "numbers_lead": "Geen opgeblazen downloads of verzonnen beoordelingen — alleen wat het product meetbaar doet.", "route_time": "Van gekozen plekken naar een meerdaagse route.", "languages_stat": "Talen — interface en spraakgidsen.", "trophies": "Landmark-trofeeen om wereldwijd te verzamelen.", "signal": "Signaalbalken nodig nadat je reis is gedownload.", "benchmark": "* Mediane routetijd in interne benchmarks, april 2026.",
+        "faq_intro": "Je vragen, beantwoord.", "faq_lead": "Niet gevonden wat je zoekt? Het Help Center gaat dieper.", "visit_help": "Bezoek Help Center", "share_q": "Kan ik mijn route delen?", "share_a": "Elke route kan als link of QR-code worden gedeeld. Vrienden bekijken het plan in hun browser.", "delete_q": "Hoe zeg ik op of verwijder ik data?", "delete_a": 'Abonnementen worden beheerd door Apple of Google. Data verwijderen kan in de app of via de <a href="/delete.html">accountverwijderpagina</a>; details staan in het <a href="/privacy.html">privacybeleid</a>.', "rights": "Navitra. Alle rechten voorbehouden. Geboren in Istanbul.",
+    },
+    "pt-br": {
+        "skip": "Ir para o conteúdo", "menu": "Menu", "try_label": "Teste aqui", "try_title": "Não leia só sobre deslizar. <em>Faça.</em>",
+        "try_lead": "Imagine que você vai para Roma. Arraste um lugar para a direita para salvar ou para a esquerda para passar. Tudo que você guarda vira uma rota diária otimizada.", "saved": "salvos na sua lista", "rome": "Roma, Itália", "save": "Salvar", "pass": "Passar", "stops": "paradas na sua lista de Roma", "swipe_again": "Deslizar de novo", "hint": "Arraste o cartão, toque em um botão ou use",
+        "philosophy": "Nossa filosofia", "philosophy_quote": "Planejar não deveria demorar mais que a viagem. O Navitra transforma horas de abas abertas em poucos minutos de swipes.", "see_how": "Veja como funciona", "app": "O app", "ready": "Pronto para encontrar <em>sua</em> rota?", "free": "Grátis no lançamento", "offline": "Funciona totalmente offline", "cancel": "Cancele quando quiser",
+        "help_line": 'Prefere olhar primeiro? Escreva para <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> ou visite a <a class="mail" href="/support.html">Central de ajuda</a>.',
+        "statement_title": 'Criado para viagens reais — <span class="accent">não itinerários perfeitos.</span>', "statement_a": "Viagens reais mudam. O almoço demora, uma praça rouba uma hora, chove no mirante. O Navitra ajusta o resto do dia em segundos.", "statement_b": "Quando o plano sobrevive à realidade, compartilhe como link.", "quote": '"Planejar uma viagem não deveria levar mais tempo que a própria viagem."', "team": "— Equipe Navitra, Istambul",
+        "numbers_title": "Os números que realmente sustentamos.", "numbers_lead": "Sem downloads inflados ou avaliações inventadas: só o que o produto faz.", "route_time": "De lugares escolhidos a uma rota de vários dias.", "languages_stat": "Idiomas — interface e guias de voz.", "trophies": "Troféus de lugares para coletar pelo mundo.", "signal": "Barras de sinal necessárias depois que a viagem é baixada.", "benchmark": "* Tempo mediano em benchmarks internos, abril de 2026.",
+        "faq_intro": "Suas perguntas, respondidas.", "faq_lead": "Não encontrou o que procura? A Central de ajuda tem mais detalhes.", "visit_help": "Visitar Central de ajuda", "share_q": "Posso compartilhar minha rota?", "share_a": "Toda rota pode ser compartilhada por link ou QR. Amigos veem o plano no navegador.", "delete_q": "Como cancelo ou apago meus dados?", "delete_a": 'Assinaturas são gerenciadas pela Apple ou Google. Para apagar dados, use o app ou a <a href="/delete.html">página de exclusão de conta</a>; detalhes na <a href="/privacy.html">Política de Privacidade</a>.', "rights": "Navitra. Todos os direitos reservados. Nascido em Istambul.",
+    },
+    "ar": {
+        "skip": "تجاوز إلى المحتوى", "menu": "القائمة", "try_label": "جرّبه هنا", "try_title": "لا تقرأ عن السحب فقط. <em>جرّبه.</em>",
+        "try_lead": "تخيّل أنك متجه إلى روما. اسحب المكان يمينًا لحفظه أو يسارًا لتجاوزه. كل ما تحتفظ به يتحول إلى مسار يومي محسّن.", "saved": "محفوظة في قائمتك", "rome": "روما، إيطاليا", "save": "حفظ", "pass": "تجاوز", "stops": "محطات في قائمتك لروما", "swipe_again": "اسحب من جديد", "hint": "اسحب البطاقة أو اضغط زرًا أو استخدم",
+        "philosophy": "فلسفتنا", "philosophy_quote": "لا نؤمن أن التخطيط يجب أن يستغرق وقتًا أطول من الرحلة. Navitra يحول ساعات البحث إلى دقائق من الاختيار.", "see_how": "شاهد طريقة العمل", "app": "التطبيق", "ready": "هل أنت جاهز لاكتشاف <em>مسارك</em>؟", "free": "مجاني عند الإطلاق", "offline": "يعمل بالكامل دون إنترنت", "cancel": "إلغاء في أي وقت",
+        "help_line": 'تريد الاستكشاف أولًا؟ راسلنا على <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> أو افتح <a class="mail" href="/support.html">مركز المساعدة</a>.',
+        "statement_title": 'مصمم للسفر الحقيقي — <span class="accent">وليس للخطط المثالية فقط.</span>', "statement_a": "الرحلات الحقيقية تتغير. الغداء يطول، وساحة جميلة تأخذ وقتًا، والمطر يفاجئك. Navitra يعيد تشكيل بقية اليوم في ثوانٍ.", "statement_b": "وعندما ينجح المسار في الواقع، شاركه كرابط.", "quote": '"تخطيط الرحلة لا يجب أن يستغرق وقتًا أطول من الرحلة نفسها."', "team": "— فريق Navitra، إسطنبول",
+        "numbers_title": "الأرقام التي نثق بها فعلًا.", "numbers_lead": "لا أرقام تنزيل مبالغ فيها ولا تقييمات مخترعة — فقط ما يفعله المنتج.", "route_time": "من الأماكن المختارة إلى مسار متعدد الأيام.", "languages_stat": "لغات — للواجهة والأدلة الصوتية.", "trophies": "جوائز معالم تجمعها حول العالم.", "signal": "أشرطة إشارة تحتاجها بعد تنزيل الرحلة.", "benchmark": "* الزمن الوسيط لإنشاء المسار في اختبارات داخلية، أبريل 2026.",
+        "faq_intro": "إجابات على أسئلتك.", "faq_lead": "لم تجد ما تبحث عنه؟ مركز المساعدة يقدم تفاصيل أكثر.", "visit_help": "زيارة مركز المساعدة", "share_q": "هل يمكنني مشاركة مساري؟", "share_a": "يمكن مشاركة كل مسار كرابط أو رمز QR. يراه الأصدقاء في المتصفح.", "delete_q": "كيف ألغي أو أحذف بياناتي؟", "delete_a": 'تُدار الاشتراكات عبر Apple أو Google. لحذف البيانات استخدم التطبيق أو <a href="/delete.html">صفحة حذف الحساب</a>؛ التفاصيل في <a href="/privacy.html">سياسة الخصوصية</a>.', "rights": "Navitra. جميع الحقوق محفوظة. وُلد في إسطنبول.",
+    },
+    "ja": {
+        "skip": "コンテンツへ移動", "menu": "メニュー", "try_label": "ここで試す", "try_title": "スワイプを読むだけでなく、<em>試してみましょう。</em>",
+        "try_lead": "ローマへ行くとします。保存したい場所は右へ、スキップする場所は左へドラッグ。残した場所が最適化された日別ルートになります。", "saved": "ショートリストに保存", "rome": "ローマ、イタリア", "save": "保存", "pass": "スキップ", "stops": "ローマリストのスポット", "swipe_again": "もう一度スワイプ", "hint": "カードをドラッグ、ボタンをタップ、またはキーを使用",
+        "philosophy": "私たちの考え方", "philosophy_quote": "旅行の計画が旅行そのものより長くなるべきではありません。Navitraは何時間もの調査を数分のスワイプに変えます。", "see_how": "使い方を見る", "app": "アプリ", "ready": "<em>あなたの</em>ルートを見つけますか？", "free": "公開時無料", "offline": "完全オフライン対応", "cancel": "いつでも解約",
+        "help_line": 'まず確認したいですか？ <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> へ連絡するか、<a class="mail" href="/support.html">ヘルプセンター</a>をご覧ください。',
+        "statement_title": '実際の旅のために設計 — <span class="accent">完璧な予定表のためではありません。</span>', "statement_a": "実際の旅は変わります。昼食が長引き、広場で時間を使い、雨も降ります。Navitraは残りの一日を数秒で調整します。", "statement_b": "現実に耐えたプランはリンクとして共有できます。", "quote": '"旅行計画は、旅行そのものより長くかかるべきではありません。"', "team": "— Navitraチーム、イスタンブール",
+        "numbers_title": "私たちが責任を持てる数字。", "numbers_lead": "誇張したダウンロード数や架空の評価ではなく、製品が実際に行うことだけ。", "route_time": "選んだ場所から複数日の完成ルートへ。", "languages_stat": "言語 — インターフェースと音声ガイド。", "trophies": "世界中で集められるランドマークトロフィー。", "signal": "旅行をダウンロードした後に必要な通信バー。", "benchmark": "* 2026年4月の内部ベンチマークにおける中央値。",
+        "faq_intro": "よくある質問に回答します。", "faq_lead": "見つからない場合はヘルプセンターをご覧ください。", "visit_help": "ヘルプセンターへ", "share_q": "ルートを友達と共有できますか？", "share_a": "各ルートはリンクまたはQRコードで共有できます。友達はブラウザでプランを確認できます。", "delete_q": "解約やデータ削除は？", "delete_a": 'サブスクリプションはAppleまたはGoogleで管理されます。データ削除はアプリまたは<a href="/delete.html">アカウント削除ページ</a>から行えます。詳細は<a href="/privacy.html">プライバシーポリシー</a>をご覧ください。', "rights": "Navitra. All rights reserved. イスタンブール生まれ。",
+    },
+    "ko": {
+        "skip": "본문으로 이동", "menu": "메뉴", "try_label": "여기서 체험하기", "try_title": "스와이프를 읽기만 하지 말고 <em>직접 해보세요.</em>",
+        "try_lead": "로마로 간다고 생각해보세요. 장소를 저장하려면 오른쪽, 넘기려면 왼쪽으로 끌어보세요. 남긴 장소가 최적화된 일별 루트가 됩니다.", "saved": "내 목록에 저장됨", "rome": "로마, 이탈리아", "save": "저장", "pass": "넘기기", "stops": "로마 목록의 장소", "swipe_again": "다시 스와이프", "hint": "카드를 끌거나 버튼을 누르거나 키를 사용하세요",
+        "philosophy": "우리의 철학", "philosophy_quote": "여행 계획이 여행보다 오래 걸릴 필요는 없습니다. Navitra는 몇 시간의 검색을 몇 분의 선택으로 바꿉니다.", "see_how": "작동 방식 보기", "app": "앱", "ready": "<em>나만의</em> 루트를 찾을 준비가 되었나요?", "free": "출시 시 무료", "offline": "완전 오프라인 작동", "cancel": "언제든 취소",
+        "help_line": '먼저 둘러보고 싶나요? <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a>으로 문의하거나 <a class="mail" href="/support.html">도움말 센터</a>를 확인하세요.',
+        "statement_title": '실제 여행을 위해 설계 — <span class="accent">완벽한 일정표만을 위한 것이 아닙니다.</span>', "statement_a": "실제 여행은 변합니다. 점심이 길어지고, 광장에서 시간이 흐르고, 비가 올 수도 있습니다. Navitra는 남은 하루를 몇 초 만에 조정합니다.", "statement_b": "현실을 견딘 계획은 링크로 공유할 수 있습니다.", "quote": '"여행 계획이 여행 자체보다 오래 걸려서는 안 됩니다."', "team": "— Navitra 팀, 이스탄불",
+        "numbers_title": "우리가 실제로 책임지는 숫자.", "numbers_lead": "부풀린 다운로드나 가짜 평점 없이, 제품이 실제로 하는 일만 보여줍니다.", "route_time": "선택한 장소에서 완성된 다일 루트까지.", "languages_stat": "언어 — 인터페이스와 음성 가이드.", "trophies": "전 세계에서 모을 수 있는 랜드마크 트로피.", "signal": "여행 다운로드 후 필요한 신호 막대.", "benchmark": "* 2026년 4월 내부 벤치마크의 중앙값.",
+        "faq_intro": "질문에 답해드립니다.", "faq_lead": "찾는 답이 없나요? 도움말 센터에서 더 자세히 볼 수 있습니다.", "visit_help": "도움말 센터 보기", "share_q": "루트를 친구와 공유할 수 있나요?", "share_a": "모든 루트는 링크나 QR 코드로 공유할 수 있습니다. 친구는 브라우저에서 계획을 볼 수 있습니다.", "delete_q": "취소하거나 데이터를 삭제하려면?", "delete_a": '구독은 Apple 또는 Google에서 관리됩니다. 데이터 삭제는 앱 또는 <a href="/delete.html">계정 삭제 페이지</a>에서 할 수 있으며, 자세한 내용은 <a href="/privacy.html">개인정보 처리방침</a>을 참고하세요.', "rights": "Navitra. 모든 권리 보유. 이스탄불에서 시작되었습니다.",
+    },
+    "ru": {
+        "skip": "Перейти к содержанию", "menu": "Меню", "try_label": "Попробуйте здесь", "try_title": "Не просто читайте про свайп. <em>Попробуйте.</em>",
+        "try_lead": "Представьте, что едете в Рим. Перетащите место вправо, чтобы сохранить, или влево, чтобы пропустить. Все сохраненное станет оптимизированным маршрутом.", "saved": "сохранено в списке", "rome": "Рим, Италия", "save": "Сохранить", "pass": "Пропустить", "stops": "остановок в списке Рима", "swipe_again": "Свайпнуть снова", "hint": "Перетащите карточку, нажмите кнопку или используйте",
+        "philosophy": "Наша философия", "philosophy_quote": "Планирование не должно длиться дольше самой поездки. Navitra превращает часы вкладок в несколько минут выбора.", "see_how": "Посмотреть, как работает", "app": "Приложение", "ready": "Готовы найти <em>свой</em> маршрут?", "free": "Бесплатно на запуске", "offline": "Полностью работает офлайн", "cancel": "Отмена в любое время",
+        "help_line": 'Хотите сначала осмотреться? Напишите на <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> или откройте <a class="mail" href="/support.html">центр помощи</a>.',
+        "statement_title": 'Создано для реальных поездок — <span class="accent">не для идеальных расписаний.</span>', "statement_a": "Реальные поездки меняются: обед затягивается, площадь крадет час, дождь начинается у смотровой точки. Navitra перестраивает остаток дня за секунды.", "statement_b": "Если план выдержал реальность, поделитесь им ссылкой.", "quote": '"Планирование поездки не должно занимать больше времени, чем сама поездка."', "team": "— Команда Navitra, Стамбул",
+        "numbers_title": "Цифры, за которые мы отвечаем.", "numbers_lead": "Без раздутых загрузок и выдуманных оценок — только то, что продукт реально делает.", "route_time": "От выбранных мест до готового маршрута на несколько дней.", "languages_stat": "Языки — интерфейс и аудиогиды.", "trophies": "Трофеи достопримечательностей по всему миру.", "signal": "Деления сети, нужные после загрузки поездки.", "benchmark": "* Медианное время генерации маршрута во внутренних тестах, апрель 2026.",
+        "faq_intro": "Ответы на ваши вопросы.", "faq_lead": "Не нашли ответ? В центре помощи больше деталей.", "visit_help": "Открыть центр помощи", "share_q": "Можно поделиться маршрутом?", "share_a": "Каждый маршрут можно отправить ссылкой или QR-кодом. Друзья увидят план в браузере.", "delete_q": "Как отменить или удалить данные?", "delete_a": 'Подписки управляются Apple или Google. Данные можно удалить в приложении или на <a href="/delete.html">странице удаления аккаунта</a>; подробности в <a href="/privacy.html">политике конфиденциальности</a>.', "rights": "Navitra. Все права защищены. Родом из Стамбула.",
+    },
+    "zh-hans": {
+        "skip": "跳到内容", "menu": "菜单", "try_label": "在这里试试", "try_title": "不要只读滑动介绍。<em>亲自试试。</em>",
+        "try_lead": "假设你要去罗马。把地点向右拖动即可保存，向左拖动即可跳过。保留下来的地点会变成优化后的每日路线。", "saved": "已保存到清单", "rome": "罗马，意大利", "save": "保存", "pass": "跳过", "stops": "罗马清单中的站点", "swipe_again": "再次滑动", "hint": "拖动卡片、点击按钮，或使用",
+        "philosophy": "我们的理念", "philosophy_quote": "旅行规划不该比旅行本身更耗时。Navitra 把数小时查资料变成几分钟选择。", "see_how": "查看如何使用", "app": "应用", "ready": "准备好找到<em>你的</em>路线了吗？", "free": "上线时免费", "offline": "完全离线可用", "cancel": "可随时取消",
+        "help_line": '想先了解一下？写信至 <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a>，或查看<a class="mail" href="/support.html">帮助中心</a>。',
+        "statement_title": '为真实旅行打造 — <span class="accent">不是只为完美行程表。</span>', "statement_a": "真实旅行总会变化：午餐变长、广场停留更久、雨正好下在观景点。Navitra 会在几秒内调整剩余行程。", "statement_b": "当计划经得起现实，就可以用链接分享。", "quote": '"规划旅行不应比旅行本身更耗时。"', "team": "— Navitra 团队，伊斯坦布尔",
+        "numbers_title": "我们真正负责的数字。", "numbers_lead": "没有夸大的下载量或虚构评分，只有产品实际做到的事情。", "route_time": "从已选地点到完成的多日路线。", "languages_stat": "语言 — 界面和语音导览。", "trophies": "在世界各地收集的地标奖章。", "signal": "旅程下载后所需的信号格数。", "benchmark": "* 内部基准测试中的中位路线生成时间，2026 年 4 月。",
+        "faq_intro": "你的问题，这里回答。", "faq_lead": "没找到答案？帮助中心有更多细节。", "visit_help": "访问帮助中心", "share_q": "可以和朋友分享路线吗？", "share_a": "每条路线都可以通过链接或二维码分享。朋友可在浏览器中查看计划。", "delete_q": "如何取消或删除数据？", "delete_a": '订阅由 Apple 或 Google 管理。删除数据可在应用内或<a href="/delete.html">账号删除页面</a>完成；详情见<a href="/privacy.html">隐私政策</a>。', "rights": "Navitra. 保留所有权利。诞生于伊斯坦布尔。",
+    },
+})
+
+
+def _clone_extra(code: str, key: str) -> str:
+    return CLONE_EXTRA.get(code, {}).get(key, CLONE_EXTRA["en"].get(key, ""))
+
+
+def _canonical_url(code: str) -> str:
+    return f"https://navitraapp.com/{code}/"
+
+
+def _localized_template(code: str, t: dict[str, object]) -> str:
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    lang = str(t["lang"])
+    # The primary landing page layout is designed left-to-right. Keeping Arabic
+    # in the same layout prevents the hero/absolute elements from shifting off canvas.
+    direction = "ltr"
+    canonical = _canonical_url(code)
+
+    html = re.sub(
+        r'<html lang="en" class="no-js">',
+        f'<html lang="{escape(lang)}" dir="{escape(direction)}" class="no-js">',
+        html,
+        count=1,
+    )
+    html = re.sub(r"<title>.*?</title>", f"<title>{escape(str(t['title']))}</title>", html, count=1, flags=re.S)
+    html = re.sub(
+        r'<meta name="description" content="[^"]*">',
+        f'<meta name="description" content="{escape(str(t["description"]))}">',
+        html,
+        count=1,
+    )
+    html = re.sub(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="{escape(str(t["title"]))}">', html, count=1)
+    html = re.sub(r'<meta property="og:description" content="[^"]*">', f'<meta property="og:description" content="{escape(str(t["description"]))}">', html, count=1)
+    html = re.sub(r'<meta property="og:url" content="[^"]*">', f'<meta property="og:url" content="{canonical}">', html, count=1)
+    html = re.sub(r'<meta name="twitter:title" content="[^"]*">', f'<meta name="twitter:title" content="{escape(str(t["title"]))}">', html, count=1)
+    html = re.sub(r'<meta name="twitter:description" content="[^"]*">', f'<meta name="twitter:description" content="{escape(str(t["description"]))}">', html, count=1)
+    html = html.replace('<link rel="canonical" href="https://navitraapp.com/">', f'<link rel="canonical" href="{canonical}">')
+
+    # Localized pages live one directory down, so root-level assets/pages must be absolute.
+    path_replacements = {
+        'href="manifest.json"': 'href="/manifest.json"',
+        'href="favicon.png': 'href="/favicon.png',
+        'href="favicon.ico': 'href="/favicon.ico',
+        'href="apple-touch-icon.png': 'href="/apple-touch-icon.png',
+        'href="img/': 'href="/img/',
+        'src="img/': 'src="/img/',
+        'src="logo-white.png': 'src="/logo-white.png',
+        'href="support.html"': 'href="/support.html"',
+        'href="delete.html"': 'href="/delete.html"',
+        'href="privacy.html"': 'href="/privacy.html"',
+        'href="terms.html"': 'href="/terms.html"',
+    }
+    for old, new in path_replacements.items():
+        html = html.replace(old, new)
+
+    features = t["features"]
+    route_bullets = t["route_bullets"]
+    steps = t["steps"]
+    faqs = t["faqs"]
+    u = UI_LABELS[code]
+
+    pairs = [
+        ("Skip to content", _clone_extra(code, "skip")),
+        ("Menu", _clone_extra(code, "menu")),
+        ("Features", str(t["nav_features"])),
+        ("How it works", str(t["nav_how"])),
+        ("Pricing", str(t["nav_pricing"])),
+        ("Support", str(t["nav_support"])),
+        ("Launch status", str(t["launch"])),
+        ("App Store soon", str(t["app_store"])),
+        ("Google Play later", str(t["google_play"])),
+        ("Born in Istanbul<br><strong>Made for every city</strong>", f"{escape(str(t['hero_fact']))}<br><strong>{escape(str(t['hero_fact_strong']))}</strong>"),
+        ('<h1 class="display">Plan smarter,<br>travel <em>better</em>.</h1>', f'<h1 class="display">{t["hero_title"]}</h1>'),
+        ("Navitra turns the places you love into an optimized day-by-day route — opening hours respected, walking minimized, stories narrated. Your AI travel companion, online or off.", str(t["hero_body"])),
+        ("If only trip planning were as simple as flipping a switch.", str(t["features_title"])),
+        ("With Navitra, it's a swipe.", str(t["features_accent"])),
+        ("Four superpowers, one app. These are the ways Navitra carries the logistics so you can carry the memories.", str(t["features_lead"])),
+        ("AI Route Planning", features[0][0]),
+        ("Swipe the places you love — AI builds each day around opening hours, distances and your pace.", features[0][1]),
+        ("AI Voice Guide", features[1][0]),
+        ("A storyteller in your pocket. Hear the history of every stop as you walk up to it, in your language.", features[1][1]),
+        ("Offline Maps", features[2][0]),
+        ("Download your whole trip before you fly. Maps, routes and voice guides — zero signal required.", features[2][1]),
+        ("Smart Discovery", features[3][0]),
+        ("Hidden gems along your route, meal stops when you're hungry — suggested at exactly the right moment.", features[3][1]),
+        ("Try it right here", _clone_extra(code, "try_label")),
+        ("Don't just read about the swipe. <em>Do it.</em>", _clone_extra(code, "try_title")),
+        ("Say you're headed to Rome. Drag a place right to save it, left to pass — exactly like in the app. Everything you keep becomes an optimized day-by-day route. This is just the fun part.", _clone_extra(code, "try_lead")),
+        ("saved to your shortlist", _clone_extra(code, "saved")),
+        ("Rome, Italy", _clone_extra(code, "rome")),
+        ("Save", _clone_extra(code, "save")),
+        ("Pass", _clone_extra(code, "pass")),
+        ("stops on your Rome list", _clone_extra(code, "stops")),
+        ("Swipe again", _clone_extra(code, "swipe_again")),
+        ("Drag the card, tap a button, or use", _clone_extra(code, "hint")),
+        ("Our philosophy", _clone_extra(code, "philosophy")),
+        ("We don't believe planning should take longer than the trip. Navitra turns hours of tab-juggling into a couple of minutes of swiping — so the adventure starts before you land.", _clone_extra(code, "philosophy_quote")),
+        ("See how it works", _clone_extra(code, "see_how")),
+        ("The app", _clone_extra(code, "app")),
+        ("From wishlist to walking route, while your coffee is still hot.", str(t["route_title"])),
+        ("Pick a city, swipe through its highlights, and watch Navitra assemble a day-by-day plan that actually works on the ground.", str(t["route_body"])),
+        ("Opening hours respected", route_bullets[0][0]),
+        ("— closed on Monday? It won't be on your Monday.", f"— {route_bullets[0][1]}"),
+        ("Geographically clustered days", route_bullets[1][0]),
+        ("— no backtracking across town for one museum.", f"— {route_bullets[1][1]}"),
+        ("Your hotel in the loop", route_bullets[2][0]),
+        ("— every day starts and ends where you actually sleep.", f"— {route_bullets[2][1]}"),
+        ("Remix anytime", route_bullets[3][0]),
+        ("— tired, hungry or off-script? One tap reshapes the rest of the day.", f"— {route_bullets[3][1]}"),
+        ("AI optimized", "AI"),
+        ("opening hours · distances", route_bullets[0][0].lower()),
+        ("Voice guide ready", str(t["voice_guides"])),
+        ("Getting from \"where should we even start?\" to a finished plan takes four steps — and most of them are fun.", str(t["steps_lead"])),
+        ("Pick a city", steps[0][0]),
+        ("Search any destination on Earth, or tell the assistant what kind of trip you're dreaming about — even a photo works. Navitra knows the highlights and the hidden corners.", steps[0][1]),
+        ("Swipe what you love", steps[1][0]),
+        ("Museums or markets, viewpoints or street food — swipe right on what excites you, left on what doesn't. Navitra learns your taste as you go.", steps[1][1]),
+        ("AI builds your days", steps[2][0]),
+        ("The route engine sequences every stop around opening hours, walking distances and your daily energy — then balances it across the days of your trip.", steps[2][1]),
+        ("Explore, with stories", steps[3][0]),
+        ("Follow the route with turn-by-turn directions, listen to voice guides as you arrive, and let it all work offline when the roaming bill says no.", steps[3][1]),
+        ('Ready to find <em>your</em> path?', _clone_extra(code, "ready")),
+        ("Navitra is preparing to launch on iOS, with Android to follow. Premium unlocks voice guides, offline maps and higher route limits, with a 7-day free trial on the yearly plan.", str(t["pricing_lead"])),
+        ("Free at launch", _clone_extra(code, "free")),
+        ("Works fully offline", _clone_extra(code, "offline")),
+        ("Cancel anytime", _clone_extra(code, "cancel")),
+        ('Prefer to look around first? Write to us at <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> or browse the <a class="mail" href="/support.html">Help Center</a> — we\'re happy to help.', _clone_extra(code, "help_line")),
+        ("A plan that fits your trip.", str(t["pricing_title"])),
+        ("Navitra will be free to download and free to plan with at launch. Premium unlocks the full experience, with simple monthly and yearly options. The yearly plan starts with a 7-day free trial.", str(t["pricing_lead"])),
+        ("Best value", str(t["best_value"])),
+        ("Yearly", str(t["yearly"])),
+        ("For the frequent traveler.", str(t["yearly_for"])),
+        ("/ year", f"/ {u['year_unit']}"),
+        ("7-day free trial included", str(t["trial"])),
+        ("Everything in Premium, all year", str(t["all_year"])),
+        ("About $3.33 a month", str(t["month_equiv"])),
+        ("Budget planning &amp; travel journal", str(t["full_access"])),
+        ("Every future Premium feature", str(t["higher_limits"])),
+        ("Monthly", str(t["monthly"])),
+        ("For the big trip.", str(t["monthly_for"])),
+        ("/ month", f"/ {u['month_unit']}"),
+        ("Full Premium access", str(t["full_access"])),
+        ("AI voice guides at every stop", str(t["voice_guides"])),
+        ("Offline maps &amp; navigation", str(t["offline_nav"])),
+        ("Higher AI route limits &amp; remixes", str(t["higher_limits"])),
+        ("Prices in USD — your app store shows local pricing. The yearly plan includes a 7-day free trial that converts to a paid subscription unless cancelled beforehand. Subscriptions renew automatically and can be cancelled anytime in your store settings.", str(t["price_note"])),
+        ('Built around real travel — <span class="accent">not perfect itineraries.</span>', _clone_extra(code, "statement_title")),
+        ("Real trips drift. Lunch runs long, a square steals an hour, it rains exactly when you reach the viewpoint. Navitra is built for that: tell it you're tired or hungry and it reshapes the rest of the day in seconds.", _clone_extra(code, "statement_a")),
+        ("And when plans survive contact with reality, share them — any route becomes a link your friends can open in a browser and adopt with one tap.", _clone_extra(code, "statement_b")),
+        ('"Planning a trip shouldn\'t take longer than the trip itself."', _clone_extra(code, "quote")),
+        ("— The Navitra team, Istanbul", _clone_extra(code, "team")),
+        ("The numbers we actually stand behind.", _clone_extra(code, "numbers_title")),
+        ("No inflated download counts, no invented ratings — just what the product does, measurably.", _clone_extra(code, "numbers_lead")),
+        ("From picked places to a finished multi-day route.", _clone_extra(code, "route_time")),
+        ("Languages — interface and voice guides alike.", _clone_extra(code, "languages_stat")),
+        ("Landmark trophies to collect as you check in around the world.", _clone_extra(code, "trophies")),
+        ("Bars of signal needed once your trip is downloaded.", _clone_extra(code, "signal")),
+        ("* Median route generation time in internal benchmarks, April 2026.", _clone_extra(code, "benchmark")),
+        ("FAQ", str(t["faq_title"])),
+        ("Your questions, answered.", _clone_extra(code, "faq_intro")),
+        ("Didn't find what you're looking for? The Help Center goes deeper, and a human reads every e-mail.", _clone_extra(code, "faq_lead")),
+        ("Visit Help Center", _clone_extra(code, "visit_help")),
+        ("Is Navitra free to use?", faqs[0][0]),
+        ("Yes — Navitra will be free to download and plan with at launch. Premium adds AI voice guides, offline maps, budget planning and higher AI route limits. The monthly plan is $5.99, and the yearly plan is $39.99 with a 7-day free trial.", faqs[0][1]),
+        ("How does the AI build my route?", faqs[1][0] if len(faqs) > 1 else ""),
+        ("Navitra's route engine treats your trip like a real logistics problem: it checks each place's opening hours, clusters nearby stops into the same day, sequences them to minimize walking, and reserves realistic time at every stop — then the AI layers in descriptions, tips and meal suggestions.", str(t["route_body"])),
+        ("Does it really work offline?", faqs[1][0] if len(faqs) > 1 else ""),
+        ("Yes. With Premium you download your destination before you fly — map tiles, your routes and voice guides are stored on the device. Airplane mode, foreign SIM dramas, underground metro: all fine.", faqs[1][1] if len(faqs) > 1 else ""),
+        ("Which languages does Navitra speak?", str(t["voice_guides"])),
+        ("Seven, fully: English, Turkish, German, Spanish, French, Arabic and Chinese — the interface, the AI plans and the voice guides all follow your language.", _clone_extra(code, "languages_stat")),
+        ("Can I share my route with friends?", _clone_extra(code, "share_q")),
+        ("Every route can be shared as a link or QR code. Friends see the full plan on an interactive map right in their browser — no account needed — and can adopt it into their own Navitra with one tap.", _clone_extra(code, "share_a")),
+        ("How do I cancel or delete my data?", _clone_extra(code, "delete_q")),
+        ('Subscriptions are managed by Apple or Google — cancel anytime from your store account, no questions asked. Want your data gone too? Use the in-app option or the <a href="/delete.html">account deletion page</a>; details are in our <a href="/privacy.html">Privacy Policy</a>.', _clone_extra(code, "delete_a")),
+        ('<h2 class="reveal">The world is waiting.<br><em>Your route is ready.</em></h2>', f'<h2 class="reveal">{t["final_title"]}</h2>'),
+        ('Navitra is preparing for iOS launch, with Android to follow — turn your next "someday" into a day-by-day plan.', str(t["final_lead"])),
+        ("Free at launch · 7-day trial on the yearly plan · Cancel anytime", str(t["tiny"])),
+        ("AI-powered travel companion that helps you discover, plan and navigate your perfect trip.", str(t["footer"])),
+        ("Product", str(t["nav_features"])),
+        ("Help Center", str(t["nav_support"])),
+        ("Contact us", u["support"]),
+        ("Delete account", _clone_extra(code, "delete_q")),
+        ("Legal", u["legal"]),
+        ("Privacy Policy", u["privacy"]),
+        ("Terms of Service", u["terms"]),
+        ("Languages", u["languages"]),
+        ("Navitra. All rights reserved. Born in Istanbul.", _clone_extra(code, "rights")),
+    ]
+    for old, new in pairs:
+        if old:
+            html = html.replace(old, escape(new) if "<" not in new and "&" not in new else new)
+
+    active = f'<a href="/{code}/">{LANGS[code]["name"]}</a>'
+    html = html.replace(active, f'<a class="active" href="/{code}/">{LANGS[code]["name"]}</a>')
+    return html
+
+
 def write_pages() -> None:
     for code, data in LOCALES.items():
         directory = ROOT / code
         directory.mkdir(exist_ok=True)
-        (directory / "index.html").write_text(render_page(code, data), encoding="utf-8", newline="\n")
+        (directory / "index.html").write_text(_localized_template(code, data), encoding="utf-8", newline="\n")
 
 
 def write_sitemap() -> None:
