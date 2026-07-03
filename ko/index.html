@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navitra - AI 여행 플래너 | 스마트 여행 루트</title>
+    <meta name="description" content="Navitra는 좋아하는 장소를 음성 가이드, 오프라인 지도, 스마트 추천이 담긴 최적의 일자별 루트로 바꿉니다.">
+    <meta property="og:title" content="Navitra - AI 여행 플래너 | 스마트 여행 루트">
+    <meta property="og:description" content="Navitra는 좋아하는 장소를 음성 가이드, 오프라인 지도, 스마트 추천이 담긴 최적의 일자별 루트로 바꿉니다.">
+    <meta property="og:image" content="https://navitraapp.com/og-image.jpg">
+    <meta property="og:url" content="https://navitraapp.com/ko/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Navitra - AI 여행 플래너 | 스마트 여행 루트">
+    <meta name="twitter:description" content="Navitra는 좋아하는 장소를 음성 가이드, 오프라인 지도, 스마트 추천이 담긴 최적의 일자별 루트로 바꿉니다.">
+    <meta name="twitter:image" content="https://navitraapp.com/og-image.jpg">
+    <link rel="canonical" href="https://navitraapp.com/ko/">
+    <link rel="alternate" hreflang="x-default" href="https://navitraapp.com/">
+    <link rel="alternate" hreflang="en" href="https://navitraapp.com/">
+    <link rel="alternate" hreflang="tr" href="https://navitraapp.com/tr/">
+    <link rel="alternate" hreflang="de" href="https://navitraapp.com/de/">
+    <link rel="alternate" hreflang="es" href="https://navitraapp.com/es/">
+    <link rel="alternate" hreflang="fr" href="https://navitraapp.com/fr/">
+    <link rel="alternate" hreflang="it" href="https://navitraapp.com/it/">
+    <link rel="alternate" hreflang="nl" href="https://navitraapp.com/nl/">
+    <link rel="alternate" hreflang="pt-BR" href="https://navitraapp.com/pt-br/">
+    <link rel="alternate" hreflang="ar" href="https://navitraapp.com/ar/">
+    <link rel="alternate" hreflang="ja" href="https://navitraapp.com/ja/">
+    <link rel="alternate" hreflang="ko" href="https://navitraapp.com/ko/">
+    <link rel="alternate" hreflang="ru" href="https://navitraapp.com/ru/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://navitraapp.com/zh-hans/">
+    <link rel="icon" type="image/png" href="/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+    <meta name="theme-color" content="#12121F">
+    <style>
+        :root { --night:#12121f; --ink:#20202b; --mut:#6f6d78; --cream:#faf8f1; --paper:#fffaf0; --line:rgba(32,32,43,.13); --sun:#ff5a2e; --sun2:#ff865f; }
+        * { box-sizing:border-box; }
+        body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:var(--cream); color:var(--ink); }
+        a { color:inherit; text-decoration:none; }
+        .wrap { width:min(1180px, calc(100% - 40px)); margin:0 auto; }
+        nav { position:sticky; top:0; z-index:5; background:rgba(18,18,31,.92); color:white; backdrop-filter:blur(18px); border-bottom:1px solid rgba(255,255,255,.12); }
+        .nav-inner { height:72px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+        .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:21px; }
+        .brand img { width:32px; height:32px; border-radius:9px; }
+        .nav-links { display:flex; align-items:center; gap:20px; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+        .nav-links a { opacity:.86; }
+        .pill { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:13px 24px; border-radius:999px; font-weight:800; font-size:13px; letter-spacing:.08em; text-transform:uppercase; background:var(--sun); color:white; box-shadow:0 16px 35px rgba(255,90,46,.25); }
+        .pill.alt { background:transparent; color:var(--ink); border:1px solid var(--line); box-shadow:none; }
+        .hero { background:radial-gradient(circle at 75% 20%, rgba(255,90,46,.28), transparent 26%), linear-gradient(135deg, #11111f, #272137 58%, #5b2e24); color:white; padding:86px 0 78px; overflow:hidden; }
+        .hero-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:54px; align-items:center; }
+        .eyebrow { color:var(--sun2); font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+        h1 { font-size:clamp(3rem, 7vw, 6.4rem); line-height:.94; margin:18px 0 22px; letter-spacing:-.04em; }
+        h1 em, .accent { color:var(--sun2); font-style:normal; }
+        .hero p { color:rgba(255,255,255,.82); font-size:clamp(1.04rem, 1.7vw, 1.32rem); line-height:1.55; max-width:620px; }
+        .cta-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+        .ghost { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.28); box-shadow:none; }
+        .visual { border-radius:8px; min-height:560px; background:#f4f2ed url('/img/app-route-result.png') center/contain no-repeat; box-shadow:0 34px 80px rgba(0,0,0,.32); }
+        section { padding:86px 0; }
+        .section-head { max-width:850px; margin-bottom:34px; }
+        h2 { font-size:clamp(2.1rem, 4vw, 4.2rem); line-height:1.02; letter-spacing:-.035em; margin:8px 0 16px; }
+        .lead { font-size:1.1rem; line-height:1.65; color:var(--mut); max-width:760px; }
+        .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .grid4 article, .plan-card, .price-card, details { background:white; border:1px solid var(--line); border-radius:8px; padding:24px; box-shadow:0 14px 42px rgba(30,30,45,.06); }
+        h3 { margin:0 0 10px; font-size:1.18rem; }
+        article p, details p, li small { color:var(--mut); line-height:1.55; }
+        .route { background:var(--paper); }
+        .split { display:grid; grid-template-columns:.95fr 1.05fr; gap:40px; align-items:start; }
+        .plan-card ul { list-style:none; padding:0; margin:0; display:grid; gap:14px; }
+        .plan-card li { display:grid; gap:4px; padding-bottom:14px; border-bottom:1px solid var(--line); }
+        .plan-card li:last-child { border-bottom:0; padding-bottom:0; }
+        .plan-card span { font-weight:800; }
+        .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; counter-reset:step; }
+        .steps b { display:inline-grid; place-items:center; width:40px; height:40px; border-radius:50%; background:var(--sun); color:white; margin-bottom:18px; }
+        .pricing { background:#171725; color:white; }
+        .pricing .lead { color:rgba(255,255,255,.68); }
+        .prices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-width:940px; }
+        .price-card { background:#222235; border-color:rgba(255,255,255,.13); color:white; }
+        .price-card.hot { background:linear-gradient(160deg, #ff5a2e, #c44324); }
+        .badge { display:inline-flex; padding:7px 10px; border-radius:999px; background:rgba(255,255,255,.16); font-size:12px; font-weight:800; margin-bottom:16px; }
+        .amount { font-size:2.8rem; font-weight:900; margin:12px 0; }
+        .amount span { font-size:1rem; opacity:.72; }
+        .price-card ul { margin:18px 0 0; padding-inline-start:20px; line-height:1.8; color:rgba(255,255,255,.82); }
+        .note { color:rgba(255,255,255,.62); font-size:.9rem; line-height:1.55; margin-top:20px; }
+        .faq-list { display:grid; gap:12px; max-width:860px; }
+        summary { cursor:pointer; font-weight:800; }
+        details p { margin-bottom:0; }
+        .final { text-align:center; background:var(--night); color:white; }
+        .final p { color:rgba(255,255,255,.72); }
+        footer { background:#0d0d17; color:white; padding:48px 0; }
+        .footer-grid { display:grid; grid-template-columns:1.3fr repeat(3,auto); gap:32px; }
+        footer p, footer a { color:rgba(255,255,255,.72); }
+        .lang-list { display:flex; flex-wrap:wrap; gap:8px; max-width:520px; }
+        .lang-list a { border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:7px 11px; font-size:12px; }
+        .lang-list .active { background:white; color:var(--night); }
+        html[dir="rtl"] .nav-links, html[dir="rtl"] .cta-row, html[dir="rtl"] .lang-list { flex-direction:row-reverse; }
+        @media (max-width:900px) { .hero-grid,.split,.prices,.footer-grid { grid-template-columns:1fr; } .grid4,.steps { grid-template-columns:1fr 1fr; } .nav-links { display:none; } .visual { min-height:520px; } }
+        @media (max-width:560px) { .grid4,.steps { grid-template-columns:1fr; } h1 { font-size:3rem; } section { padding:64px 0; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="wrap nav-inner">
+            <a class="brand" href="/"><img src="/logo-white.png" alt="">Navitra</a>
+            <div class="nav-links">
+                <a href="#features">기능</a>
+                <a href="#how">사용 방법</a>
+                <a href="#pricing">가격</a>
+                <a href="/support.html">지원</a>
+                <a class="pill" href="#download">출시 상태</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="wrap hero-grid">
+            <div>
+                <div class="eyebrow">이스탄불에서 시작 · 모든 도시를 위해</div>
+                <h1>더 똑똑하게 계획하고,<br>더 좋게 <em>여행하세요</em>.</h1>
+                <p>Navitra는 좋아하는 장소를 영업시간, 거리, 여행 속도에 맞춘 일자별 루트로 정리합니다. 온라인과 오프라인에서 함께하는 AI 여행 동반자입니다.</p>
+                <div class="cta-row">
+                    <a class="pill" href="#download">App Store 곧 출시</a>
+                    <a class="pill ghost" href="#download">Google Play 추후 공개</a>
+                </div>
+            </div>
+            <div class="visual" role="img" aria-label="Navitra 경로 계획 미리보기"></div>
+        </div>
+    </header>
+
+    <main>
+        <section id="features">
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">Navitra</div>
+                    <h2>여행 계획은 복잡할 필요가 없습니다. <span class="accent">Navitra에서는 선택만 하면 됩니다.</span></h2>
+                    <p class="lead">복잡한 동선은 Navitra가 맡고, 당신은 여행에 집중하세요.</p>
+                </div>
+                <div class="grid4"><article><h3>AI 루트 계획</h3><p>가고 싶은 곳을 고르면 AI가 시간, 거리, 속도에 맞춰 하루를 구성합니다.</p></article>
+<article><h3>AI 음성 가이드</h3><p>지원되는 내레이션 언어로 각 장소의 이야기를 들을 수 있습니다.</p></article>
+<article><h3>오프라인 지도</h3><p>출발 전 여행, 지도, 음성 가이드를 저장하세요. 신호가 없어도 계속됩니다.</p></article>
+<article><h3>스마트 발견</h3><p>숨은 명소, 식사 시간, 대체 장소를 필요한 순간에 추천합니다.</p></article></div>
+            </div>
+        </section>
+
+        <section class="route">
+            <div class="wrap split">
+                <div>
+                    <div class="eyebrow">루트 엔진</div>
+                    <h2>위시리스트를 걸을 수 있는 루트로.</h2>
+                    <p class="lead">도시를 고르고 마음에 드는 장소를 저장하면 Navitra가 실제로 움직이기 좋은 일정을 만듭니다.</p>
+                </div>
+                <div class="plan-card">
+                    <ul><li><span>영업시간 반영</span><small>월요일 휴무라면 월요일 일정에 넣지 않습니다.</small></li>
+<li><span>지역별 일정 구성</span><small>한 곳 때문에 도시를 왔다 갔다 하지 않습니다.</small></li>
+<li><span>숙소 반영</span><small>매일 실제 숙소에서 시작하고 돌아옵니다.</small></li>
+<li><span>언제든 재구성</span><small>피곤하거나 배고프거나 계획이 바뀌면 남은 하루를 다시 짭니다.</small></li></ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="how">
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">사용 방법</div>
+                    <h2>사용 방법</h2>
+                    <p class="lead">어디서 시작할지 모르는 순간에서 완성된 계획까지 네 단계입니다.</p>
+                </div>
+                <div class="steps"><article><b>01</b><h3>도시 선택</h3><p>목적지를 검색하거나 원하는 여행 스타일을 어시스턴트에게 말하세요.</p></article>
+<article><b>02</b><h3>좋아하는 곳 선택</h3><p>박물관, 시장, 전망대, 길거리 음식까지 마음에 드는 곳을 고릅니다.</p></article>
+<article><b>03</b><h3>AI가 하루를 구성</h3><p>루트 엔진이 영업시간, 거리, 에너지에 맞춰 정렬합니다.</p></article>
+<article><b>04</b><h3>이야기와 함께 탐험</h3><p>루트를 따라가고 음성 가이드를 듣고 오프라인에서도 사용하세요.</p></article></div>
+            </div>
+        </section>
+
+        <section class="pricing" id="pricing">
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">가격</div>
+                    <h2>여행에 맞는 플랜.</h2>
+                    <p class="lead">Navitra는 출시 시 다운로드와 여행 계획이 무료입니다. Premium은 연간 플랜 7일 무료 체험과 함께 전체 경험을 엽니다.</p>
+                </div>
+                <div class="prices">
+                    <article class="price-card hot">
+                        <span class="badge">최고 가치</span>
+                        <h3>연간</h3>
+                        <p>자주 여행하는 분께.</p>
+                        <div class="amount">$39.99 <span>/ 년</span></div>
+                        <ul>
+                            <li>7일 무료 체험 포함</li>
+                            <li>일 년 내내 Premium</li>
+                            <li>월 약 $3.33</li>
+                        </ul>
+                    </article>
+                    <article class="price-card">
+                        <h3>월간</h3>
+                        <p>큰 여행을 위해.</p>
+                        <div class="amount">$5.99 <span>/ 월</span></div>
+                        <ul>
+                            <li>전체 Premium 접근</li>
+                            <li>모든 장소의 AI 음성 가이드</li>
+                            <li>오프라인 지도와 내비게이션</li>
+                            <li>더 높은 AI 루트 한도</li>
+                        </ul>
+                    </article>
+                </div>
+                <p class="note">가격은 USD 기준이며 스토어에서 현지 가격이 표시됩니다. 구독은 자동 갱신되며 스토어에서 언제든 취소할 수 있습니다.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">FAQ</div>
+                    <h2>자주 묻는 질문</h2>
+                </div>
+                <div class="faq-list"><details><summary>Navitra는 무료인가요?</summary><p>예. 출시 시 다운로드와 여행 계획은 무료입니다. Premium은 음성 가이드, 오프라인 지도, 더 높은 한도를 제공합니다.</p></details>
+<details><summary>오프라인으로 정말 작동하나요?</summary><p>Premium에서는 여행 전 목적지를 다운로드할 수 있습니다. 지도, 루트, 음성 가이드가 기기에 저장됩니다.</p></details>
+<details><summary>어떻게 취소하나요?</summary><p>구독은 App Store 또는 Google Play에서 관리하며 언제든 취소할 수 있습니다.</p></details></div>
+            </div>
+        </section>
+
+        <section class="final" id="download">
+            <div class="wrap">
+                <h2>세상이 기다립니다.<br><em>루트는 준비됐습니다.</em></h2>
+                <p class="lead" style="margin-inline:auto">Navitra는 iOS 출시를 준비 중이며 Android는 추후 공개됩니다.</p>
+                <div class="cta-row" style="justify-content:center">
+                    <a class="pill" href="#download">App Store 곧 출시</a>
+                    <a class="pill ghost" href="#download">Google Play 추후 공개</a>
+                </div>
+                <p>출시 시 무료 · 연간 플랜 7일 체험 · 언제든 취소</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap footer-grid">
+            <div>
+                <a class="brand" href="/"><img src="/logo-white.png" alt="">Navitra</a>
+                <p>발견, 계획, 이동을 돕는 AI 여행 동반자.</p>
+            </div>
+            <div>
+                <h3>지원</h3>
+                <p><a href="/support.html">지원</a><br><a href="mailto:support@navitraapp.com">support@navitraapp.com</a></p>
+            </div>
+            <div>
+                <h3>법적 고지</h3>
+                <p><a href="/privacy.html">개인정보 처리방침</a><br><a href="/terms.html">서비스 약관</a></p>
+            </div>
+            <div>
+                <h3>언어</h3>
+                <div class="lang-list"><a href="/">English</a>
+<a href="/tr/">Türkçe</a>
+<a href="/de/">Deutsch</a>
+<a href="/es/">Español</a>
+<a href="/fr/">Français</a>
+<a href="/it/">Italiano</a>
+<a href="/nl/">Nederlands</a>
+<a href="/pt-br/">Português (Brasil)</a>
+<a href="/ar/">العربية</a>
+<a href="/ja/">日本語</a>
+<a class="active" href="/ko/">한국어</a>
+<a href="/ru/">Русский</a>
+<a href="/zh-hans/">简体中文</a></div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

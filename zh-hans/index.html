@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navitra - AI旅行规划师 | 智能路线</title>
+    <meta name="description" content="Navitra 将你喜欢的地点变成按天优化的旅行路线，包含语音导览、离线地图和智能发现。">
+    <meta property="og:title" content="Navitra - AI旅行规划师 | 智能路线">
+    <meta property="og:description" content="Navitra 将你喜欢的地点变成按天优化的旅行路线，包含语音导览、离线地图和智能发现。">
+    <meta property="og:image" content="https://navitraapp.com/og-image.jpg">
+    <meta property="og:url" content="https://navitraapp.com/zh-hans/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Navitra - AI旅行规划师 | 智能路线">
+    <meta name="twitter:description" content="Navitra 将你喜欢的地点变成按天优化的旅行路线，包含语音导览、离线地图和智能发现。">
+    <meta name="twitter:image" content="https://navitraapp.com/og-image.jpg">
+    <link rel="canonical" href="https://navitraapp.com/zh-hans/">
+    <link rel="alternate" hreflang="x-default" href="https://navitraapp.com/">
+    <link rel="alternate" hreflang="en" href="https://navitraapp.com/">
+    <link rel="alternate" hreflang="tr" href="https://navitraapp.com/tr/">
+    <link rel="alternate" hreflang="de" href="https://navitraapp.com/de/">
+    <link rel="alternate" hreflang="es" href="https://navitraapp.com/es/">
+    <link rel="alternate" hreflang="fr" href="https://navitraapp.com/fr/">
+    <link rel="alternate" hreflang="it" href="https://navitraapp.com/it/">
+    <link rel="alternate" hreflang="nl" href="https://navitraapp.com/nl/">
+    <link rel="alternate" hreflang="pt-BR" href="https://navitraapp.com/pt-br/">
+    <link rel="alternate" hreflang="ar" href="https://navitraapp.com/ar/">
+    <link rel="alternate" hreflang="ja" href="https://navitraapp.com/ja/">
+    <link rel="alternate" hreflang="ko" href="https://navitraapp.com/ko/">
+    <link rel="alternate" hreflang="ru" href="https://navitraapp.com/ru/">
+    <link rel="alternate" hreflang="zh-Hans" href="https://navitraapp.com/zh-hans/">
+    <link rel="icon" type="image/png" href="/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+    <meta name="theme-color" content="#12121F">
+    <style>
+        :root { --night:#12121f; --ink:#20202b; --mut:#6f6d78; --cream:#faf8f1; --paper:#fffaf0; --line:rgba(32,32,43,.13); --sun:#ff5a2e; --sun2:#ff865f; }
+        * { box-sizing:border-box; }
+        body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:var(--cream); color:var(--ink); }
+        a { color:inherit; text-decoration:none; }
+        .wrap { width:min(1180px, calc(100% - 40px)); margin:0 auto; }
+        nav { position:sticky; top:0; z-index:5; background:rgba(18,18,31,.92); color:white; backdrop-filter:blur(18px); border-bottom:1px solid rgba(255,255,255,.12); }
+        .nav-inner { height:72px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+        .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:21px; }
+        .brand img { width:32px; height:32px; border-radius:9px; }
+        .nav-links { display:flex; align-items:center; gap:20px; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+        .nav-links a { opacity:.86; }
+        .pill { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:13px 24px; border-radius:999px; font-weight:800; font-size:13px; letter-spacing:.08em; text-transform:uppercase; background:var(--sun); color:white; box-shadow:0 16px 35px rgba(255,90,46,.25); }
+        .pill.alt { background:transparent; color:var(--ink); border:1px solid var(--line); box-shadow:none; }
+        .hero { background:radial-gradient(circle at 75% 20%, rgba(255,90,46,.28), transparent 26%), linear-gradient(135deg, #11111f, #272137 58%, #5b2e24); color:white; padding:86px 0 78px; overflow:hidden; }
+        .hero-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:54px; align-items:center; }
+        .eyebrow { color:var(--sun2); font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+        h1 { font-size:clamp(3rem, 7vw, 6.4rem); line-height:.94; margin:18px 0 22px; letter-spacing:-.04em; }
+        h1 em, .accent { color:var(--sun2); font-style:normal; }
+        .hero p { color:rgba(255,255,255,.82); font-size:clamp(1.04rem, 1.7vw, 1.32rem); line-height:1.55; max-width:620px; }
+        .cta-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+        .ghost { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.28); box-shadow:none; }
+        .visual { border-radius:8px; min-height:560px; background:#f4f2ed url('/img/app-route-result.png') center/contain no-repeat; box-shadow:0 34px 80px rgba(0,0,0,.32); }
+        section { padding:86px 0; }
+        .section-head { max-width:850px; margin-bottom:34px; }
+        h2 { font-size:clamp(2.1rem, 4vw, 4.2rem); line-height:1.02; letter-spacing:-.035em; margin:8px 0 16px; }
+        .lead { font-size:1.1rem; line-height:1.65; color:var(--mut); max-width:760px; }
+        .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .grid4 article, .plan-card, .price-card, details { background:white; border:1px solid var(--line); border-radius:8px; padding:24px; box-shadow:0 14px 42px rgba(30,30,45,.06); }
+        h3 { margin:0 0 10px; font-size:1.18rem; }
+        article p, details p, li small { color:var(--mut); line-height:1.55; }
+        .route { background:var(--paper); }
+        .split { display:grid; grid-template-columns:.95fr 1.05fr; gap:40px; align-items:start; }
+        .plan-card ul { list-style:none; padding:0; margin:0; display:grid; gap:14px; }
+        .plan-card li { display:grid; gap:4px; padding-bottom:14px; border-bottom:1px solid var(--line); }
+        .plan-card li:last-child { border-bottom:0; padding-bottom:0; }
+        .plan-card span { font-weight:800; }
+        .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; counter-reset:step; }
+        .steps b { display:inline-grid; place-items:center; width:40px; height:40px; border-radius:50%; background:var(--sun); color:white; margin-bottom:18px; }
+        .pricing { background:#171725; color:white; }
+        .pricing .lead { color:rgba(255,255,255,.68); }
+        .prices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-width:940px; }
+        .price-card { background:#222235; border-color:rgba(255,255,255,.13); color:white; }
+        .price-card.hot { background:linear-gradient(160deg, #ff5a2e, #c44324); }
+        .badge { display:inline-flex; padding:7px 10px; border-radius:999px; background:rgba(255,255,255,.16); font-size:12px; font-weight:800; margin-bottom:16px; }
+        .amount { font-size:2.8rem; font-weight:900; margin:12px 0; }
+        .amount span { font-size:1rem; opacity:.72; }
+        .price-card ul { margin:18px 0 0; padding-inline-start:20px; line-height:1.8; color:rgba(255,255,255,.82); }
+        .note { color:rgba(255,255,255,.62); font-size:.9rem; line-height:1.55; margin-top:20px; }
+        .faq-list { display:grid; gap:12px; max-width:860px; }
+        summary { cursor:pointer; font-weight:800; }
+        details p { margin-bottom:0; }
+        .final { text-align:center; background:var(--night); color:white; }
+        .final p { color:rgba(255,255,255,.72); }
+        footer { background:#0d0d17; color:white; padding:48px 0; }
+        .footer-grid { display:grid; grid-template-columns:1.3fr repeat(3,auto); gap:32px; }
+        footer p, footer a { color:rgba(255,255,255,.72); }
+        .lang-list { display:flex; flex-wrap:wrap; gap:8px; max-width:520px; }
+        .lang-list a { border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:7px 11px; font-size:12px; }
+        .lang-list .active { background:white; color:var(--night); }
+        html[dir="rtl"] .nav-links, html[dir="rtl"] .cta-row, html[dir="rtl"] .lang-list { flex-direction:row-reverse; }
+        @media (max-width:900px) { .hero-grid,.split,.prices,.footer-grid { grid-template-columns:1fr; } .grid4,.steps { grid-template-columns:1fr 1fr; } .nav-links { display:none; } .visual { min-height:520px; } }
+        @media (max-width:560px) { .grid4,.steps { grid-template-columns:1fr; } h1 { font-size:3rem; } section { padding:64px 0; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="wrap nav-inner">
+            <a class="brand" href="/"><img src="/logo-white.png" alt="">Navitra</a>
+            <div class="nav-links">
+                <a href="#features">功能</a>
+                <a href="#how">如何使用</a>
+                <a href="#pricing">价格</a>
+                <a href="/support.html">支持</a>
+                <a class="pill" href="#download">上线状态</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="wrap hero-grid">
+            <div>
+                <div class="eyebrow">诞生于伊斯坦布尔 · 为每座城市而做</div>
+                <h1>更聪明地计划，<br>更好地<em>旅行</em>。</h1>
+                <p>Navitra 会把你喜欢的地点整理成按天优化的路线，兼顾开放时间、距离和你的节奏。在线或离线，都能陪你旅行。</p>
+                <div class="cta-row">
+                    <a class="pill" href="#download">App Store 即将上线</a>
+                    <a class="pill ghost" href="#download">Google Play 稍后推出</a>
+                </div>
+            </div>
+            <div class="visual" role="img" aria-label="Navitra 路线规划预览"></div>
+        </div>
+    </header>
+
+    <main>
+        <section id="features">
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">Navitra</div>
+                    <h2>旅行计划不该复杂。 <span class="accent">用 Navitra，只需选择。</span></h2>
+                    <p class="lead">路线和时间交给 Navitra，你专注享受旅程。</p>
+                </div>
+                <div class="grid4"><article><h3>AI路线规划</h3><p>选择想去的地方，AI 会按开放时间、距离和节奏安排每天路线。</p></article>
+<article><h3>AI语音导览</h3><p>可使用受支持的讲解语言收听每个地点的故事。</p></article>
+<article><h3>离线地图</h3><p>出发前下载路线、地图和语音导览，没有网络也能继续。</p></article>
+<article><h3>智能发现</h3><p>隐藏景点、用餐停靠和替代方案会在合适时机出现。</p></article></div>
+            </div>
+        </section>
+
+        <section class="route">
+            <div class="wrap split">
+                <div>
+                    <div class="eyebrow">路线引擎</div>
+                    <h2>从心愿清单到可步行路线。</h2>
+                    <p class="lead">选择城市，保存喜欢的地点，Navitra 会生成真正适合落地执行的日程。</p>
+                </div>
+                <div class="plan-card">
+                    <ul><li><span>考虑开放时间</span><small>周一关闭的地点不会出现在周一行程里。</small></li>
+<li><span>按区域组织每天</span><small>不会为了一个地点反复横穿城市。</small></li>
+<li><span>纳入住宿位置</span><small>每天从真实住宿点开始并返回。</small></li>
+<li><span>随时重新安排</span><small>累了、饿了或计划变化，剩余行程可重新调整。</small></li></ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="how">
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">如何使用</div>
+                    <h2>如何使用</h2>
+                    <p class="lead">从不知道从哪开始，到完成计划，只需四步。</p>
+                </div>
+                <div class="steps"><article><b>01</b><h3>选择城市</h3><p>搜索目的地，或告诉助手你想要什么样的旅行。</p></article>
+<article><b>02</b><h3>标记喜欢的地点</h3><p>博物馆、市场、观景点或街头美食，选你真正感兴趣的。</p></article>
+<article><b>03</b><h3>AI安排每天</h3><p>路线引擎会按时间、距离和每日精力排序。</p></article>
+<article><b>04</b><h3>带着故事探索</h3><p>跟随路线，收听语音导览，需要时离线使用。</p></article></div>
+            </div>
+        </section>
+
+        <section class="pricing" id="pricing">
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">价格</div>
+                    <h2>适合你旅程的计划。</h2>
+                    <p class="lead">Navitra 上线时可免费下载并免费规划。Premium 解锁完整体验，年度计划含 7 天免费试用。</p>
+                </div>
+                <div class="prices">
+                    <article class="price-card hot">
+                        <span class="badge">最划算</span>
+                        <h3>年度</h3>
+                        <p>适合经常旅行的人。</p>
+                        <div class="amount">$39.99 <span>/ 年</span></div>
+                        <ul>
+                            <li>含 7 天免费试用</li>
+                            <li>全年 Premium</li>
+                            <li>约每月 $3.33</li>
+                        </ul>
+                    </article>
+                    <article class="price-card">
+                        <h3>月度</h3>
+                        <p>适合一次大旅行。</p>
+                        <div class="amount">$5.99 <span>/ 月</span></div>
+                        <ul>
+                            <li>完整 Premium 权限</li>
+                            <li>每站 AI 语音导览</li>
+                            <li>离线地图和导航</li>
+                            <li>更高 AI 路线额度</li>
+                        </ul>
+                    </article>
+                </div>
+                <p class="note">价格以美元显示；商店会显示本地价格。订阅会自动续订，可在商店设置中取消。</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">FAQ</div>
+                    <h2>常见问题</h2>
+                </div>
+                <div class="faq-list"><details><summary>Navitra 免费吗？</summary><p>是。上线时下载和规划旅行免费。Premium 会提供语音导览、离线地图和更高 AI 路线额度。</p></details>
+<details><summary>真的可以离线使用吗？</summary><p>Premium 用户可在出发前下载目的地。地图、路线和语音导览会保存在设备上。</p></details>
+<details><summary>如何取消？</summary><p>订阅由 App Store 或 Google Play 管理，可随时取消。</p></details></div>
+            </div>
+        </section>
+
+        <section class="final" id="download">
+            <div class="wrap">
+                <h2>世界在等你。<br><em>路线已准备好。</em></h2>
+                <p class="lead" style="margin-inline:auto">Navitra 正在准备 iOS 上线，Android 将稍后推出。</p>
+                <div class="cta-row" style="justify-content:center">
+                    <a class="pill" href="#download">App Store 即将上线</a>
+                    <a class="pill ghost" href="#download">Google Play 稍后推出</a>
+                </div>
+                <p>上线时免费 · 年度计划 7 天试用 · 可随时取消</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap footer-grid">
+            <div>
+                <a class="brand" href="/"><img src="/logo-white.png" alt="">Navitra</a>
+                <p>帮助你发现、计划和导航的 AI 旅行伙伴。</p>
+            </div>
+            <div>
+                <h3>支持</h3>
+                <p><a href="/support.html">支持</a><br><a href="mailto:support@navitraapp.com">support@navitraapp.com</a></p>
+            </div>
+            <div>
+                <h3>法律</h3>
+                <p><a href="/privacy.html">隐私政策</a><br><a href="/terms.html">服务条款</a></p>
+            </div>
+            <div>
+                <h3>语言</h3>
+                <div class="lang-list"><a href="/">English</a>
+<a href="/tr/">Türkçe</a>
+<a href="/de/">Deutsch</a>
+<a href="/es/">Español</a>
+<a href="/fr/">Français</a>
+<a href="/it/">Italiano</a>
+<a href="/nl/">Nederlands</a>
+<a href="/pt-br/">Português (Brasil)</a>
+<a href="/ar/">العربية</a>
+<a href="/ja/">日本語</a>
+<a href="/ko/">한국어</a>
+<a href="/ru/">Русский</a>
+<a class="active" href="/zh-hans/">简体中文</a></div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
