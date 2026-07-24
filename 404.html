@@ -1251,10 +1251,14 @@
       return m ? m[1] : null;
     }
 
+    // 2026-07-23 security scan (F1/F2/F5/F6): textContent->innerHTML encodes
+    // < > &, but NOT " or '. Values interpolated into quoted attributes could
+    // therefore escape the attribute and inject an event handler. Encode
+    // quotes too so this stays safe in attribute context.
     function escapeHtml(t) {
       var d = document.createElement('div');
       d.textContent = t;
-      return d.innerHTML;
+      return d.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
     // ── Map ──
@@ -1310,8 +1314,11 @@
           var marker = L.marker(latlng, { icon: icon }).addTo(layerGroup);
 
           var popupContent = '<div class="map-popup">';
-          if (place.imageUrl) {
-            popupContent += '<img src="' + escapeHtml(place.imageUrl) + '" onerror="this.style.display=\'none\'" />';
+          // 2026-07-23 security scan (F5/F6): this sink used the RAW
+          // place.imageUrl, bypassing even the weak filter renderRoute applied.
+          var popupImg = resolveImageUrl(place.imageUrl);
+          if (popupImg) {
+            popupContent += '<img src="' + escapeHtml(popupImg) + '" onerror="this.style.display=\'none\'" />';
           }
           popupContent += '<div><div class="map-popup-name">' + escapeHtml(place.name || '') + '</div>' +
             '<div class="map-popup-cat">' + escapeHtml(place.category || '') + '</div></div></div>';
@@ -1397,12 +1404,24 @@
     }
 
     // ── Render ──
+    // 2026-07-23 security scan: startsWith('http') accepted any string that
+    // merely began with "http", including quote-bearing XSS payloads. Parse
+    // strictly instead - https only, no embedded credentials, no characters
+    // that could break out of an attribute. Anything rejected falls back to
+    // the category placeholder. Legacy places/ refs stay unresolved (photos
+    // are cached to Firebase Storage during publish).
     function resolveImageUrl(raw) {
-      if (!raw) return '';
-      if (raw.startsWith('http')) return raw;
-      // Legacy places/ refs are no longer resolved client-side
-      // Photos are cached to Firebase Storage during publish
-      return '';
+      if (!raw || typeof raw !== 'string') return '';
+      try {
+        var u = new URL(raw);
+        if (u.protocol !== 'https:') return '';
+        if (u.username || u.password) return '';
+        var s = u.toString();
+        if (/["'<>\\]/.test(s)) return '';
+        return s;
+      } catch (_) {
+        return '';
+      }
     }
 
     function renderRoute(data, shareId) {
