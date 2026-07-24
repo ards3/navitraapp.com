@@ -1560,7 +1560,11 @@
         '<div class="day-legend">' + chipsHtml + '</div>' +
         daysHtml +
         '<div class="cta-section">' +
-          '<a href="' + deepLink + '" class="open-app-btn" id="open-app">' + T.openInApp + '</a>' +
+          // 2026-07-25: escaped for consistency with the other attribute
+          // sinks. shareId comes from the URL path, and browsers percent-encode
+          // quotes there, so this was never exploitable — but the safety came
+          // from URL normalisation rather than from this code. Now it is here.
+          '<a href="' + escapeHtml(deepLink) + '" class="open-app-btn" id="open-app">' + T.openInApp + '</a>' +
           '<div class="bottom-row cta-bottom-row">' +
             '<div class="qr-card"><div id="qr-code"></div><p>' + T.scanToOpen + '</p></div>' +
             '<div class="store-col">' +
