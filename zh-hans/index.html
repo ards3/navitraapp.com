@@ -665,6 +665,20 @@
         .socials a:hover { background: var(--sunset); border-color: var(--sunset); color: #fff; transform: translateY(-2px); }
         .socials svg { width: 16px; height: 16px; }
 
+        /* ───────────── collaborations ───────────── */
+        .collaborate { background: var(--cream-warm); padding: var(--sec-y) var(--pad-x); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .collab-intro { display: grid; grid-template-columns: 1fr .8fr; gap: clamp(18px, 3vw, 36px) clamp(30px, 7vw, 100px); align-items: end; margin: 0 auto clamp(38px, 6vw, 72px); max-width: 1280px; }
+        .collab-intro .label { grid-column: 1 / -1; }
+        .collab-intro .lede { color: var(--mut); }
+        .collab-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: var(--cream); }
+        .collab-card { padding: clamp(26px, 3.5vw, 44px); border-right: 1px solid var(--line); }
+        .collab-card:last-child { border-right: 0; }
+        .collab-card span { color: var(--sunset); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+        .collab-card h3 { margin: 12px 0 10px; font-family: var(--serif); font-size: clamp(1.55rem, 2.2vw, 2rem); font-weight: 400; }
+        .collab-card p { color: var(--mut); font-size: 14px; }
+        .collab-action { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 34px; }
+        .collab-action p { max-width: 62ch; color: var(--mut); font-size: 13.5px; }
+
         /* ───────────── pricing ───────────── */
         .pricing {
             background: var(--cream-warm);
@@ -972,6 +986,12 @@
             .cta-side { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 30px; }
             .how-head { grid-template-columns: 1fr; align-items: start; }
             .how-head p { justify-self: start; }
+            .collab-intro { grid-template-columns: 1fr; align-items: start; }
+            .collab-intro .label { grid-column: auto; }
+            .collab-grid { grid-template-columns: 1fr; }
+            .collab-card { border-right: 0; border-bottom: 1px solid var(--line); }
+            .collab-card:last-child { border-bottom: 0; }
+            .collab-action { align-items: flex-start; flex-direction: column; }
             .step { grid-template-columns: 1fr; gap: 18px; }
             .step .num { order: -1 !important; font-size: clamp(4.5rem, 18vw, 7rem); }
         }
@@ -1064,8 +1084,9 @@
             <a href="#features">功能</a>
             <a href="#how">如何使用</a>
             <a href="#pricing">价格</a>
+            <a href="#collaborate">合作</a>
             <a href="/support.html">支持</a>
-            <a href="#download" class="pill pill-sunset">上线状态</a>
+            <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset">下载应用</a>
         </div>
         <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="m菜单">菜单</button>
     </nav>
@@ -1074,10 +1095,11 @@
         <a href="#features">功能</a>
         <a href="#how">如何使用</a>
         <a href="#pricing">价格</a>
+        <a href="#collaborate">合作</a>
         <a href="/support.html">支持</a>
         <div class="m-stores">
-            <a class="pill pill-sunset" href="#download">App Store 即将上线</a>
-            <a class="pill pill-ghost" href="#download">Google Play 稍后推出</a>
+            <a class="pill pill-sunset" href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173">App Store</a>
+            <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">Google Play · Coming soon</span>
         </div>
     </div>
 
@@ -1096,10 +1118,10 @@
             <div class="hero-side">
                 <p>Navitra 会把你喜欢的地点整理成按天优化的路线，兼顾开放时间、距离和你的节奏。在线或离线，都能陪你旅行。</p>
                 <div class="hero-ctas">
-                    <a href="#download" class="pill pill-light" aria-label="Navitra App Store launch status">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store 即将上线</a>
-                    <a href="#download" class="pill pill-ghost" aria-label="Navitra Google Play launch status">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play 稍后推出</a>
+                    <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-light" aria-label="Download Navitra on the App Store">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
+                    <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</span>
                 </div>
             </div>
         </div>
@@ -1200,7 +1222,7 @@
                         <h3>罗马清单中的站点</h3>
                         <p>In the app, Navitra turns your picks into a day-by-day route that respects opening hours, distances and your pace.</p>
                         <div class="sd-done-cta">
-                            <a href="#download" class="pill">上线状态</a>
+                            <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill">下载应用</a>
                             <button type="button" class="sd-replay">再次滑动</button>
                         </div>
                     </div>
@@ -1300,15 +1322,15 @@
     <section class="cta-strip">
         <div class="reveal">
             <h2 class="sec-head">准备好找到<em>你的</em>路线了吗？</h2>
-            <p class="lede">Navitra 上线时可免费下载并免费规划。Premium 解锁完整体验，年度计划含 7 天免费试用。</p>
+            <p class="lede">Navitra is now available on iPhone. Android is coming soon. Premium unlocks voice guides, offline maps and higher route limits, with a 7-day free trial on the yearly plan.</p>
             <div class="hero-ctas">
-                <a href="#download" class="pill pill-sunset" aria-label="Navitra App Store launch status">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store 即将上线</a>
+                <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset" aria-label="Download Navitra on the App Store">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
                 <a href="#download" class="pill pill-ink" aria-label="Navitra Google Play launch status">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play 稍后推出</a>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</a>
             </div>
             <div class="chips" aria-label="Highlights">
-                <span class="chip">上线时免费</span>
+                <span class="chip">Free to download</span>
                 <span class="chip">7 languages</span>
                 <span class="chip">完全离线可用</span>
                 <span class="chip">可随时取消</span>
@@ -1330,12 +1352,30 @@
         </div>
     </section>
 
+    <!-- ───────────── COLLABORATE ───────────── -->
+    <section class="collaborate" id="collaborate">
+        <div class="collab-intro reveal">
+            <span class="label">与 Navitra 合作</span>
+            <h2 class="sec-head">让旅行更有个人温度。</h2>
+            <p class="lede">你是创作者、本地专家或旅行品牌吗？让我们一起打造实用的故事、城市指南和体验。</p>
+        </div>
+        <div class="collab-grid">
+            <article class="collab-card reveal"><span>01 · 创作者</span><h3>分享值得信赖的旅程。</h3><p>与 Navitra 一起创作真实的目的地故事、应用介绍和旅行系列。</p></article>
+            <article class="collab-card reveal"><span>02 · 本地专家</span><h3>让你的城市鲜活起来。</h3><p>把本地知识、隐藏景点和主题路线变成旅行者可跟随的体验。</p></article>
+            <article class="collab-card reveal"><span>03 · 旅行伙伴</span><h3>一起做真正有用的事。</h3><p>共同探索真正帮助旅行者的活动、内容合作和产品整合。</p></article>
+        </div>
+        <div class="collab-action reveal">
+            <p>请告诉我们你是谁、受众在哪里，以及你想创造什么。</p>
+            <a class="pill pill-sunset" data-collaboration-cta="email" href="mailto:support@navitraapp.com?subject=Work%20with%20Navitra&amp;body=Hi%20Navitra%20team%2C%0A%0AI%27d%20like%20to%20work%20with%20you.%0A%0AName%20%2F%20brand%3A%0AAudience%20%2F%20market%3A%0AIdea%3A%0A">与我们合作</a>
+        </div>
+    </section>
+
     <!-- ───────────── PRICING ───────────── -->
     <section class="pricing" id="pricing">
         <div class="pricing-head reveal">
             <span class="label">价格</span>
             <h2 class="sec-head">适合你旅程的计划。</h2>
-            <p class="lede">Navitra 上线时可免费下载并免费规划。Premium 解锁完整体验，年度计划含 7 天免费试用。</p>
+            <p class="lede">Navitra is free to download and plan with. Premium unlocks the full experience, with simple monthly and yearly options. The yearly plan starts with a 7-day free trial.</p>
         </div>
         <div class="price-grid">
             <article class="p-card hot reveal">
@@ -1350,7 +1390,7 @@
                     <li><span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M1.5 6.5l3 3 6-7"/></svg></span>完整 Premium 权限</li>
                     <li><span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M1.5 6.5l3 3 6-7"/></svg></span>更高 AI 路线额度</li>
                 </ul>
-                <a href="#download" class="pill pill-sunset">上线状态</a>
+                <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset">下载应用</a>
             </article>
             <article class="p-card reveal">
                 <h3>月度</h3>
@@ -1362,7 +1402,7 @@
                     <li><span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M1.5 6.5l3 3 6-7"/></svg></span>离线地图和导航</li>
                     <li><span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M1.5 6.5l3 3 6-7"/></svg></span>更高 AI 路线额度</li>
                 </ul>
-                <a href="#download" class="pill pill-ink">上线状态</a>
+                <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-ink">下载应用</a>
             </article>
         </div>
         <p class="price-note">价格以美元显示；商店会显示本地价格。订阅会自动续订，可在商店设置中取消。</p>
@@ -1423,7 +1463,7 @@
             <div>
                 <div class="acc">
                     <button aria-expanded="false">Navitra 免费吗？<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
-                    <div class="panel"><div><p>是。上线时下载和规划旅行免费。Premium 会提供语音导览、离线地图和更高 AI 路线额度。</p></div></div>
+                    <div class="panel"><div><p>Yes — Navitra is free to download and plan with. Premium adds AI voice guides, offline maps, budget planning and higher AI route limits. The monthly plan is $5.99, and the yearly plan is $39.99 with a 7-day free trial.</p></div></div>
                 </div>
                 <div class="acc">
                     <button aria-expanded="false">真的可以离线使用吗？<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
@@ -1452,14 +1492,14 @@
     <!-- ───────────── FINAL CTA ───────────── -->
     <section class="final" id="download">
         <h2 class="reveal">世界在等你。<br><em>路线已准备好。</em></h2>
-        <p class="reveal">Navitra 正在准备 iOS 上线，Android 将稍后推出。</p>
+        <p class="reveal">Navitra is now available on iPhone. Android is coming soon — turn your next "someday" into a day-by-day plan.</p>
         <div class="hero-ctas reveal">
-            <a href="#download" class="pill pill-light" aria-label="Navitra App Store launch status">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store 即将上线</a>
+            <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-light" aria-label="Download Navitra on the App Store">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
             <a href="#download" class="pill pill-ghost" aria-label="Navitra Google Play launch status">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play 稍后推出</a>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</a>
         </div>
-        <p class="tiny reveal">上线时免费 · 7-day trial on the yearly plan · 可随时取消</p>
+        <p class="tiny reveal">Free to download · 7-day trial on the yearly plan · 可随时取消</p>
     </section>
 
     </main>
@@ -1479,7 +1519,8 @@
                 <a href="#features">功能</a>
                 <a href="#how">如何使用</a>
                 <a href="#pricing">价格</a>
-                <a href="#download">上线状态</a>
+                <a href="#collaborate">合作</a>
+                <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173">下载应用</a>
             </div>
             <div class="foot-col">
                 <h4>支持</h4>

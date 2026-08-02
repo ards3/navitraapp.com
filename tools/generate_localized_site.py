@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-LASTMOD = "2026-07-03"
+LASTMOD = "2026-08-02"
 
 LANGS = {
     "en": {"name": "English", "url": "/", "hreflang": "en"},
@@ -1201,6 +1201,22 @@ CLONE_EXTRA.update({
 })
 
 
+LIVE_COPY = {
+    "tr": {"get": "Uygulamayı indir", "collab": "Bizimle çalışın", "label": "Navitra ile çalışın", "title": "Seyahati birlikte daha kişisel hale getirelim.", "lead": "İçerik üreticisi, yerel uzman veya seyahat markası mısınız? Faydalı hikâyeler, şehir rehberleri ve deneyimler üretelim.", "creators": "İçerik üreticileri", "creator_title": "İnsanların güvendiği yolculukları paylaşın.", "creator_body": "Navitra ile samimi destinasyon hikâyeleri, uygulama anlatımları ve seyahat serileri üretin.", "experts": "Yerel uzmanlar", "expert_title": "Şehrinizi canlandırın.", "expert_body": "Yerel bilginizi, saklı noktaları ve temalı rotaları gezginlerin takip edebileceği deneyimlere dönüştürün.", "partners": "Seyahat ortakları", "partner_title": "Birlikte faydalı bir şey oluşturalım.", "partner_body": "Gezginlere gerçekten yardımcı olan kampanyaları, içerik ortaklıklarını ve ürün entegrasyonlarını keşfedelim.", "note": "Bize kim olduğunuzu, kitlenizin nerede olduğunu ve ne üretmek istediğinizi anlatın.", "cta": "Birlikte çalışalım"},
+    "de": {"get": "App laden", "collab": "Zusammenarbeiten", "label": "Mit Navitra arbeiten", "title": "Machen wir Reisen persönlicher.", "lead": "Du bist Creator, lokaler Experte oder Reisemarke? Lass uns nützliche Geschichten, Stadtführer und Erlebnisse entwickeln.", "creators": "Creators", "creator_title": "Teile Reisen, denen Menschen vertrauen.", "creator_body": "Erstelle mit Navitra ehrliche Reiseziel-Geschichten, App-Guides und Reiseserien.", "experts": "Lokale Experten", "expert_title": "Erwecke deine Stadt zum Leben.", "expert_body": "Verwandle lokales Wissen, Geheimtipps und Themenrouten in Erlebnisse für Reisende.", "partners": "Reisepartner", "partner_title": "Bauen wir gemeinsam etwas Nützliches.", "partner_body": "Entdecken wir Kampagnen, Content-Partnerschaften und Integrationen, die Reisenden helfen.", "note": "Erzähl uns, wer du bist, wo dein Publikum ist und was du erstellen möchtest.", "cta": "Gemeinsam arbeiten"},
+    "es": {"get": "Descargar la app", "collab": "Colabora", "label": "Trabaja con Navitra", "title": "Hagamos que viajar sea más personal.", "lead": "¿Eres creador, experto local o marca de viajes? Creemos historias, guías y experiencias útiles.", "creators": "Creadores", "creator_title": "Comparte viajes en los que la gente confía.", "creator_body": "Crea historias honestas, recorridos de la app y series de viajes con Navitra.", "experts": "Expertos locales", "expert_title": "Da vida a tu ciudad.", "expert_body": "Convierte conocimiento local, joyas ocultas y rutas temáticas en experiencias para viajeros.", "partners": "Socios de viaje", "partner_title": "Construyamos algo útil juntos.", "partner_body": "Exploremos campañas, contenidos e integraciones que ayuden de verdad a los viajeros.", "note": "Cuéntanos quién eres, dónde está tu audiencia y qué te gustaría crear.", "cta": "Trabajemos juntos"},
+    "fr": {"get": "Télécharger l’app", "collab": "Collaborer", "label": "Travaillez avec Navitra", "title": "Rendons le voyage plus personnel.", "lead": "Vous êtes créateur, expert local ou marque de voyage ? Créons ensemble des récits, guides et expériences utiles.", "creators": "Créateurs", "creator_title": "Partagez des voyages inspirants et fiables.", "creator_body": "Créez avec Navitra des récits authentiques, présentations de l’app et séries de voyage.", "experts": "Experts locaux", "expert_title": "Donnez vie à votre ville.", "expert_body": "Transformez vos bonnes adresses et itinéraires en expériences à suivre.", "partners": "Partenaires voyage", "partner_title": "Construisons quelque chose d’utile.", "partner_body": "Imaginons des campagnes, contenus et intégrations qui aident vraiment les voyageurs.", "note": "Dites-nous qui vous êtes, où se trouve votre audience et ce que vous souhaitez créer.", "cta": "Travaillons ensemble"},
+    "it": {"get": "Scarica l’app", "collab": "Collabora", "label": "Lavora con Navitra", "title": "Rendiamo il viaggio più personale.", "lead": "Sei un creator, un esperto locale o un brand di viaggi? Creiamo storie, guide ed esperienze utili.", "creators": "Creator", "creator_title": "Condividi viaggi di cui fidarsi.", "creator_body": "Crea con Navitra storie autentiche, guide all’app e serie di viaggio.", "experts": "Esperti locali", "expert_title": "Dai vita alla tua città.", "expert_body": "Trasforma conoscenze locali, gemme nascoste e itinerari in esperienze da seguire.", "partners": "Partner di viaggio", "partner_title": "Creiamo qualcosa di utile insieme.", "partner_body": "Esploriamo campagne, contenuti e integrazioni che aiutino davvero i viaggiatori.", "note": "Raccontaci chi sei, dov’è il tuo pubblico e cosa vorresti creare.", "cta": "Lavoriamo insieme"},
+    "nl": {"get": "Download de app", "collab": "Samenwerken", "label": "Werk met Navitra", "title": "Laten we reizen persoonlijker maken.", "lead": "Ben je creator, lokale expert of reismerk? Laten we nuttige verhalen, stadsgidsen en ervaringen maken.", "creators": "Creators", "creator_title": "Deel reizen die mensen vertrouwen.", "creator_body": "Maak eerlijke reisverhalen, app-uitleg en reeksen met Navitra.", "experts": "Lokale experts", "expert_title": "Breng je stad tot leven.", "expert_body": "Maak van lokale kennis, verborgen plekken en routes ervaringen die reizigers kunnen volgen.", "partners": "Reispartners", "partner_title": "Bouw samen iets nuttigs.", "partner_body": "Ontdek campagnes, content en integraties die reizigers echt helpen.", "note": "Vertel wie je bent, waar je publiek zit en wat je wilt maken.", "cta": "Laten we samenwerken"},
+    "pt-br": {"get": "Baixar o app", "collab": "Colabore", "label": "Trabalhe com a Navitra", "title": "Vamos tornar a viagem mais pessoal.", "lead": "Você é criador, especialista local ou marca de viagem? Vamos criar histórias, guias e experiências úteis.", "creators": "Criadores", "creator_title": "Compartilhe viagens em que as pessoas confiam.", "creator_body": "Crie histórias autênticas, demonstrações do app e séries de viagem com a Navitra.", "experts": "Especialistas locais", "expert_title": "Dê vida à sua cidade.", "expert_body": "Transforme conhecimento local, lugares secretos e rotas em experiências para viajantes.", "partners": "Parceiros de viagem", "partner_title": "Vamos construir algo útil juntos.", "partner_body": "Explore campanhas, conteúdo e integrações que realmente ajudem viajantes.", "note": "Conte quem você é, onde está seu público e o que gostaria de criar.", "cta": "Vamos trabalhar juntos"},
+    "ar": {"get": "نزّل التطبيق", "collab": "تعاون معنا", "label": "اعمل مع Navitra", "title": "لنجعل السفر أكثر خصوصية.", "lead": "هل أنت صانع محتوى أو خبير محلي أو علامة سفر؟ لنصنع قصصًا وأدلة وتجارب مفيدة معًا.", "creators": "صناع المحتوى", "creator_title": "شارك رحلات يثق بها الناس.", "creator_body": "أنشئ قصص وجهات صادقة وشروحات للتطبيق وسلاسل سفر مع Navitra.", "experts": "الخبراء المحليون", "expert_title": "أحضر مدينتك إلى الحياة.", "expert_body": "حوّل معرفتك المحلية والجواهر الخفية والمسارات إلى تجارب يتبعها المسافرون.", "partners": "شركاء السفر", "partner_title": "لنبنِ شيئًا مفيدًا معًا.", "partner_body": "لنستكشف حملات وشراكات ومزايا تساعد المسافرين فعلًا.", "note": "أخبرنا من أنت وأين جمهورك وما الذي ترغب في صنعه.", "cta": "لنعمل معًا"},
+    "ja": {"get": "アプリを入手", "collab": "コラボレーション", "label": "Navitraと一緒に", "title": "旅をもっと自分らしく。", "lead": "クリエイター、地域の専門家、旅行ブランドの皆さま。役立つ物語や街歩きガイド、体験を一緒につくりませんか。", "creators": "クリエイター", "creator_title": "信頼される旅を届ける。", "creator_body": "Navitraとリアルな旅の物語、アプリ紹介、旅行シリーズを制作できます。", "experts": "地域の専門家", "expert_title": "街の魅力を生き生きと。", "expert_body": "地域の知識や穴場、テーマ別ルートを旅行者が楽しめる体験にします。", "partners": "旅行パートナー", "partner_title": "役立つものを一緒につくる。", "partner_body": "旅行者を本当に助ける企画、コンテンツ、連携を検討しましょう。", "note": "あなたのこと、オーディエンス、つくりたいものを教えてください。", "cta": "一緒に取り組む"},
+    "ko": {"get": "앱 다운로드", "collab": "협업", "label": "Navitra와 함께하세요", "title": "여행을 더 개인적으로 만들어 봐요.", "lead": "크리에이터, 지역 전문가 또는 여행 브랜드인가요? 유용한 이야기와 도시 가이드, 경험을 함께 만들어요.", "creators": "크리에이터", "creator_title": "사람들이 신뢰하는 여행을 공유하세요.", "creator_body": "Navitra와 진솔한 여행 이야기, 앱 소개, 여행 시리즈를 제작하세요.", "experts": "지역 전문가", "expert_title": "도시에 생기를 더하세요.", "expert_body": "지역 지식과 숨은 명소, 테마 경로를 여행자가 따라갈 경험으로 바꾸세요.", "partners": "여행 파트너", "partner_title": "유용한 것을 함께 만들어요.", "partner_body": "여행자를 진정으로 돕는 캠페인, 콘텐츠, 제품 연동을 함께 찾아봐요.", "note": "누구인지, 청중은 어디에 있는지, 무엇을 만들고 싶은지 알려 주세요.", "cta": "함께 일하기"},
+    "ru": {"get": "Скачать приложение", "collab": "Сотрудничество", "label": "Работайте с Navitra", "title": "Сделаем путешествия более личными.", "lead": "Вы автор, местный эксперт или туристический бренд? Давайте создавать полезные истории, гиды и впечатления.", "creators": "Авторы", "creator_title": "Делитесь путешествиями, которым доверяют.", "creator_body": "Создавайте с Navitra честные истории, обзоры приложения и серии о путешествиях.", "experts": "Местные эксперты", "expert_title": "Оживите свой город.", "expert_body": "Превратите местные знания, секретные места и маршруты в готовые впечатления.", "partners": "Тревел-партнёры", "partner_title": "Создадим что-то полезное вместе.", "partner_body": "Обсудим кампании, контент и интеграции, которые действительно помогают путешественникам.", "note": "Расскажите, кто вы, где ваша аудитория и что хотите создать.", "cta": "Давайте сотрудничать"},
+    "zh-hans": {"get": "下载应用", "collab": "合作", "label": "与 Navitra 合作", "title": "让旅行更有个人温度。", "lead": "你是创作者、本地专家或旅行品牌吗？让我们一起打造实用的故事、城市指南和体验。", "creators": "创作者", "creator_title": "分享值得信赖的旅程。", "creator_body": "与 Navitra 一起创作真实的目的地故事、应用介绍和旅行系列。", "experts": "本地专家", "expert_title": "让你的城市鲜活起来。", "expert_body": "把本地知识、隐藏景点和主题路线变成旅行者可跟随的体验。", "partners": "旅行伙伴", "partner_title": "一起做真正有用的事。", "partner_body": "共同探索真正帮助旅行者的活动、内容合作和产品整合。", "note": "请告诉我们你是谁、受众在哪里，以及你想创造什么。", "cta": "与我们合作"},
+}
+
+
 def _clone_extra(code: str, key: str) -> str:
     return CLONE_EXTRA.get(code, {}).get(key, CLONE_EXTRA["en"].get(key, ""))
 
@@ -1259,6 +1275,7 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
     steps = t["steps"]
     faqs = t["faqs"]
     u = UI_LABELS[code]
+    live = LIVE_COPY[code]
 
     pairs = [
         ("Skip to content", _clone_extra(code, "skip")),
@@ -1267,7 +1284,8 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
         ("How it works", str(t["nav_how"])),
         ("Pricing", str(t["nav_pricing"])),
         ("Support", str(t["nav_support"])),
-        ("Launch status", str(t["launch"])),
+        ("Get the app", live["get"]),
+        ("Collaborate", live["collab"]),
         ("App Store soon", str(t["app_store"])),
         ("Google Play later", str(t["google_play"])),
         ("Born in Istanbul<br><strong>Made for every city</strong>", f"{escape(str(t['hero_fact']))}<br><strong>{escape(str(t['hero_fact_strong']))}</strong>"),
@@ -1321,11 +1339,24 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
         ("Explore, with stories", steps[3][0]),
         ("Follow the route with turn-by-turn directions, listen to voice guides as you arrive, and let it all work offline when the roaming bill says no.", steps[3][1]),
         ('Ready to find <em>your</em> path?', _clone_extra(code, "ready")),
-        ("Navitra is preparing to launch on iOS, with Android to follow. Premium unlocks voice guides, offline maps and higher route limits, with a 7-day free trial on the yearly plan.", str(t["pricing_lead"])),
         ("Free at launch", _clone_extra(code, "free")),
         ("Works fully offline", _clone_extra(code, "offline")),
         ("Cancel anytime", _clone_extra(code, "cancel")),
         ('Prefer to look around first? Write to us at <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> or browse the <a class="mail" href="/support.html">Help Center</a> — we\'re happy to help.', _clone_extra(code, "help_line")),
+        ("Work with Navitra", live["label"]),
+        ("Let's make travel feel more personal.", live["title"]),
+        ("Are you a creator, local expert or travel brand? Let's build useful stories, city guides and experiences together.", live["lead"]),
+        ("Creators", live["creators"]),
+        ("Share journeys people trust.", live["creator_title"]),
+        ("Create honest destination stories, app walkthroughs and travel series with Navitra.", live["creator_body"]),
+        ("Local experts", live["experts"]),
+        ("Bring your city to life.", live["expert_title"]),
+        ("Turn local knowledge, hidden gems and themed routes into experiences travelers can follow.", live["expert_body"]),
+        ("Travel partners", live["partners"]),
+        ("Build something useful together.", live["partner_title"]),
+        ("Let's explore campaigns, content partnerships and product integrations that genuinely help travelers.", live["partner_body"]),
+        ("Tell us who you are, where your audience is and what you would like to create.", live["note"]),
+        ("Let's work together", live["cta"]),
         ("A plan that fits your trip.", str(t["pricing_title"])),
         ("Navitra will be free to download and free to plan with at launch. Premium unlocks the full experience, with simple monthly and yearly options. The yearly plan starts with a 7-day free trial.", str(t["pricing_lead"])),
         ("Best value", str(t["best_value"])),
@@ -1374,7 +1405,6 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
         ("How do I cancel or delete my data?", _clone_extra(code, "delete_q")),
         ('Subscriptions are managed by Apple or Google — cancel anytime from your store account, no questions asked. Want your data gone too? Use the in-app option or the <a href="/delete.html">account deletion page</a>; details are in our <a href="/privacy.html">Privacy Policy</a>.', _clone_extra(code, "delete_a")),
         ('<h2 class="reveal">The world is waiting.<br><em>Your route is ready.</em></h2>', f'<h2 class="reveal">{t["final_title"]}</h2>'),
-        ('Navitra is preparing for iOS launch, with Android to follow — turn your next "someday" into a day-by-day plan.', str(t["final_lead"])),
         ("Free at launch · 7-day trial on the yearly plan · Cancel anytime", str(t["tiny"])),
         ("AI-powered travel companion that helps you discover, plan and navigate your perfect trip.", str(t["footer"])),
         ("Product", str(t["nav_features"])),

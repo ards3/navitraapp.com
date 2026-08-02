@@ -665,6 +665,20 @@
         .socials a:hover { background: var(--sunset); border-color: var(--sunset); color: #fff; transform: translateY(-2px); }
         .socials svg { width: 16px; height: 16px; }
 
+        /* ───────────── collaborations ───────────── */
+        .collaborate { background: var(--cream-warm); padding: var(--sec-y) var(--pad-x); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .collab-intro { display: grid; grid-template-columns: 1fr .8fr; gap: clamp(18px, 3vw, 36px) clamp(30px, 7vw, 100px); align-items: end; margin: 0 auto clamp(38px, 6vw, 72px); max-width: 1280px; }
+        .collab-intro .label { grid-column: 1 / -1; }
+        .collab-intro .lede { color: var(--mut); }
+        .collab-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: var(--cream); }
+        .collab-card { padding: clamp(26px, 3.5vw, 44px); border-right: 1px solid var(--line); }
+        .collab-card:last-child { border-right: 0; }
+        .collab-card span { color: var(--sunset); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+        .collab-card h3 { margin: 12px 0 10px; font-family: var(--serif); font-size: clamp(1.55rem, 2.2vw, 2rem); font-weight: 400; }
+        .collab-card p { color: var(--mut); font-size: 14px; }
+        .collab-action { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 34px; }
+        .collab-action p { max-width: 62ch; color: var(--mut); font-size: 13.5px; }
+
         /* ───────────── pricing ───────────── */
         .pricing {
             background: var(--cream-warm);
@@ -972,6 +986,12 @@
             .cta-side { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 30px; }
             .how-head { grid-template-columns: 1fr; align-items: start; }
             .how-head p { justify-self: start; }
+            .collab-intro { grid-template-columns: 1fr; align-items: start; }
+            .collab-intro .label { grid-column: auto; }
+            .collab-grid { grid-template-columns: 1fr; }
+            .collab-card { border-right: 0; border-bottom: 1px solid var(--line); }
+            .collab-card:last-child { border-bottom: 0; }
+            .collab-action { align-items: flex-start; flex-direction: column; }
             .step { grid-template-columns: 1fr; gap: 18px; }
             .step .num { order: -1 !important; font-size: clamp(4.5rem, 18vw, 7rem); }
         }
@@ -1064,8 +1084,9 @@
             <a href="#features">Funzioni</a>
             <a href="#how">Come funziona</a>
             <a href="#pricing">Prezzi</a>
+            <a href="#collaborate">Collabora</a>
             <a href="/support.html">Supporto</a>
-            <a href="#download" class="pill pill-sunset">Stato lancio</a>
+            <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset">Scarica l’app</a>
         </div>
         <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mMenu">Menu</button>
     </nav>
@@ -1074,10 +1095,11 @@
         <a href="#features">Funzioni</a>
         <a href="#how">Come funziona</a>
         <a href="#pricing">Prezzi</a>
+        <a href="#collaborate">Collabora</a>
         <a href="/support.html">Supporto</a>
         <div class="m-stores">
-            <a class="pill pill-sunset" href="#download">App Store a breve</a>
-            <a class="pill pill-ghost" href="#download">Google Play piu avanti</a>
+            <a class="pill pill-sunset" href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173">App Store</a>
+            <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">Google Play · Coming soon</span>
         </div>
     </div>
 
@@ -1096,10 +1118,10 @@
             <div class="hero-side">
                 <p>Navitra trasforma i luoghi che ami in un percorso giorno per giorno, considerando orari, distanze e ritmo reale. Il tuo compagno di viaggio IA, online o offline.</p>
                 <div class="hero-ctas">
-                    <a href="#download" class="pill pill-light" aria-label="Navitra App Store launch status">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store a breve</a>
-                    <a href="#download" class="pill pill-ghost" aria-label="Navitra Google Play launch status">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play piu avanti</a>
+                    <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-light" aria-label="Download Navitra on the App Store">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
+                    <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</span>
                 </div>
             </div>
         </div>
@@ -1200,7 +1222,7 @@
                         <h3>tappe nella tua lista di Roma</h3>
                         <p>In the app, Navitra turns your picks into a day-by-day route that respects opening hours, distances and your pace.</p>
                         <div class="sd-done-cta">
-                            <a href="#download" class="pill">Stato lancio</a>
+                            <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill">Scarica l’app</a>
                             <button type="button" class="sd-replay">Scorri di nuovo</button>
                         </div>
                     </div>
@@ -1300,15 +1322,15 @@
     <section class="cta-strip">
         <div class="reveal">
             <h2 class="sec-head">Pronto a trovare <em>il tuo</em> percorso?</h2>
-            <p class="lede">Al lancio Navitra sara gratis da scaricare e usare per pianificare. Premium sblocca l&#x27;esperienza completa con 7 giorni di prova sul piano annuale.</p>
+            <p class="lede">Navitra is now available on iPhone. Android is coming soon. Premium unlocks voice guides, offline maps and higher route limits, with a 7-day free trial on the yearly plan.</p>
             <div class="hero-ctas">
-                <a href="#download" class="pill pill-sunset" aria-label="Navitra App Store launch status">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store a breve</a>
+                <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset" aria-label="Download Navitra on the App Store">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
                 <a href="#download" class="pill pill-ink" aria-label="Navitra Google Play launch status">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play piu avanti</a>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</a>
             </div>
             <div class="chips" aria-label="Highlights">
-                <span class="chip">Gratis al lancio</span>
+                <span class="chip">Free to download</span>
                 <span class="chip">7 languages</span>
                 <span class="chip">Funziona completamente offline</span>
                 <span class="chip">Annulla quando vuoi</span>
@@ -1330,12 +1352,30 @@
         </div>
     </section>
 
+    <!-- ───────────── COLLABORATE ───────────── -->
+    <section class="collaborate" id="collaborate">
+        <div class="collab-intro reveal">
+            <span class="label">Lavora con Navitra</span>
+            <h2 class="sec-head">Rendiamo il viaggio più personale.</h2>
+            <p class="lede">Sei un creator, un esperto locale o un brand di viaggi? Creiamo storie, guide ed esperienze utili.</p>
+        </div>
+        <div class="collab-grid">
+            <article class="collab-card reveal"><span>01 · Creator</span><h3>Condividi viaggi di cui fidarsi.</h3><p>Crea con Navitra storie autentiche, guide all’app e serie di viaggio.</p></article>
+            <article class="collab-card reveal"><span>02 · Esperti locali</span><h3>Dai vita alla tua città.</h3><p>Trasforma conoscenze locali, gemme nascoste e itinerari in esperienze da seguire.</p></article>
+            <article class="collab-card reveal"><span>03 · Partner di viaggio</span><h3>Creiamo qualcosa di utile insieme.</h3><p>Esploriamo campagne, contenuti e integrazioni che aiutino davvero i viaggiatori.</p></article>
+        </div>
+        <div class="collab-action reveal">
+            <p>Raccontaci chi sei, dov’è il tuo pubblico e cosa vorresti creare.</p>
+            <a class="pill pill-sunset" data-collaboration-cta="email" href="mailto:support@navitraapp.com?subject=Work%20with%20Navitra&amp;body=Hi%20Navitra%20team%2C%0A%0AI%27d%20like%20to%20work%20with%20you.%0A%0AName%20%2F%20brand%3A%0AAudience%20%2F%20market%3A%0AIdea%3A%0A">Lavoriamo insieme</a>
+        </div>
+    </section>
+
     <!-- ───────────── PRICING ───────────── -->
     <section class="pricing" id="pricing">
         <div class="pricing-head reveal">
             <span class="label">Prezzi</span>
             <h2 class="sec-head">Un piano per il tuo viaggio.</h2>
-            <p class="lede">Al lancio Navitra sara gratis da scaricare e usare per pianificare. Premium sblocca l&#x27;esperienza completa con 7 giorni di prova sul piano annuale.</p>
+            <p class="lede">Navitra is free to download and plan with. Premium unlocks the full experience, with simple monthly and yearly options. The yearly plan starts with a 7-day free trial.</p>
         </div>
         <div class="price-grid">
             <article class="p-card hot reveal">
@@ -1350,7 +1390,7 @@
                     <li><span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M1.5 6.5l3 3 6-7"/></svg></span>Accesso Premium completo</li>
                     <li><span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M1.5 6.5l3 3 6-7"/></svg></span>Limiti IA piu alti</li>
                 </ul>
-                <a href="#download" class="pill pill-sunset">Stato lancio</a>
+                <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset">Scarica l’app</a>
             </article>
             <article class="p-card reveal">
                 <h3>Mensile</h3>
@@ -1362,7 +1402,7 @@
                     <li><span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M1.5 6.5l3 3 6-7"/></svg></span>Mappe e navigazione offline</li>
                     <li><span class="check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M1.5 6.5l3 3 6-7"/></svg></span>Limiti IA piu alti</li>
                 </ul>
-                <a href="#download" class="pill pill-ink">Stato lancio</a>
+                <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-ink">Scarica l’app</a>
             </article>
         </div>
         <p class="price-note">Prezzi in USD; lo store mostra i prezzi locali. Gli abbonamenti si rinnovano automaticamente e si possono annullare nello store.</p>
@@ -1423,7 +1463,7 @@
             <div>
                 <div class="acc">
                     <button aria-expanded="false">Navitra e gratis?<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
-                    <div class="panel"><div><p>Si. Al lancio, download e pianificazione saranno gratuiti. Premium aggiunge guide vocali, mappe offline e limiti IA piu alti.</p></div></div>
+                    <div class="panel"><div><p>Yes — Navitra is free to download and plan with. Premium adds AI voice guides, offline maps, budget planning and higher AI route limits. The monthly plan is $5.99, and the yearly plan is $39.99 with a 7-day free trial.</p></div></div>
                 </div>
                 <div class="acc">
                     <button aria-expanded="false">Funziona offline?<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
@@ -1452,14 +1492,14 @@
     <!-- ───────────── FINAL CTA ───────────── -->
     <section class="final" id="download">
         <h2 class="reveal">Il mondo ti aspetta.<br><em>La tua rotta e pronta.</em></h2>
-        <p class="reveal">Navitra sta preparando il lancio iOS; Android arrivera piu avanti.</p>
+        <p class="reveal">Navitra is now available on iPhone. Android is coming soon — turn your next "someday" into a day-by-day plan.</p>
         <div class="hero-ctas reveal">
-            <a href="#download" class="pill pill-light" aria-label="Navitra App Store launch status">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store a breve</a>
+            <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-light" aria-label="Download Navitra on the App Store">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
             <a href="#download" class="pill pill-ghost" aria-label="Navitra Google Play launch status">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play piu avanti</a>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</a>
         </div>
-        <p class="tiny reveal">Gratis al lancio · 7-day trial on the yearly plan · Annulla quando vuoi</p>
+        <p class="tiny reveal">Free to download · 7-day trial on the yearly plan · Annulla quando vuoi</p>
     </section>
 
     </main>
@@ -1479,7 +1519,8 @@
                 <a href="#features">Funzioni</a>
                 <a href="#how">Come funziona</a>
                 <a href="#pricing">Prezzi</a>
-                <a href="#download">Stato lancio</a>
+                <a href="#collaborate">Collabora</a>
+                <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173">Scarica l’app</a>
             </div>
             <div class="foot-col">
                 <h4>Supporto</h4>
