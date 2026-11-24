@@ -4,6 +4,7 @@ import re
 from html import escape
 from pathlib import Path
 
+import generate_guides
 import site_fixes
 
 
@@ -1452,6 +1453,9 @@ def write_sitemap() -> None:
     ]
     for code in LOCALES:
         urls.append((f"https://navitraapp.com/{code}/", "0.8"))
+    urls.append(("https://navitraapp.com/tr/rehber/", "0.7"))
+    for guide in generate_guides.GUIDES:
+        urls.append((f"https://navitraapp.com/tr/rehber/{guide['slug']}/", "0.7"))
 
     body = "\n".join(
         f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{LASTMOD}</lastmod>\n    <priority>{priority}</priority>\n  </url>"

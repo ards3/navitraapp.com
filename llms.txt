@@ -40,6 +40,13 @@ Navitra is made in Istanbul. It is free to download and free to plan with; an op
 - Account deletion: https://navitraapp.com/delete.html
 - Contact: support@navitraapp.com
 
+## Travel guides (Turkish)
+
+- Christmas market routes 2026 (index): https://navitraapp.com/tr/rehber/
+- Vienna: 4 Christmas markets in one evening, dates and opening hours: https://navitraapp.com/tr/rehber/viyana-noel-pazarlari/
+- Dresden: Striezelmarkt and 3 more markets, one-evening walking route: https://navitraapp.com/tr/rehber/dresden-noel-pazarlari/
+- Prague: Old Town Square and Wenceslas Square markets, 28 Nov 2026 – 6 Jan 2027: https://navitraapp.com/tr/rehber/prag-noel-pazarlari/
+
 ## Social
 
 - Instagram: https://www.instagram.com/navitra.travel/
