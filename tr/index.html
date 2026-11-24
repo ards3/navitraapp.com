@@ -1147,11 +1147,20 @@
 .phone video,.phone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .routes-band{padding:var(--sec-y) var(--pad-x);background:var(--cream-warm)}
 .routes-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:clamp(40px,6vw,96px);align-items:center}
-.routes-proof{display:grid;justify-items:center;gap:16px}
+.routes-proof{display:grid;justify-items:center;gap:18px}
 .routes-proof .phone{border-color:var(--line);box-shadow:0 30px 70px rgba(18,18,31,.18)}
-.proof-chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);text-decoration:none;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:9px 16px}
-.proof-chip strong{font-weight:600}
-.proof-chip:hover{border-color:var(--ink)}
+.routes-proof{margin:0}
+.reel .reel-top{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:9px;padding:16px 16px 28px;color:#fff;font:600 13px var(--sans);background:linear-gradient(rgba(0,0,0,.45),transparent)}
+.reel .reel-top img{position:static;width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);object-fit:cover}
+.reel .reel-top svg{width:20px;height:20px;margin-left:auto;opacity:.95}
+.reel .reel-plays{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:5px;color:#fff;font:600 14px var(--sans);text-shadow:0 1px 6px rgba(0,0,0,.55)}
+.reel .reel-plays svg{width:15px;height:15px;filter:drop-shadow(0 1px 4px rgba(0,0,0,.5))}
+.reel-stats{display:grid;grid-template-columns:repeat(3,auto);gap:clamp(18px,2.4vw,30px);margin:6px 0 0;padding:0}
+.reel-stats div{display:grid;justify-items:center;gap:2px}
+.reel-stats strong{font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,2.4vw,2.1rem);line-height:1;color:var(--ink)}
+.reel-stats span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+.reel-link{font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+.reel-link:hover{color:var(--sunset);border-color:var(--sunset)}
 .routes-copy .label{display:block;margin-bottom:18px}
 .routes-copy .sec-head{margin-bottom:18px}
 .routes-copy .lede{color:var(--mut);max-width:52ch;margin-bottom:28px}
@@ -1562,14 +1571,27 @@
     <!-- ───────────── NOEL PAZARI ROTALARI ───────────── -->
     <section class="routes-band" id="rehberler">
         <div class="routes-inner">
-            <div class="routes-proof reveal">
-                <div class="phone">
+            <figure class="routes-proof reveal">
+                <div class="phone reel">
                     <video data-autoplay muted loop playsinline preload="none" poster="/img/video/viyana-reel.jpg" aria-label="Viyana'da 4 Noel pazarı rotası animasyonu">
                         <source src="/img/video/viyana-reel.mp4" type="video/mp4">
                     </video>
+                    <div class="reel-top" aria-hidden="true">
+                        <img src="/apple-touch-icon.png" alt="" width="28" height="28">
+                        <span>navitra.travel</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M3 8.5h18M8.5 3l3 5.5M14 3l3 5.5"/><path d="M10 12.5v4.5l4-2.25z" fill="currentColor" stroke="none"/></svg>
+                    </div>
+                    <div class="reel-plays" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12.5-7.5z"/></svg>20 B
+                    </div>
                 </div>
-                <a class="proof-chip" href="https://www.instagram.com/reel/DgDPOmtjneF/" target="_blank" rel="noopener">Instagram'da <strong>20.000+</strong> kez izlendi</a>
-            </div>
+                <figcaption class="reel-stats">
+                    <div><strong>20 B+</strong><span>izlenme</span></div>
+                    <div><strong>600+</strong><span>paylaşım</span></div>
+                    <div><strong>600+</strong><span>kaydetme</span></div>
+                </figcaption>
+                <a class="reel-link" href="https://www.instagram.com/reel/DgDPOmtjneF/" target="_blank" rel="noopener">Instagram'da izle <span aria-hidden="true">→</span></a>
+            </figure>
             <div class="routes-copy reveal">
                 <span class="label">Noel Pazarı Rotası</span>
                 <h2 class="sec-head">Avrupa'nın Noel pazarları, <em>tek akşamda.</em></h2>
