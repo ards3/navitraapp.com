@@ -4,6 +4,7 @@ import re
 from html import escape
 from pathlib import Path
 
+import generate_guides
 import site_fixes
 
 
@@ -1431,6 +1432,10 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
     items = site_fixes.faq_items(code, t, extra)
     html = site_fixes.replace_faq_block(html, site_fixes.render_faq_items(items, escape))
     html = site_fixes.replace_json_ld(html, site_fixes.json_ld(lang, canonical, str(t["description"]), items))
+    html = site_fixes.fix_leftovers(code, html, escape)
+    html = site_fixes.add_app_lang_notice(code, html, escape)
+    if code == "tr":
+        html = site_fixes.add_tr_extras(html)
     return html
 
 
@@ -1452,6 +1457,9 @@ def write_sitemap() -> None:
     ]
     for code in LOCALES:
         urls.append((f"https://navitraapp.com/{code}/", "0.8"))
+    urls.append(("https://navitraapp.com/tr/rehber/", "0.7"))
+    for guide in generate_guides.GUIDES:
+        urls.append((f"https://navitraapp.com/tr/rehber/{guide['slug']}/", "0.7"))
 
     body = "\n".join(
         f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{LASTMOD}</lastmod>\n    <priority>{priority}</priority>\n  </url>"
