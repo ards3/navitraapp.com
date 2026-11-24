@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -7,7 +8,8 @@ STORE = "https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173"
 
 failed = []
 for page in PAGES:
-    text = page.read_text(encoding="utf-8")
+    # Count visible links only: JSON-LD lists the same profiles in sameAs.
+    text = re.sub(r'<script type="application/ld\+json">.*?</script>', "", page.read_text(encoding="utf-8"), flags=re.S)
     checks = {
         "collaboration section": 'id="collaborate"' in text,
         "collaboration email": "mailto:support@navitraapp.com?subject=" in text,

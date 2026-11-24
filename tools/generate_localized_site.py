@@ -4,9 +4,11 @@ import re
 from html import escape
 from pathlib import Path
 
+import site_fixes
+
 
 ROOT = Path(__file__).resolve().parents[1]
-LASTMOD = "2026-08-02"
+LASTMOD = "2026-11-24"
 
 LANGS = {
     "en": {"name": "English", "url": "/", "hreflang": "en"},
@@ -1278,6 +1280,8 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
     live = LIVE_COPY[code]
 
     pairs = [
+        # Longer strings first: shorter keys below ("Cancel anytime") would split them.
+        ("Free to download · 7-day trial on the yearly plan · Cancel anytime", site_fixes.LIVE[code]["tiny"]),
         ("Skip to content", _clone_extra(code, "skip")),
         ("Menu", _clone_extra(code, "menu")),
         ("Features", str(t["nav_features"])),
@@ -1286,8 +1290,7 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
         ("Support", str(t["nav_support"])),
         ("Get the app", live["get"]),
         ("Collaborate", live["collab"]),
-        ("App Store soon", str(t["app_store"])),
-        ("Google Play later", str(t["google_play"])),
+        ("Google Play · Coming soon", site_fixes.LIVE[code]["gplay"]),
         ("Born in Istanbul<br><strong>Made for every city</strong>", f"{escape(str(t['hero_fact']))}<br><strong>{escape(str(t['hero_fact_strong']))}</strong>"),
         ('<h1 class="display">Plan smarter,<br>travel <em>better</em>.</h1>', f'<h1 class="display">{t["hero_title"]}</h1>'),
         ("Navitra turns the places you love into an optimized day-by-day route — opening hours respected, walking minimized, stories narrated. Your AI travel companion, online or off.", str(t["hero_body"])),
@@ -1339,7 +1342,7 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
         ("Explore, with stories", steps[3][0]),
         ("Follow the route with turn-by-turn directions, listen to voice guides as you arrive, and let it all work offline when the roaming bill says no.", steps[3][1]),
         ('Ready to find <em>your</em> path?', _clone_extra(code, "ready")),
-        ("Free at launch", _clone_extra(code, "free")),
+        ('<span class="chip">Free to download</span>', f'<span class="chip">{escape(site_fixes.LIVE[code]["free"])}</span>'),
         ("Works fully offline", _clone_extra(code, "offline")),
         ("Cancel anytime", _clone_extra(code, "cancel")),
         ('Prefer to look around first? Write to us at <a class="mail" href="mailto:support@navitraapp.com">support@navitraapp.com</a> or browse the <a class="mail" href="/support.html">Help Center</a> — we\'re happy to help.', _clone_extra(code, "help_line")),
@@ -1358,7 +1361,7 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
         ("Tell us who you are, where your audience is and what you would like to create.", live["note"]),
         ("Let's work together", live["cta"]),
         ("A plan that fits your trip.", str(t["pricing_title"])),
-        ("Navitra will be free to download and free to plan with at launch. Premium unlocks the full experience, with simple monthly and yearly options. The yearly plan starts with a 7-day free trial.", str(t["pricing_lead"])),
+        ("Navitra is free to download and plan with. Premium unlocks the full experience, with simple monthly and yearly options. The yearly plan starts with a 7-day free trial.", site_fixes.LIVE[code]["pricing_lead"]),
         ("Best value", str(t["best_value"])),
         ("Yearly", str(t["yearly"])),
         ("For the frequent traveler.", str(t["yearly_for"])),
@@ -1405,7 +1408,6 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
         ("How do I cancel or delete my data?", _clone_extra(code, "delete_q")),
         ('Subscriptions are managed by Apple or Google — cancel anytime from your store account, no questions asked. Want your data gone too? Use the in-app option or the <a href="/delete.html">account deletion page</a>; details are in our <a href="/privacy.html">Privacy Policy</a>.', _clone_extra(code, "delete_a")),
         ('<h2 class="reveal">The world is waiting.<br><em>Your route is ready.</em></h2>', f'<h2 class="reveal">{t["final_title"]}</h2>'),
-        ("Free at launch · 7-day trial on the yearly plan · Cancel anytime", str(t["tiny"])),
         ("AI-powered travel companion that helps you discover, plan and navigate your perfect trip.", str(t["footer"])),
         ("Product", str(t["nav_features"])),
         ("Help Center", str(t["nav_support"])),
@@ -1423,6 +1425,12 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
 
     active = f'<a href="/{code}/">{LANGS[code]["name"]}</a>'
     html = html.replace(active, f'<a class="active" href="/{code}/">{LANGS[code]["name"]}</a>')
+
+    # Post-launch copy, the full six-question FAQ and localized JSON-LD.
+    extra = {key: _clone_extra(code, key) for key in ("share_q", "share_a", "delete_q", "delete_a")}
+    items = site_fixes.faq_items(code, t, extra)
+    html = site_fixes.replace_faq_block(html, site_fixes.render_faq_items(items, escape))
+    html = site_fixes.replace_json_ld(html, site_fixes.json_ld(lang, canonical, str(t["description"]), items))
     return html
 
 
