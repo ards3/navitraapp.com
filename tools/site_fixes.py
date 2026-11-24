@@ -261,3 +261,327 @@ def english_faq_items(html: str) -> list[tuple[str, str]]:
         section,
         re.S,
     )
+
+
+# ---------------------------------------------------------------------------
+# Visible English leftovers in the localized pages (swipe demo cards and two
+# call-to-action paragraphs). Keys are the English source strings.
+# card: (country, name, line) for Colosseum, Trevi, Pantheon, Vatican, Trastevere
+# ---------------------------------------------------------------------------
+
+CARDS_EN = [
+    ("the Colosseum", "Ancient Rome", "The Colosseum", "The arena that defined an empire."),
+    ("the Trevi Fountain", "Baroque Rome", "The Trevi Fountain", "Toss a coin, make a wish, come back."),
+    ("the Pantheon", "Ancient Rome", "The Pantheon", "A 2,000-year-old dome, still perfect."),
+    ("the Vatican Museums", "Vatican City", "The Vatican Museums", "Michelangelo's ceiling, room after room."),
+    ("Trastevere", "Neighborhood", "Trastevere", "Cobbled lanes, trattorias, golden light."),
+]
+
+DONE_EN = "In the app, Navitra turns your picks into a day-by-day route that respects opening hours, distances and your pace."
+CTA_EN = "Navitra is now available on iPhone. Android is coming soon. Premium unlocks voice guides, offline maps and higher route limits, with a 7-day free trial on the yearly plan."
+FINAL_EN = 'Navitra is now available on iPhone. Android is coming soon — turn your next "someday" into a day-by-day plan.'
+
+LEFTOVERS = {
+    "tr": {
+        "cards": [
+            ("Antik Roma", "Kolezyum", "Bir imparatorluğu tanımlayan arena."),
+            ("Barok Roma", "Trevi Çeşmesi", "Bir bozuk para at, dilek tut, geri gel."),
+            ("Antik Roma", "Pantheon", "2.000 yıllık kubbe, hâlâ kusursuz."),
+            ("Vatikan", "Vatikan Müzeleri", "Salon salon Michelangelo'nun tavanı."),
+            ("Mahalle", "Trastevere", "Arnavut kaldırımı, trattoriler, altın ışık."),
+        ],
+        "done": "Uygulamada Navitra seçtiklerini açılış saatlerine, mesafelere ve temposuna uyan günlük bir rotaya dönüştürür.",
+        "cta": "Navitra artık iPhone'da. Android yakında. Premium; sesli rehber, offline harita ve daha yüksek rota limitlerini açar, yıllık planda 7 gün ücretsiz deneme var.",
+        "final": "Navitra artık iPhone'da, Android yakında. Bir gün gideceğin yeri bugünden günlük bir plana dönüştür.",
+    },
+    "de": {
+        "cards": [
+            ("Antikes Rom", "Kolosseum", "Die Arena, die ein Weltreich prägte."),
+            ("Barockes Rom", "Trevi-Brunnen", "Münze werfen, etwas wünschen, wiederkommen."),
+            ("Antikes Rom", "Pantheon", "Eine 2.000 Jahre alte Kuppel, noch immer perfekt."),
+            ("Vatikanstadt", "Vatikanische Museen", "Michelangelos Decke, Saal für Saal."),
+            ("Viertel", "Trastevere", "Kopfsteinpflaster, Trattorien, goldenes Licht."),
+        ],
+        "done": "In der App macht Navitra aus deiner Auswahl eine Tagesroute, die Öffnungszeiten, Wege und dein Tempo berücksichtigt.",
+        "cta": "Navitra ist jetzt fürs iPhone verfügbar, Android folgt bald. Premium schaltet Sprachguides, Offline-Karten und höhere Routenlimits frei, mit 7 Tagen Gratis-Test im Jahresplan.",
+        "final": "Navitra ist jetzt fürs iPhone verfügbar, Android folgt bald. Mach aus deinem nächsten „irgendwann“ einen Plan für jeden Tag.",
+    },
+    "es": {
+        "cards": [
+            ("Roma antigua", "El Coliseo", "La arena que definió un imperio."),
+            ("Roma barroca", "La Fontana di Trevi", "Lanza una moneda, pide un deseo, vuelve."),
+            ("Roma antigua", "El Panteón", "Una cúpula de 2.000 años, aún perfecta."),
+            ("Ciudad del Vaticano", "Museos Vaticanos", "El techo de Miguel Ángel, sala tras sala."),
+            ("Barrio", "Trastevere", "Calles empedradas, trattorias, luz dorada."),
+        ],
+        "done": "En la app, Navitra convierte tus elecciones en una ruta día a día que respeta horarios, distancias y tu ritmo.",
+        "cta": "Navitra ya está disponible en iPhone. Android llegará pronto. Premium desbloquea guías de voz, mapas offline y más rutas, con 7 días de prueba gratis en el plan anual.",
+        "final": "Navitra ya está disponible en iPhone y pronto en Android. Convierte tu próximo «algún día» en un plan día a día.",
+    },
+    "fr": {
+        "cards": [
+            ("Rome antique", "Le Colisée", "L’arène qui a défini un empire."),
+            ("Rome baroque", "La fontaine de Trevi", "Lancez une pièce, faites un vœu, revenez."),
+            ("Rome antique", "Le Panthéon", "Une coupole de 2 000 ans, toujours parfaite."),
+            ("Cité du Vatican", "Les musées du Vatican", "Le plafond de Michel-Ange, salle après salle."),
+            ("Quartier", "Trastevere", "Ruelles pavées, trattorias, lumière dorée."),
+        ],
+        "done": "Dans l’app, Navitra transforme vos choix en itinéraire jour par jour qui respecte horaires, distances et votre rythme.",
+        "cta": "Navitra est disponible sur iPhone, Android arrive bientôt. Premium débloque les guides vocaux, les cartes hors ligne et plus d’itinéraires, avec 7 jours d’essai gratuit sur l’offre annuelle.",
+        "final": "Navitra est disponible sur iPhone, Android arrive bientôt. Transformez votre prochain « un jour » en plan jour par jour.",
+    },
+    "it": {
+        "cards": [
+            ("Roma antica", "Il Colosseo", "L’arena che ha definito un impero."),
+            ("Roma barocca", "Fontana di Trevi", "Lancia una moneta, esprimi un desiderio, torna."),
+            ("Roma antica", "Il Pantheon", "Una cupola di 2.000 anni, ancora perfetta."),
+            ("Città del Vaticano", "Musei Vaticani", "Il soffitto di Michelangelo, sala dopo sala."),
+            ("Quartiere", "Trastevere", "Vicoli acciottolati, trattorie, luce dorata."),
+        ],
+        "done": "Nell’app, Navitra trasforma le tue scelte in un itinerario giorno per giorno che rispetta orari, distanze e il tuo ritmo.",
+        "cta": "Navitra è disponibile su iPhone, Android arriverà presto. Premium sblocca guide vocali, mappe offline e più itinerari, con 7 giorni di prova gratuita sul piano annuale.",
+        "final": "Navitra è disponibile su iPhone, presto su Android. Trasforma il tuo prossimo «prima o poi» in un piano giorno per giorno.",
+    },
+    "nl": {
+        "cards": [
+            ("Het oude Rome", "Het Colosseum", "De arena die een rijk bepaalde."),
+            ("Barok Rome", "De Trevifontein", "Gooi een munt, doe een wens, kom terug."),
+            ("Het oude Rome", "Het Pantheon", "Een koepel van 2.000 jaar, nog steeds perfect."),
+            ("Vaticaanstad", "Vaticaanse Musea", "Michelangelo’s plafond, zaal na zaal."),
+            ("Wijk", "Trastevere", "Keienstraatjes, trattoria’s, gouden licht."),
+        ],
+        "done": "In de app maakt Navitra van je keuzes een dagroute die rekening houdt met openingstijden, afstanden en jouw tempo.",
+        "cta": "Navitra is nu beschikbaar op iPhone, Android volgt binnenkort. Premium ontgrendelt audiogidsen, offline kaarten en meer routes, met 7 dagen gratis proberen bij het jaarplan.",
+        "final": "Navitra is nu beschikbaar op iPhone, Android volgt binnenkort. Maak van je volgende ‘ooit’ een plan per dag.",
+    },
+    "pt-br": {
+        "cards": [
+            ("Roma antiga", "O Coliseu", "A arena que definiu um império."),
+            ("Roma barroca", "A Fontana di Trevi", "Jogue uma moeda, faça um pedido, volte."),
+            ("Roma antiga", "O Panteão", "Uma cúpula de 2.000 anos, ainda perfeita."),
+            ("Cidade do Vaticano", "Museus do Vaticano", "O teto de Michelangelo, sala após sala."),
+            ("Bairro", "Trastevere", "Ruas de pedra, trattorias, luz dourada."),
+        ],
+        "done": "No app, a Navitra transforma suas escolhas em uma rota dia a dia que respeita horários, distâncias e o seu ritmo.",
+        "cta": "A Navitra já está disponível no iPhone. Android em breve. O Premium libera guias de voz, mapas offline e mais rotas, com 7 dias de teste grátis no plano anual.",
+        "final": "A Navitra já está no iPhone e em breve no Android. Transforme o seu próximo “um dia” em um plano dia a dia.",
+    },
+    "ar": {
+        "cards": [
+            ("روما القديمة", "الكولوسيوم", "الساحة التي صنعت إمبراطورية."),
+            ("روما الباروكية", "نافورة تريفي", "ارمِ عملة، تمنَّ أمنية، وعُد."),
+            ("روما القديمة", "البانثيون", "قبة عمرها 2000 عام وما زالت مثالية."),
+            ("مدينة الفاتيكان", "متاحف الفاتيكان", "سقف مايكل أنجلو، قاعة بعد قاعة."),
+            ("حيّ", "تراستيفيري", "أزقة مرصوفة ومطاعم صغيرة وضوء ذهبي."),
+        ],
+        "done": "في التطبيق، يحوّل Navitra اختياراتك إلى مسار يومي يراعي مواعيد الافتتاح والمسافات وإيقاعك.",
+        "cta": "Navitra متاح الآن على iPhone، وقريبًا على Android. يفتح Premium الأدلة الصوتية والخرائط بلا إنترنت وحدودًا أعلى للمسارات، مع تجربة مجانية لمدة 7 أيام في الخطة السنوية.",
+        "final": "Navitra متاح الآن على iPhone وقريبًا على Android. حوّل «يومًا ما» القادم إلى خطة يومًا بيوم.",
+    },
+    "ja": {
+        "cards": [
+            ("古代ローマ", "コロッセオ", "帝国を象徴した円形闘技場。"),
+            ("バロックのローマ", "トレヴィの泉", "コインを投げて願えば、また戻ってこられる。"),
+            ("古代ローマ", "パンテオン", "2000年前のドームが今も完璧なまま。"),
+            ("バチカン市国", "バチカン美術館", "部屋ごとに続くミケランジェロの天井画。"),
+            ("街並み", "トラステヴェレ", "石畳、トラットリア、黄金色の光。"),
+        ],
+        "done": "アプリでは、選んだ場所をNavitraが営業時間、距離、あなたのペースに合わせた日別ルートにします。",
+        "cta": "NavitraはiPhoneで利用できます。Androidは近日公開。Premiumでは音声ガイド、オフライン地図、ルート上限の拡大が使え、年額プランは7日間無料で試せます。",
+        "final": "NavitraはiPhoneで利用でき、Androidも近日公開。いつか行きたい場所を、日ごとのプランに。",
+    },
+    "ko": {
+        "cards": [
+            ("고대 로마", "콜로세움", "제국을 상징한 원형 경기장."),
+            ("바로크 로마", "트레비 분수", "동전을 던지고 소원을 빌면 다시 오게 돼요."),
+            ("고대 로마", "판테온", "2,000년 된 돔, 여전히 완벽해요."),
+            ("바티칸 시국", "바티칸 박물관", "방마다 이어지는 미켈란젤로의 천장화."),
+            ("동네", "트라스테베레", "자갈길, 트라토리아, 황금빛 햇살."),
+        ],
+        "done": "앱에서 Navitra는 고른 장소를 영업시간, 거리, 여행 속도에 맞춘 일별 루트로 만들어 줍니다.",
+        "cta": "Navitra는 지금 iPhone에서 사용할 수 있고 Android는 곧 출시됩니다. Premium은 음성 가이드, 오프라인 지도, 더 많은 루트를 제공하며 연간 플랜은 7일 무료 체험으로 시작합니다.",
+        "final": "Navitra는 지금 iPhone에서, 곧 Android에서도 만날 수 있어요. 언젠가의 여행을 일별 계획으로 바꿔 보세요.",
+    },
+    "ru": {
+        "cards": [
+            ("Древний Рим", "Колизей", "Арена, ставшая символом империи."),
+            ("Барочный Рим", "Фонтан Треви", "Бросьте монету, загадайте желание, вернитесь."),
+            ("Древний Рим", "Пантеон", "Куполу 2000 лет, и он всё так же совершенен."),
+            ("Ватикан", "Музеи Ватикана", "Потолок Микеланджело, зал за залом."),
+            ("Район", "Трастевере", "Брусчатка, траттории, золотой свет."),
+        ],
+        "done": "В приложении Navitra превращает ваш выбор в маршрут по дням с учётом часов работы, расстояний и вашего темпа.",
+        "cta": "Navitra уже доступна на iPhone, Android скоро. Premium открывает аудиогиды, офлайн-карты и больше маршрутов, а годовой план начинается с 7 бесплатных дней.",
+        "final": "Navitra уже на iPhone и скоро на Android. Превратите своё «когда-нибудь» в план по дням.",
+    },
+    "zh-hans": {
+        "cards": [
+            ("古罗马", "罗马斗兽场", "定义一个帝国的竞技场。"),
+            ("巴洛克罗马", "特雷维喷泉", "投一枚硬币，许个愿，还会再来。"),
+            ("古罗马", "万神殿", "两千年的穹顶，依旧完美。"),
+            ("梵蒂冈", "梵蒂冈博物馆", "米开朗基罗的天顶画，一厅接一厅。"),
+            ("街区", "特拉斯提弗列", "石板小巷、小餐馆和金色的光。"),
+        ],
+        "done": "在应用里，Navitra 会把你选中的地方变成兼顾营业时间、距离和你节奏的每日路线。",
+        "cta": "Navitra 现已登陆 iPhone，Android 版即将推出。Premium 解锁语音导览、离线地图和更多路线，年度方案可免费试用 7 天。",
+        "final": "Navitra 现已登陆 iPhone，Android 版即将推出。把下一个“总有一天”变成每日计划。",
+    },
+}
+
+# The app speaks 7 languages; these site locales are not among them.
+APP_LANG_NOTICE = {
+    "it": "L’app Navitra è disponibile in inglese, turco, tedesco, spagnolo, francese, arabo e cinese. L’italiano non è ancora tra le lingue dell’app.",
+    "nl": "De Navitra-app is beschikbaar in het Engels, Turks, Duits, Spaans, Frans, Arabisch en Chinees. Nederlands wordt in de app nog niet ondersteund.",
+    "pt-br": "O app Navitra está disponível em inglês, turco, alemão, espanhol, francês, árabe e chinês. O português ainda não está entre os idiomas do app.",
+    "ja": "Navitraアプリは英語、トルコ語、ドイツ語、スペイン語、フランス語、アラビア語、中国語に対応しています。日本語にはまだ対応していません。",
+    "ko": "Navitra 앱은 영어, 터키어, 독일어, 스페인어, 프랑스어, 아랍어, 중국어를 지원합니다. 한국어는 아직 앱에서 지원하지 않습니다.",
+    "ru": "Приложение Navitra доступно на английском, турецком, немецком, испанском, французском, арабском и китайском. Русский язык в приложении пока не поддерживается.",
+}
+
+
+def fix_leftovers(code: str, html: str, esc) -> str:
+    data = LEFTOVERS[code]
+    for (data_name, country, name, line), (l_country, l_name, l_line) in zip(CARDS_EN, data["cards"]):
+        html = html.replace(f'data-name="{data_name}"', f'data-name="{esc(l_name)}"', 1)
+        html = html.replace(
+            f'<span class="sd-country">{country}</span><h3>{name}</h3><p>{line}</p>',
+            f'<span class="sd-country">{esc(l_country)}</span><h3>{esc(l_name)}</h3><p>{esc(l_line)}</p>',
+            1,
+        )
+    html = html.replace(f"<p>{DONE_EN}</p>", f"<p>{esc(data['done'])}</p>", 1)
+    html = html.replace(f'<p class="lede">{CTA_EN}</p>', f'<p class="lede">{esc(data["cta"])}</p>', 1)
+    html = html.replace(f'<p class="reveal">{FINAL_EN}</p>', f'<p class="reveal">{esc(data["final"])}</p>', 1)
+    return html
+
+
+NOTICE_CSS = (
+    "<style>.app-lang-note{margin-top:16px;max-width:46ch;font-size:12.5px;line-height:1.5;"
+    "color:rgba(250,250,247,.82)}</style>"
+)
+
+
+def add_app_lang_notice(code: str, html: str, esc) -> str:
+    """Small note under the hero buttons on locales the app itself does not speak."""
+    note = APP_LANG_NOTICE.get(code)
+    if not note:
+        return html
+    hero = html.index('<header class="hero">')
+    ctas = html.index('<div class="hero-ctas', hero)
+    close = html.index("</div>", ctas) + len("</div>")
+    html = html[:close] + f'\n                <p class="app-lang-note" role="note">{esc(note)}</p>' + html[close:]
+    return html.replace("</head>", NOTICE_CSS + "\n</head>", 1)
+
+
+# ---------------------------------------------------------------------------
+# Turkish homepage extras: "Rehberler" nav link, an app demo inside
+# "Nasıl çalışır", and a Christmas-route band (social proof + guide links).
+# Turkish only: the videos and the guides are in Turkish.
+# ---------------------------------------------------------------------------
+
+IG_VIENNA_REEL = "https://www.instagram.com/reel/DgDPOmtjneF/"
+
+TR_EXTRA_CSS = """<style>
+.how .step:nth-last-of-type(2){border-bottom:1px solid var(--line-light)}
+.how-demo{max-width:1280px;margin:clamp(56px,7vw,96px) auto 0;display:grid;grid-template-columns:1fr auto;gap:clamp(32px,6vw,96px);align-items:center}
+.how-demo .label{display:block;margin-bottom:16px}
+.how-demo h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,3.4vw,3rem);letter-spacing:-.015em;color:var(--cream);margin-bottom:14px}
+.how-demo p{color:var(--mut-light);max-width:46ch;font-size:15px}
+.phone{position:relative;width:clamp(220px,24vw,290px);aspect-ratio:9/16;border-radius:34px;overflow:hidden;background:#0b0b14;border:1px solid rgba(250,250,247,.14);box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 8px rgba(250,250,247,.04)}
+.phone video,.phone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.routes-band{padding:var(--sec-y) var(--pad-x);background:var(--cream-warm)}
+.routes-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:clamp(40px,6vw,96px);align-items:center}
+.routes-proof{display:grid;justify-items:center;gap:16px}
+.routes-proof .phone{border-color:var(--line);box-shadow:0 30px 70px rgba(18,18,31,.18)}
+.proof-chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);text-decoration:none;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:9px 16px}
+.proof-chip strong{font-weight:600}
+.proof-chip:hover{border-color:var(--ink)}
+.routes-copy .label{display:block;margin-bottom:18px}
+.routes-copy .sec-head{margin-bottom:18px}
+.routes-copy .lede{color:var(--mut);max-width:52ch;margin-bottom:28px}
+.route-links{list-style:none;margin:0 0 30px;padding:0;border-top:1px solid var(--line)}
+.route-links a{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.route-links .city{font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,2rem)}
+.route-links .meta{font-size:13px;color:var(--mut);text-align:right}
+.route-links a:hover .city{color:var(--sunset)}
+@media (max-width:880px){.how-demo,.routes-inner{grid-template-columns:1fr}.how-demo .phone{justify-self:center}.routes-proof{order:2}}
+</style>"""
+
+TR_HOW_DEMO = """
+        <div class="how-demo reveal">
+            <div>
+                <span class="label">Uygulamada</span>
+                <h3>Prag'da 3 gün, tek rotada.</h3>
+                <p>Yerleri seçersin; Navitra mesafeleri, açılış saatlerini ve yürüme süresini hesaba katıp günlere böler.</p>
+            </div>
+            <div class="phone">
+                <video data-autoplay muted loop playsinline preload="none" poster="/img/video/demo-prag.jpg" aria-label="Navitra ile Prag'da 3 günlük rota oluşturma">
+                    <source src="/img/video/demo-prag.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+"""
+
+TR_ROUTES_BAND = f"""
+    <!-- ───────────── NOEL PAZARI ROTALARI ───────────── -->
+    <section class="routes-band" id="rehberler">
+        <div class="routes-inner">
+            <div class="routes-proof reveal">
+                <div class="phone">
+                    <video data-autoplay muted loop playsinline preload="none" poster="/img/video/viyana-reel.jpg" aria-label="Viyana'da 4 Noel pazarı rotası animasyonu">
+                        <source src="/img/video/viyana-reel.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <a class="proof-chip" href="{IG_VIENNA_REEL}" target="_blank" rel="noopener">Instagram'da <strong>20.000+</strong> kez izlendi</a>
+            </div>
+            <div class="routes-copy reveal">
+                <span class="label">Noel Pazarı Rotası</span>
+                <h2 class="sec-head">Avrupa'nın Noel pazarları, <em>tek akşamda.</em></h2>
+                <p class="lede">Şehir şehir tarihler, açılış saatleri ve yürüyüş rotaları. Bilgiler resmî kaynaklardan kontrol edilir, sezon boyunca güncellenir.</p>
+                <ul class="route-links">
+                    <li><a href="/tr/rehber/viyana-noel-pazarlari/"><span class="city">Viyana</span><span class="meta">4 pazar · ~1,5 km</span></a></li>
+                    <li><a href="/tr/rehber/dresden-noel-pazarlari/"><span class="city">Dresden</span><span class="meta">Striezelmarkt + 3 pazar</span></a></li>
+                    <li><a href="/tr/rehber/prag-noel-pazarlari/"><span class="city">Prag</span><span class="meta">28 Kasım'da açılıyor</span></a></li>
+                </ul>
+                <a href="/tr/rehber/" class="pill pill-ink">Tüm rehberler</a>
+            </div>
+        </div>
+    </section>
+"""
+
+TR_VIDEO_SCRIPT = """<script>
+(function(){
+  var vids=document.querySelectorAll('video[data-autoplay]');
+  if(!vids.length) return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!('IntersectionObserver' in window)){vids.forEach(function(v){v.setAttribute('controls','');});return;}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){var v=e.target;
+    if(e.isIntersecting){if(v.preload==='none'){v.preload='auto';v.load();}var p=v.play();if(p&&p.catch)p.catch(function(){});}
+    else{v.pause();}});},{threshold:0.35});
+  vids.forEach(function(v){io.observe(v);});
+})();
+</script>"""
+
+
+def add_tr_extras(html: str) -> str:
+    # Nav and mobile menu: "Rehberler" before "Destek".
+    html = html.replace(
+        '<a href="#collaborate">Bizimle çalışın</a>\n            <a href="/support.html">Destek</a>',
+        '<a href="#collaborate">Bizimle çalışın</a>\n            <a href="/tr/rehber/">Rehberler</a>\n            <a href="/support.html">Destek</a>',
+        1,
+    )
+    html = html.replace(
+        '<a href="#collaborate">Bizimle çalışın</a>\n        <a href="/support.html">Destek</a>',
+        '<a href="#collaborate">Bizimle çalışın</a>\n        <a href="/tr/rehber/">Rehberler</a>\n        <a href="/support.html">Destek</a>',
+        1,
+    )
+    # Demo phone at the end of "Nasıl çalışır".
+    start = html.index('<section class="how" id="how">')
+    end = html.index("</section>", start)
+    html = html[:end] + TR_HOW_DEMO + "    " + html[end:]
+    # Routes band right before the FAQ.
+    faq_section = html.index('<section class="faq" id="faq">')
+    faq = html.rindex("    <!--", 0, faq_section)
+    html = html[:faq] + TR_ROUTES_BAND + "\n" + html[faq:]
+    html = html.replace("</head>", TR_EXTRA_CSS + "\n</head>", 1)
+    html = html.replace("</body>", TR_VIDEO_SCRIPT + "\n</body>", 1)
+    return html

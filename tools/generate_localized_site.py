@@ -1432,6 +1432,10 @@ def _localized_template(code: str, t: dict[str, object]) -> str:
     items = site_fixes.faq_items(code, t, extra)
     html = site_fixes.replace_faq_block(html, site_fixes.render_faq_items(items, escape))
     html = site_fixes.replace_json_ld(html, site_fixes.json_ld(lang, canonical, str(t["description"]), items))
+    html = site_fixes.fix_leftovers(code, html, escape)
+    html = site_fixes.add_app_lang_notice(code, html, escape)
+    if code == "tr":
+        html = site_fixes.add_tr_extras(html)
     return html
 
 

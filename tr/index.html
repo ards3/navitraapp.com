@@ -1137,6 +1137,31 @@
             .sd-deck-area { margin-top: 6px; }
         }
     </style>
+<style>
+.how .step:nth-last-of-type(2){border-bottom:1px solid var(--line-light)}
+.how-demo{max-width:1280px;margin:clamp(56px,7vw,96px) auto 0;display:grid;grid-template-columns:1fr auto;gap:clamp(32px,6vw,96px);align-items:center}
+.how-demo .label{display:block;margin-bottom:16px}
+.how-demo h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,3.4vw,3rem);letter-spacing:-.015em;color:var(--cream);margin-bottom:14px}
+.how-demo p{color:var(--mut-light);max-width:46ch;font-size:15px}
+.phone{position:relative;width:clamp(220px,24vw,290px);aspect-ratio:9/16;border-radius:34px;overflow:hidden;background:#0b0b14;border:1px solid rgba(250,250,247,.14);box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 8px rgba(250,250,247,.04)}
+.phone video,.phone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.routes-band{padding:var(--sec-y) var(--pad-x);background:var(--cream-warm)}
+.routes-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:clamp(40px,6vw,96px);align-items:center}
+.routes-proof{display:grid;justify-items:center;gap:16px}
+.routes-proof .phone{border-color:var(--line);box-shadow:0 30px 70px rgba(18,18,31,.18)}
+.proof-chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);text-decoration:none;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:9px 16px}
+.proof-chip strong{font-weight:600}
+.proof-chip:hover{border-color:var(--ink)}
+.routes-copy .label{display:block;margin-bottom:18px}
+.routes-copy .sec-head{margin-bottom:18px}
+.routes-copy .lede{color:var(--mut);max-width:52ch;margin-bottom:28px}
+.route-links{list-style:none;margin:0 0 30px;padding:0;border-top:1px solid var(--line)}
+.route-links a{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.route-links .city{font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,2rem)}
+.route-links .meta{font-size:13px;color:var(--mut);text-align:right}
+.route-links a:hover .city{color:var(--sunset)}
+@media (max-width:880px){.how-demo,.routes-inner{grid-template-columns:1fr}.how-demo .phone{justify-self:center}.routes-proof{order:2}}
+</style>
 </head>
 <body>
     <a href="#main" class="skip-link">İçeriğe geç</a>
@@ -1152,6 +1177,7 @@
             <a href="#how">Nasıl çalışır</a>
             <a href="#pricing">Fiyatlar</a>
             <a href="#collaborate">Bizimle çalışın</a>
+            <a href="/tr/rehber/">Rehberler</a>
             <a href="/support.html">Destek</a>
             <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset">Uygulamayı indir</a>
         </div>
@@ -1163,6 +1189,7 @@
         <a href="#how">Nasıl çalışır</a>
         <a href="#pricing">Fiyatlar</a>
         <a href="#collaborate">Bizimle çalışın</a>
+        <a href="/tr/rehber/">Rehberler</a>
         <a href="/support.html">Destek</a>
         <div class="m-stores">
             <a class="pill pill-sunset" href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173">App Store</a>
@@ -1248,46 +1275,46 @@
                     Roma, İtalya
                 </span>
                 <div class="sd-deck" role="group" aria-roledescription="card deck" aria-label="Swipe through highlights in Rome. Use the left and right arrow keys, or the Skip and Kaydet buttons.">
-                    <article class="sd-card" data-name="the Colosseum">
+                    <article class="sd-card" data-name="Kolezyum">
                         <img src="/img/rome-colosseum.jpg" alt="The Colosseum in Rome" loading="lazy">
                         <div class="sd-grad"></div>
                         <span class="sd-stamp save" aria-hidden="true">Kaydet</span>
                         <span class="sd-stamp pass" aria-hidden="true">Geç</span>
-                        <div class="sd-meta"><span class="sd-country">Ancient Rome</span><h3>The Colosseum</h3><p>The arena that defined an empire.</p></div>
+                        <div class="sd-meta"><span class="sd-country">Antik Roma</span><h3>Kolezyum</h3><p>Bir imparatorluğu tanımlayan arena.</p></div>
                     </article>
-                    <article class="sd-card" data-name="the Trevi Fountain">
+                    <article class="sd-card" data-name="Trevi Çeşmesi">
                         <img src="/img/rome-trevi.jpg" alt="The Trevi Fountain in Rome" loading="lazy">
                         <div class="sd-grad"></div>
                         <span class="sd-stamp save" aria-hidden="true">Kaydet</span>
                         <span class="sd-stamp pass" aria-hidden="true">Geç</span>
-                        <div class="sd-meta"><span class="sd-country">Baroque Rome</span><h3>The Trevi Fountain</h3><p>Toss a coin, make a wish, come back.</p></div>
+                        <div class="sd-meta"><span class="sd-country">Barok Roma</span><h3>Trevi Çeşmesi</h3><p>Bir bozuk para at, dilek tut, geri gel.</p></div>
                     </article>
-                    <article class="sd-card" data-name="the Pantheon">
+                    <article class="sd-card" data-name="Pantheon">
                         <img src="/img/rome-pantheon.jpg" alt="The Pantheon in Rome" loading="lazy">
                         <div class="sd-grad"></div>
                         <span class="sd-stamp save" aria-hidden="true">Kaydet</span>
                         <span class="sd-stamp pass" aria-hidden="true">Geç</span>
-                        <div class="sd-meta"><span class="sd-country">Ancient Rome</span><h3>The Pantheon</h3><p>A 2,000-year-old dome, still perfect.</p></div>
+                        <div class="sd-meta"><span class="sd-country">Antik Roma</span><h3>Pantheon</h3><p>2.000 yıllık kubbe, hâlâ kusursuz.</p></div>
                     </article>
-                    <article class="sd-card" data-name="the Vatican Museums">
+                    <article class="sd-card" data-name="Vatikan Müzeleri">
                         <img src="/img/rome-vatican.jpg" alt="St. Peter's Basilica, Vatican City" loading="lazy">
                         <div class="sd-grad"></div>
                         <span class="sd-stamp save" aria-hidden="true">Kaydet</span>
                         <span class="sd-stamp pass" aria-hidden="true">Geç</span>
-                        <div class="sd-meta"><span class="sd-country">Vatican City</span><h3>The Vatican Museums</h3><p>Michelangelo's ceiling, room after room.</p></div>
+                        <div class="sd-meta"><span class="sd-country">Vatikan</span><h3>Vatikan Müzeleri</h3><p>Salon salon Michelangelo&#x27;nun tavanı.</p></div>
                     </article>
                     <article class="sd-card" data-name="Trastevere">
                         <img src="/img/rome-trastevere.jpg" alt="The Trastevere neighborhood in Rome" loading="lazy">
                         <div class="sd-grad"></div>
                         <span class="sd-stamp save" aria-hidden="true">Kaydet</span>
                         <span class="sd-stamp pass" aria-hidden="true">Geç</span>
-                        <div class="sd-meta"><span class="sd-country">Neighborhood</span><h3>Trastevere</h3><p>Cobbled lanes, trattorias, golden light.</p></div>
+                        <div class="sd-meta"><span class="sd-country">Mahalle</span><h3>Trastevere</h3><p>Arnavut kaldırımı, trattoriler, altın ışık.</p></div>
                     </article>
 
                     <div class="sd-done" aria-hidden="true">
                         <span class="sd-done-num">0</span>
                         <h3>Roma listendeki durak</h3>
-                        <p>In the app, Navitra turns your picks into a day-by-day route that respects opening hours, distances and your pace.</p>
+                        <p>Uygulamada Navitra seçtiklerini açılış saatlerine, mesafelere ve temposuna uyan günlük bir rotaya dönüştürür.</p>
                         <div class="sd-done-cta">
                             <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill">Uygulamayı indir</a>
                             <button type="button" class="sd-replay">Tekrar kaydır</button>
@@ -1383,13 +1410,26 @@
             </div>
             <div class="num" aria-hidden="true">04</div>
         </div>
+    
+        <div class="how-demo reveal">
+            <div>
+                <span class="label">Uygulamada</span>
+                <h3>Prag'da 3 gün, tek rotada.</h3>
+                <p>Yerleri seçersin; Navitra mesafeleri, açılış saatlerini ve yürüme süresini hesaba katıp günlere böler.</p>
+            </div>
+            <div class="phone">
+                <video data-autoplay muted loop playsinline preload="none" poster="/img/video/demo-prag.jpg" aria-label="Navitra ile Prag'da 3 günlük rota oluşturma">
+                    <source src="/img/video/demo-prag.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
     </section>
 
     <!-- ───────────── CTA STRIP ───────────── -->
     <section class="cta-strip">
         <div class="reveal">
             <h2 class="sec-head">Kendi <em>rotanı</em> bulmaya hazır mısın?</h2>
-            <p class="lede">Navitra is now available on iPhone. Android is coming soon. Premium unlocks voice guides, offline maps and higher route limits, with a 7-day free trial on the yearly plan.</p>
+            <p class="lede">Navitra artık iPhone&#x27;da. Android yakında. Premium; sesli rehber, offline harita ve daha yüksek rota limitlerini açar, yıllık planda 7 gün ücretsiz deneme var.</p>
             <div class="hero-ctas">
                 <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset" aria-label="Download Navitra on the App Store">
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
@@ -1518,6 +1558,32 @@
         <p class="num-foot">* Dahili testlerde medyan rota üretim süresi, Nisan 2026.</p>
     </section>
 
+
+    <!-- ───────────── NOEL PAZARI ROTALARI ───────────── -->
+    <section class="routes-band" id="rehberler">
+        <div class="routes-inner">
+            <div class="routes-proof reveal">
+                <div class="phone">
+                    <video data-autoplay muted loop playsinline preload="none" poster="/img/video/viyana-reel.jpg" aria-label="Viyana'da 4 Noel pazarı rotası animasyonu">
+                        <source src="/img/video/viyana-reel.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <a class="proof-chip" href="https://www.instagram.com/reel/DgDPOmtjneF/" target="_blank" rel="noopener">Instagram'da <strong>20.000+</strong> kez izlendi</a>
+            </div>
+            <div class="routes-copy reveal">
+                <span class="label">Noel Pazarı Rotası</span>
+                <h2 class="sec-head">Avrupa'nın Noel pazarları, <em>tek akşamda.</em></h2>
+                <p class="lede">Şehir şehir tarihler, açılış saatleri ve yürüyüş rotaları. Bilgiler resmî kaynaklardan kontrol edilir, sezon boyunca güncellenir.</p>
+                <ul class="route-links">
+                    <li><a href="/tr/rehber/viyana-noel-pazarlari/"><span class="city">Viyana</span><span class="meta">4 pazar · ~1,5 km</span></a></li>
+                    <li><a href="/tr/rehber/dresden-noel-pazarlari/"><span class="city">Dresden</span><span class="meta">Striezelmarkt + 3 pazar</span></a></li>
+                    <li><a href="/tr/rehber/prag-noel-pazarlari/"><span class="city">Prag</span><span class="meta">28 Kasım'da açılıyor</span></a></li>
+                </ul>
+                <a href="/tr/rehber/" class="pill pill-ink">Tüm rehberler</a>
+            </div>
+        </div>
+    </section>
+
     <!-- ───────────── Sık sorulan sorular ───────────── -->
     <section class="faq" id="faq">
         <div class="faq-grid">
@@ -1559,7 +1625,7 @@
     <!-- ───────────── FINAL CTA ───────────── -->
     <section class="final" id="download">
         <h2 class="reveal">Dünya bekliyor.<br><em>Rotan hazır.</em></h2>
-        <p class="reveal">Navitra is now available on iPhone. Android is coming soon — turn your next "someday" into a day-by-day plan.</p>
+        <p class="reveal">Navitra artık iPhone&#x27;da, Android yakında. Bir gün gideceğin yeri bugünden günlük bir plana dönüştür.</p>
         <div class="hero-ctas reveal">
             <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-light" aria-label="Download Navitra on the App Store">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
@@ -1896,5 +1962,17 @@
         /* ── Year ── */
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
+<script>
+(function(){
+  var vids=document.querySelectorAll('video[data-autoplay]');
+  if(!vids.length) return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!('IntersectionObserver' in window)){vids.forEach(function(v){v.setAttribute('controls','');});return;}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){var v=e.target;
+    if(e.isIntersecting){if(v.preload==='none'){v.preload='auto';v.load();}var p=v.play();if(p&&p.catch)p.catch(function(){});}
+    else{v.pause();}});},{threshold:0.35});
+  vids.forEach(function(v){io.observe(v);});
+})();
+</script>
 </body>
 </html>
