@@ -52,24 +52,91 @@
 
     <!-- Structured Data (no fabricated ratings — add aggregateRating only with real store data) -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "MobileApplication",
+{
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Navitra",
+    "url": "https://navitraapp.com/ar/",
+    "inLanguage": "ar",
+    "downloadUrl": "https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173",
+    "installUrl": "https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173",
+    "operatingSystem": "iOS",
+    "applicationCategory": "TravelApplication",
+    "description": "Navitra يحول الأماكن التي تحبها إلى مسارات يومية ذكية مع دليل صوتي وخرائط بلا إنترنت واكتشافات مناسبة لرحلتك.",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    },
+    "creator": {
+        "@type": "Organization",
         "name": "Navitra",
-        "operatingSystem": "iOS",
-        "applicationCategory": "TravelApplication",
-        "description": "AI travel planner that builds optimized day-by-day routes with voice guides, offline maps and smart discovery.",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "creator": {
-            "@type": "Organization",
-            "name": "Navitra",
-            "url": "https://navitraapp.com"
-        }
+        "url": "https://navitraapp.com/",
+        "sameAs": [
+            "https://x.com/navitratravel",
+            "https://www.instagram.com/navitra.travel/",
+            "https://www.tiktok.com/@navitra.travel",
+            "https://www.youtube.com/@navitraaitravelplanner"
+        ]
     }
+}
+    </script>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "ar",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "هل Navitra مجاني؟",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "نعم. التنزيل والتخطيط مجانيان. يضيف Premium أدلة صوتية بالذكاء الاصطناعي وخرائط بلا إنترنت وتخطيط الميزانية وحدودًا أعلى للمسارات. يظهر السعر الحالي بعملتك في App Store، وتبدأ الخطة السنوية بتجربة مجانية لمدة 7 أيام."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "كيف يبني الذكاء الاصطناعي مساري؟",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "يتعامل محرك المسارات في Navitra مع رحلتك كمسألة لوجستية حقيقية: يتحقق من مواعيد الافتتاح، ويجمع الأماكن القريبة في اليوم نفسه، ويرتبها لتقليل المشي، ويخصص وقتًا واقعيًا لكل محطة. بعد ذلك يضيف الذكاء الاصطناعي الأوصاف والنصائح واقتراحات الطعام."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "هل يعمل بلا إنترنت؟",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "مع Premium يمكنك تنزيل الوجهة قبل السفر؛ تبقى الخرائط والمسارات والأدلة على الجهاز."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "ما اللغات التي يتحدثها Navitra؟",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "سبع لغات بالكامل: العربية والإنجليزية والتركية والألمانية والإسبانية والفرنسية والصينية. الواجهة وخطط الذكاء الاصطناعي والأدلة الصوتية تتبع لغتك."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "هل يمكنني مشاركة مساري؟",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "يمكن مشاركة كل مسار كرابط أو رمز QR. يراه الأصدقاء في المتصفح."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "كيف ألغي أو أحذف بياناتي؟",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "تُدار الاشتراكات عبر Apple أو Google. لحذف البيانات استخدم التطبيق أو صفحة حذف الحساب؛ التفاصيل في سياسة الخصوصية."
+            }
+        }
+    ]
+}
     </script>
 
     <!-- Fonts: Crimson Text (display serif) + Inter (body) -->
@@ -1099,7 +1166,7 @@
         <a href="/support.html">الدعم</a>
         <div class="m-stores">
             <a class="pill pill-sunset" href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173">App Store</a>
-            <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">Google Play · Coming soon</span>
+            <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">Google Play · قريبًا</span>
         </div>
     </div>
 
@@ -1121,7 +1188,7 @@
                     <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-light" aria-label="Download Navitra on the App Store">
                         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
                     <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</span>
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · قريبًا</span>
                 </div>
             </div>
         </div>
@@ -1327,10 +1394,10 @@
                 <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset" aria-label="Download Navitra on the App Store">
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
                 <a href="#download" class="pill pill-ink" aria-label="Navitra Google Play launch status">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</a>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · قريبًا</a>
             </div>
             <div class="chips" aria-label="Highlights">
-                <span class="chip">Free to download</span>
+                <span class="chip">تنزيل مجاني</span>
                 <span class="chip">7 languages</span>
                 <span class="chip">يعمل بالكامل دون إنترنت</span>
                 <span class="chip">إلغاء في أي وقت</span>
@@ -1375,7 +1442,7 @@
         <div class="pricing-head reveal">
             <span class="label">الأسعار</span>
             <h2 class="sec-head">خطة تناسب رحلتك.</h2>
-            <p class="lede">Navitra is free to download and plan with. Premium unlocks the full experience, with simple monthly and yearly options. The yearly plan starts with a 7-day free trial.</p>
+            <p class="lede">تنزيل Navitra وتخطيط الرحلات مجاني. يفتح Premium التجربة الكاملة باشتراك شهري أو سنوي، ويبدأ الاشتراك السنوي بتجربة مجانية لمدة 7 أيام.</p>
         </div>
         <div class="price-grid">
             <article class="p-card hot reveal">
@@ -1463,19 +1530,19 @@
             <div>
                 <div class="acc">
                     <button aria-expanded="false">هل Navitra مجاني؟<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
-                    <div class="panel"><div><p>Yes — Navitra is free to download and plan with. Premium adds AI voice guides, offline maps, budget planning and higher AI route limits. The monthly plan is $5.99, and the yearly plan is $39.99 with a 7-day free trial.</p></div></div>
+                    <div class="panel"><div><p>نعم. التنزيل والتخطيط مجانيان. يضيف Premium أدلة صوتية بالذكاء الاصطناعي وخرائط بلا إنترنت وتخطيط الميزانية وحدودًا أعلى للمسارات. يظهر السعر الحالي بعملتك في App Store، وتبدأ الخطة السنوية بتجربة مجانية لمدة 7 أيام.</p></div></div>
                 </div>
                 <div class="acc">
-                    <button aria-expanded="false">هل يعمل بلا إنترنت؟<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
-                    <div class="panel"><div><p>اختر مدينة، احفظ ما تحبه، ودع Navitra يبني خطة يومية تصلح على أرض الواقع.</p></div></div>
+                    <button aria-expanded="false">كيف يبني الذكاء الاصطناعي مساري؟<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
+                    <div class="panel"><div><p>يتعامل محرك المسارات في Navitra مع رحلتك كمسألة لوجستية حقيقية: يتحقق من مواعيد الافتتاح، ويجمع الأماكن القريبة في اليوم نفسه، ويرتبها لتقليل المشي، ويخصص وقتًا واقعيًا لكل محطة. بعد ذلك يضيف الذكاء الاصطناعي الأوصاف والنصائح واقتراحات الطعام.</p></div></div>
                 </div>
                 <div class="acc">
                     <button aria-expanded="false">هل يعمل بلا إنترنت؟<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
                     <div class="panel"><div><p>مع Premium يمكنك تنزيل الوجهة قبل السفر؛ تبقى الخرائط والمسارات والأدلة على الجهاز.</p></div></div>
                 </div>
                 <div class="acc">
-                    <button aria-expanded="false">دليل صوتي ذكي في كل محطة<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
-                    <div class="panel"><div><p>لغات — للواجهة والأدلة الصوتية.</p></div></div>
+                    <button aria-expanded="false">ما اللغات التي يتحدثها Navitra؟<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
+                    <div class="panel"><div><p>سبع لغات بالكامل: العربية والإنجليزية والتركية والألمانية والإسبانية والفرنسية والصينية. الواجهة وخطط الذكاء الاصطناعي والأدلة الصوتية تتبع لغتك.</p></div></div>
                 </div>
                 <div class="acc">
                     <button aria-expanded="false">هل يمكنني مشاركة مساري؟<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
@@ -1497,9 +1564,9 @@
             <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-light" aria-label="Download Navitra on the App Store">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
             <a href="#download" class="pill pill-ghost" aria-label="Navitra Google Play launch status">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</a>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · قريبًا</a>
         </div>
-        <p class="tiny reveal">Free to download · 7-day trial on the yearly plan · إلغاء في أي وقت</p>
+        <p class="tiny reveal">تنزيل مجاني · تجربة 7 أيام في الخطة السنوية · إلغاء في أي وقت</p>
     </section>
 
     </main>

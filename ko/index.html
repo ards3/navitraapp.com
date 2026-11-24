@@ -52,24 +52,91 @@
 
     <!-- Structured Data (no fabricated ratings — add aggregateRating only with real store data) -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "MobileApplication",
+{
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Navitra",
+    "url": "https://navitraapp.com/ko/",
+    "inLanguage": "ko",
+    "downloadUrl": "https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173",
+    "installUrl": "https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173",
+    "operatingSystem": "iOS",
+    "applicationCategory": "TravelApplication",
+    "description": "Navitra는 좋아하는 장소를 음성 가이드, 오프라인 지도, 스마트 추천이 담긴 최적의 일자별 루트로 바꿉니다.",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    },
+    "creator": {
+        "@type": "Organization",
         "name": "Navitra",
-        "operatingSystem": "iOS",
-        "applicationCategory": "TravelApplication",
-        "description": "AI travel planner that builds optimized day-by-day routes with voice guides, offline maps and smart discovery.",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "creator": {
-            "@type": "Organization",
-            "name": "Navitra",
-            "url": "https://navitraapp.com"
-        }
+        "url": "https://navitraapp.com/",
+        "sameAs": [
+            "https://x.com/navitratravel",
+            "https://www.instagram.com/navitra.travel/",
+            "https://www.tiktok.com/@navitra.travel",
+            "https://www.youtube.com/@navitraaitravelplanner"
+        ]
     }
+}
+    </script>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "ko",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Navitra는 무료인가요?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "예. 다운로드와 여행 계획은 무료입니다. Premium은 AI 음성 가이드, 오프라인 지도, 예산 관리, 더 높은 AI 루트 한도를 제공합니다. 최신 가격은 App Store에서 현지 통화로 확인할 수 있으며, 연간 플랜은 7일 무료 체험으로 시작합니다."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "AI는 내 루트를 어떻게 만드나요?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Navitra의 루트 엔진은 여행을 실제 물류 문제처럼 다룹니다. 장소별 영업시간을 확인하고, 가까운 곳을 같은 날로 묶고, 걷는 거리가 가장 짧도록 순서를 정하고, 각 장소에 현실적인 시간을 배정합니다. 그다음 AI가 설명, 팁, 식사 추천을 더합니다."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "오프라인으로 정말 작동하나요?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Premium에서는 여행 전 목적지를 다운로드할 수 있습니다. 지도, 루트, 음성 가이드가 기기에 저장됩니다."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Navitra는 어떤 언어를 지원하나요?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "7개 언어를 완전히 지원합니다: 영어, 터키어, 독일어, 스페인어, 프랑스어, 아랍어, 중국어. 화면, AI 계획, 음성 가이드가 모두 선택한 언어를 따릅니다."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "루트를 친구와 공유할 수 있나요?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "모든 루트는 링크나 QR 코드로 공유할 수 있습니다. 친구는 브라우저에서 계획을 볼 수 있습니다."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "취소하거나 데이터를 삭제하려면?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "구독은 Apple 또는 Google에서 관리됩니다. 데이터 삭제는 앱 또는 계정 삭제 페이지에서 할 수 있으며, 자세한 내용은 개인정보 처리방침을 참고하세요."
+            }
+        }
+    ]
+}
     </script>
 
     <!-- Fonts: Crimson Text (display serif) + Inter (body) -->
@@ -1099,7 +1166,7 @@
         <a href="/support.html">지원</a>
         <div class="m-stores">
             <a class="pill pill-sunset" href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173">App Store</a>
-            <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">Google Play · Coming soon</span>
+            <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">Google Play · 출시 예정</span>
         </div>
     </div>
 
@@ -1121,7 +1188,7 @@
                     <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-light" aria-label="Download Navitra on the App Store">
                         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
                     <span class="pill pill-ghost" aria-label="Navitra for Android is coming soon">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</span>
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · 출시 예정</span>
                 </div>
             </div>
         </div>
@@ -1327,10 +1394,10 @@
                 <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-sunset" aria-label="Download Navitra on the App Store">
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
                 <a href="#download" class="pill pill-ink" aria-label="Navitra Google Play launch status">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</a>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · 출시 예정</a>
             </div>
             <div class="chips" aria-label="Highlights">
-                <span class="chip">Free to download</span>
+                <span class="chip">무료 다운로드</span>
                 <span class="chip">7 languages</span>
                 <span class="chip">완전 오프라인 작동</span>
                 <span class="chip">언제든 취소</span>
@@ -1375,7 +1442,7 @@
         <div class="pricing-head reveal">
             <span class="label">가격</span>
             <h2 class="sec-head">여행에 맞는 플랜.</h2>
-            <p class="lede">Navitra is free to download and plan with. Premium unlocks the full experience, with simple monthly and yearly options. The yearly plan starts with a 7-day free trial.</p>
+            <p class="lede">Navitra 다운로드와 여행 계획은 무료입니다. Premium은 월간·연간 옵션으로 모든 기능을 열어 주며, 연간 플랜은 7일 무료 체험으로 시작합니다.</p>
         </div>
         <div class="price-grid">
             <article class="p-card hot reveal">
@@ -1463,19 +1530,19 @@
             <div>
                 <div class="acc">
                     <button aria-expanded="false">Navitra는 무료인가요?<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
-                    <div class="panel"><div><p>Yes — Navitra is free to download and plan with. Premium adds AI voice guides, offline maps, budget planning and higher AI route limits. The monthly plan is $5.99, and the yearly plan is $39.99 with a 7-day free trial.</p></div></div>
+                    <div class="panel"><div><p>예. 다운로드와 여행 계획은 무료입니다. Premium은 AI 음성 가이드, 오프라인 지도, 예산 관리, 더 높은 AI 루트 한도를 제공합니다. 최신 가격은 App Store에서 현지 통화로 확인할 수 있으며, 연간 플랜은 7일 무료 체험으로 시작합니다.</p></div></div>
                 </div>
                 <div class="acc">
-                    <button aria-expanded="false">오프라인으로 정말 작동하나요?<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
-                    <div class="panel"><div><p>도시를 고르고 마음에 드는 장소를 저장하면 Navitra가 실제로 움직이기 좋은 일정을 만듭니다.</p></div></div>
+                    <button aria-expanded="false">AI는 내 루트를 어떻게 만드나요?<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
+                    <div class="panel"><div><p>Navitra의 루트 엔진은 여행을 실제 물류 문제처럼 다룹니다. 장소별 영업시간을 확인하고, 가까운 곳을 같은 날로 묶고, 걷는 거리가 가장 짧도록 순서를 정하고, 각 장소에 현실적인 시간을 배정합니다. 그다음 AI가 설명, 팁, 식사 추천을 더합니다.</p></div></div>
                 </div>
                 <div class="acc">
                     <button aria-expanded="false">오프라인으로 정말 작동하나요?<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
                     <div class="panel"><div><p>Premium에서는 여행 전 목적지를 다운로드할 수 있습니다. 지도, 루트, 음성 가이드가 기기에 저장됩니다.</p></div></div>
                 </div>
                 <div class="acc">
-                    <button aria-expanded="false">모든 장소의 AI 음성 가이드<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
-                    <div class="panel"><div><p>언어 — 인터페이스와 음성 가이드.</p></div></div>
+                    <button aria-expanded="false">Navitra는 어떤 언어를 지원하나요?<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
+                    <div class="panel"><div><p>7개 언어를 완전히 지원합니다: 영어, 터키어, 독일어, 스페인어, 프랑스어, 아랍어, 중국어. 화면, AI 계획, 음성 가이드가 모두 선택한 언어를 따릅니다.</p></div></div>
                 </div>
                 <div class="acc">
                     <button aria-expanded="false">루트를 친구와 공유할 수 있나요?<span class="ic"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 1v10M1 6h10"/></svg></span></button>
@@ -1497,9 +1564,9 @@
             <a href="https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173" class="pill pill-light" aria-label="Download Navitra on the App Store">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>App Store</a>
             <a href="#download" class="pill pill-ghost" aria-label="Navitra Google Play launch status">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · Coming soon</a>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 0 1 0 1.38l-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/></svg>Google Play · 출시 예정</a>
         </div>
-        <p class="tiny reveal">Free to download · 7-day trial on the yearly plan · 언제든 취소</p>
+        <p class="tiny reveal">무료 다운로드 · 연간 플랜 7일 체험 · 언제든 해지</p>
     </section>
 
     </main>

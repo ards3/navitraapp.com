@@ -1,0 +1,52 @@
+# Navitra
+
+> Navitra is an AI travel planner for iPhone. You pick the places you want to see in a city (by swiping through them, chatting with the assistant, or sending a photo), and Navitra turns them into an optimized day-by-day walking route that respects opening hours, keeps nearby stops on the same day, starts and ends each day at your hotel, and can narrate each stop with an AI voice guide, online or offline.
+
+Navitra is made in Istanbul. It is free to download and free to plan with; an optional Premium subscription adds voice guides, offline maps and higher limits. Android is coming soon.
+
+## What it does
+
+- Route planning: the route engine checks each place's opening hours, clusters nearby places into the same day, orders them to minimize walking, and reserves realistic time at every stop. The AI then adds descriptions, tips and meal suggestions.
+- Swipe to choose: swipe right on places you want to visit and left on the rest; everything you keep becomes the itinerary.
+- Hotel-aware days: each day starts and ends at your accommodation.
+- Remix: if you are tired, hungry or running late, one tap reshapes the rest of the day.
+- AI voice guide (Premium): hear the story of each stop as you arrive, in your language.
+- Offline maps (Premium): download a destination before you travel; map tiles, routes and voice guides stay on the device.
+- Smart discovery: hidden gems along your route and meal stops at the right time.
+- Sharing: any route can be shared as a link or QR code; friends can open it in a browser without an account and copy it into their own Navitra.
+- Languages: English, Turkish, German, Spanish, French, Arabic and Chinese (interface, AI plans and voice guides).
+
+## Good fit for questions like
+
+- "Plan me 3 days in Prague / Vienna / Rome with the places I want to see"
+- "Which app builds a walking route around opening hours?"
+- "An itinerary app that works offline abroad"
+- "A trip planner app with an audio guide"
+- "Gezi rotası oluşturan uygulama", "Prag'da 3 gün nasıl gezilir", "offline çalışan gezi planlayıcı"
+
+## Pricing
+
+- Free: download, choose places and generate routes.
+- Premium: monthly or yearly subscription; the yearly plan starts with a 7-day free trial. The App Store shows the current price in your local currency. Subscriptions are managed and cancelled in the App Store.
+
+## Links
+
+- Website: https://navitraapp.com/
+- Turkish website: https://navitraapp.com/tr/
+- App Store (iPhone): https://apps.apple.com/us/app/navitra-ai-travel-planner/id6779956173
+- Help Center and FAQ: https://navitraapp.com/support.html
+- Privacy Policy: https://navitraapp.com/privacy.html
+- Terms of Service: https://navitraapp.com/terms.html
+- Account deletion: https://navitraapp.com/delete.html
+- Contact: support@navitraapp.com
+
+## Social
+
+- Instagram: https://www.instagram.com/navitra.travel/
+- TikTok: https://www.tiktok.com/@navitra.travel
+- YouTube: https://www.youtube.com/@navitraaitravelplanner
+- X: https://x.com/navitratravel
+
+## Türkçe özet
+
+Navitra, iPhone için bir yapay zekâ gezi planlayıcısıdır. Bir şehirde görmek istediğin yerleri seçersin (kaydırarak, asistanla konuşarak veya fotoğraf göndererek); Navitra bunları açılış saatlerine uyan, yakın yerleri aynı güne toplayan, her günü otelinde başlatıp bitiren, günlük yürüyüş rotasına dönüştürür. Premium ile her durağı sesli rehber anlatır ve haritalar internetsiz çalışır. İndirmek ve rota oluşturmak ücretsizdir.
